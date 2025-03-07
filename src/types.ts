@@ -1,4 +1,4 @@
-type Alignment = 'left' | 'center' | 'right'
+export type Alignment = 'left' | 'center' | 'right'
 
 export interface Row {
   id: number

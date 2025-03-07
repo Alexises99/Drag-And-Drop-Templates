@@ -7,7 +7,7 @@ function App() {
     <>
       <Header />
       <main>
-        <h1 className="text-3xl">Jeans</h1>
+        <h1 className="my-8 text-center text-5xl">Jeans</h1>
         <RowContainer />
       </main>
     </>
