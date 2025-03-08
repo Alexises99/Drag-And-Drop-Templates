@@ -13,7 +13,8 @@ export default defineConfig({
       '@context': resolve(__dirname, './src/context'),
       '@hooks': resolve(__dirname, './src/hooks'),
       '@assets': resolve(__dirname, './src/assets'),
-      '@utils': resolve(__dirname, './src/utils')
+      '@utils': resolve(__dirname, './src/utils'),
+      '@data': resolve(__dirname, './src/data')
     }
   }
 })
