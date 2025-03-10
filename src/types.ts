@@ -4,6 +4,7 @@ export type Alignment = 'left' | 'center' | 'right'
 
 export interface Row {
   id: number
+  name: string
   alignment: Alignment
   items: UniqueIdentifier[]
 }

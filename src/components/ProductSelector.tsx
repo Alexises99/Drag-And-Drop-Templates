@@ -22,10 +22,10 @@ export default function ProductSelector() {
       <section
         ref={sliderRef}
         className="flex gap-4 overflow-hidden overflow-x-auto border-1 p-4 whitespace-nowrap"
-        onMouseDown={handleTouchStart}
-        onMouseMove={handleTouchMove}
-        onMouseUp={handleTouchEnd}
-        onMouseLeave={handleTouchEnd}
+        // onMouseDown={handleTouchStart}
+        // onMouseMove={handleTouchMove}
+        // onMouseUp={handleTouchEnd}
+        // onMouseLeave={handleTouchEnd}
       >
         {firstRow.items.map((product) => {
           const jean = jeans.find((jean) => jean.name === product)

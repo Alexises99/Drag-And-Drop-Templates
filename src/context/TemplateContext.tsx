@@ -16,9 +16,11 @@ interface TemplateContextValue {
   rows: Record<UniqueIdentifier, Row>
   showProducts: boolean
   rowContainers: number[]
-  handleMoveRows: (activeId: number, overId: number) => void
   handleShowProducts: () => void
+  handleMoveRows: (activeId: number, overId: number) => void
+  handleDeleteRow: (id: number) => void
   handleAddRow: () => void
+  changeCategoryName: (id: number, value: string) => void
   handleDragOver: (
     activeId: UniqueIdentifier,
     overId: UniqueIdentifier,
@@ -43,6 +45,7 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
   const [rows, setRows] = useState<Record<UniqueIdentifier, Row>>({
     1: {
       alignment: 'left',
+      name: 'Productos',
       id: 1,
       items: jeans.map((jean) => jean.name)
     }
@@ -54,17 +57,41 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
       .map((item) => Number(item))
   )
 
-  console.log(rowContainers)
-
   const handleShowProducts = () => setShowProducts((prev) => !prev)
 
   const handleAddRow = () => {
     const size = Object.keys(rows).length
-    const newRow: Row = { alignment: 'left', id: size + 1, items: [] }
+    const newRow: Row = {
+      alignment: 'left',
+      id: size + 1,
+      items: [],
+      name: 'Sin nombre'
+    }
 
     startTransition(() => {
       setRows((prev) => ({ ...prev, [newRow.id]: newRow }))
       setRowContainers((prev) => [...prev, newRow.id])
+    })
+  }
+
+  const handleDeleteRow = (id: number) => {
+    startTransition(() => {
+      setRows((prev) => {
+        const copy = { ...prev }
+        delete copy[id]
+        return copy
+      })
+      setRowContainers((prev) =>
+        prev.filter((containerId) => containerId !== id)
+      )
+    })
+  }
+
+  const changeCategoryName = (id: number, value: string) => {
+    setRows((prev) => {
+      const copy = { ...prev }
+      copy[id].name = value
+      return copy
     })
   }
 
@@ -144,9 +171,11 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
     rows,
     showProducts,
     rowContainers,
-    handleMoveRows,
-    handleShowProducts,
     handleAddRow,
+    handleMoveRows,
+    handleDeleteRow,
+    handleShowProducts,
+    changeCategoryName,
     handleDragEnd,
     handleDragOver
   }

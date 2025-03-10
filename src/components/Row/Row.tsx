@@ -1,57 +1,60 @@
-import type { Alignment, Row as RowType } from '@types'
 import { useState } from 'react'
 import TemplateButtons from './TemplateButtons'
-import aligmentUtils from '@utils/aligment'
 import {
   horizontalListSortingStrategy,
   SortableContext
 } from '@dnd-kit/sortable'
-import DroppableRow from '@components/DragDrop/DroppableRow'
-import { jeans } from '@data/jeans'
-import Product from '@components/Product'
+import RowContent from './RowContent'
+import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
+import type { DraggableAttributes } from '@dnd-kit/core'
+import type { Alignment, Row as RowType } from '@types'
+import useTemplate from '@hooks/useTemplate'
+import Category from './Category'
 
 interface RowProps {
   row: RowType
+  isDraggable: boolean
+  listeners: SyntheticListenerMap | undefined
+  attributes: DraggableAttributes | undefined
 }
 
-export default function Row({ row }: RowProps) {
-  const { alignment: initialAligment, id } = row
+export default function Row({
+  row,
+  isDraggable,
+  attributes,
+  listeners
+}: RowProps) {
+  const { alignment: initialAligment, id, items, name } = row
 
   const [alignment, setAlignment] = useState<Alignment>(initialAligment)
 
-  const selectedAligment = aligmentUtils.getJustifyAligment(alignment)
+  const { handleDeleteRow, changeCategoryName } = useTemplate()
 
   const changeAligment = (alignment: Alignment) => setAlignment(alignment)
 
   return (
-    <DroppableRow
-      id={id}
-      items={row.items}
-      className="border-medium-gray my-12 flex w-full flex-col gap-3 border-1 p-4"
-      header={(listeners, attributes) => (
-        <header className="flex items-center justify-between">
-          <span>{`Categoria ${id}`}</span>
-          <TemplateButtons
-            listeners={listeners}
-            attributes={attributes}
-            changeAligment={changeAligment}
-          />
-        </header>
-      )}
+    <section
+      className={
+        'border-medium-gray my-12 flex w-full flex-col gap-3 rounded-xl border-1'
+      }
     >
-      <div
-        className={`flex min-h-44 w-full items-center gap-4 ${selectedAligment}`}
-      >
-        <SortableContext
-          items={row.items}
-          strategy={horizontalListSortingStrategy}
-        >
-          {row.items.map((item) => {
-            const jean = jeans.find((jean) => jean.name === item)
-            return <Product product={jean!} key={jean?.name} />
-          })}
+      <header className="group border-medium-gray hover:bg-light-gray flex items-center justify-between border-b-1 p-4 hover:rounded-t-md">
+        <Category id={id} name={name} handleChangeName={changeCategoryName} />
+        <TemplateButtons
+          selectedAligment={alignment}
+          listeners={listeners}
+          attributes={attributes}
+          changeAligment={changeAligment}
+          handleDelete={() => handleDeleteRow(id)}
+        />
+      </header>
+      {isDraggable ? (
+        <SortableContext items={items} strategy={horizontalListSortingStrategy}>
+          <RowContent row={row} alignment={alignment} />
         </SortableContext>
-      </div>
-    </DroppableRow>
+      ) : (
+        <RowContent row={row} alignment={alignment} />
+      )}
+    </section>
   )
 }

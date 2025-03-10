@@ -28,7 +28,7 @@ export default function Product({ product }: ProductProps) {
       <img
         src={image}
         alt={name}
-        className="max-h-40 object-cover select-none md:max-h-80"
+        className="max-h-40 object-cover select-none md:max-h-64"
         draggable={false}
       />
       <h3>{name}</h3>

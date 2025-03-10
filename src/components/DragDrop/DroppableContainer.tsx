@@ -1,33 +1,29 @@
 import { useSortable } from '@dnd-kit/sortable'
-import { PropsWithChildren, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { CSS } from '@dnd-kit/utilities'
 
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 
-interface DroppableRowProps {
+interface DroppableContainerProps {
   id: UniqueIdentifier
   items: UniqueIdentifier[]
   className?: string
-  header: (
+  children: (
     listeners: SyntheticListenerMap | undefined,
     attributes: DraggableAttributes
   ) => ReactNode
   onRemove?: () => void
 }
 
-export default function DroppableRow({
+export default function DroppableContainer({
   id,
   items,
-  className,
-  children,
-  header,
-  onRemove
-}: PropsWithChildren<DroppableRowProps>) {
+  children
+}: DroppableContainerProps) {
   const {
     over,
     active,
-    isOver,
     setNodeRef,
     transform,
     transition,
@@ -41,10 +37,7 @@ export default function DroppableRow({
     }
   })
 
-  const isOverRow = over
-    ? (id === over.id && active?.data.current?.type !== 'row') ||
-      items.includes(over.id)
-    : false
+  console.log({ over, active })
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -52,9 +45,8 @@ export default function DroppableRow({
   }
 
   return (
-    <section ref={setNodeRef} style={style} className={className}>
-      {header(listeners, attributes)}
-      {children}
-    </section>
+    <div ref={setNodeRef} style={style} className={`h-full w-full`}>
+      {children(listeners, attributes)}
+    </div>
   )
 }

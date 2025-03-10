@@ -1,6 +1,6 @@
 import useTemplate from '@/hooks/useTemplate'
-import Row from './Row/Row'
 import CreateRow from './DragDrop/CreateRow'
+import DroppableRow from './Row/DroppableRow'
 
 export default function RowContainer() {
   const { rows, rowContainers } = useTemplate()
@@ -8,7 +8,7 @@ export default function RowContainer() {
   return (
     <ul>
       {rowContainers.map((rowId) => (
-        <Row row={rows[rowId]} key={rows[rowId].id} />
+        <DroppableRow row={rows[rowId]} key={rowId} />
       ))}
       <CreateRow />
     </ul>

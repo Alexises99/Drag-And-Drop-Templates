@@ -1,8 +1,7 @@
 import Product from '@components/Product'
-import RowOverlay from '@components/Row/RowOverlay'
 import { jeans } from '@data/jeans'
 import {
-  closestCorners,
+  closestCenter,
   DndContext,
   DragEndEvent,
   DragOverEvent,
@@ -19,6 +18,7 @@ import dragDropUtils from '@utils/drag-drop'
 import { PropsWithChildren, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { NEW_ROW_ID } from './TemplateContext'
+import Row from '@components/Row/Row'
 
 export default function DragDropContext({ children }: PropsWithChildren) {
   const { rows, rowContainers, handleDragEnd, handleDragOver, handleMoveRows } =
@@ -81,7 +81,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
 
   return (
     <DndContext
-      collisionDetection={closestCorners}
+      collisionDetection={closestCenter}
       sensors={sensors}
       onDragStart={onDragStart}
       onDragOver={onDragOver}
@@ -97,7 +97,12 @@ export default function DragDropContext({ children }: PropsWithChildren) {
         <DragOverlay>
           {activeId ? (
             rowContainers.includes(activeId as number) ? (
-              <RowOverlay row={rows[activeId]} />
+              <Row
+                row={rows[activeId]}
+                attributes={undefined}
+                listeners={undefined}
+                isDraggable={false}
+              />
             ) : (
               <Product
                 product={jeans.find((jean) => jean.name === activeId)!}
