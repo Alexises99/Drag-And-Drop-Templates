@@ -2,9 +2,12 @@ import { jeans } from '@data/jeans'
 import Product from './Product'
 import { useHorizontalDrag } from '@hooks/useHorizontalDrag'
 import { useRef } from 'react'
+import useTemplate from '@hooks/useTemplate'
 
 export default function ProductSelector() {
   const sliderRef = useRef<HTMLDivElement>(null)
+
+  const { rows } = useTemplate()
 
   const { handleTouchEnd, handleTouchMove, handleTouchStart } =
     useHorizontalDrag(sliderRef)
@@ -18,9 +21,10 @@ export default function ProductSelector() {
       onMouseUp={handleTouchEnd}
       onMouseLeave={handleTouchEnd}
     >
-      {jeans.map((product) => (
-        <Product product={product} key={product.name} />
-      ))}
+      {rows[1].items.map((product) => {
+        const jean = jeans.find((jean) => jean.name === product)
+        return <Product product={jean!} key={jean!.name} />
+      })}
     </section>
   )
 }
