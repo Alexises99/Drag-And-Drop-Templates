@@ -5,12 +5,13 @@ import useTemplate from '@hooks/useTemplate'
 
 export default function CreateRow() {
   const { handleAddRow } = useTemplate()
-  const { setNodeRef, transform, transition, attributes } = useSortable({
-    id: NEW_ROW_ID,
-    data: {
-      type: 'row'
-    }
-  })
+  const { setNodeRef, transform, transition, attributes, listeners, isOver } =
+    useSortable({
+      id: NEW_ROW_ID,
+      data: {
+        type: 'row'
+      }
+    })
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -21,9 +22,10 @@ export default function CreateRow() {
     <button
       ref={setNodeRef}
       style={style}
-      className="border-light-gray text-dark-gray hover:border-medium-gray w-full border-1 border-dashed py-4 font-semibold"
+      className={`border-light-gray text-dark-gray hover:border-medium-gray w-full cursor-pointer border-1 border-dashed py-4 font-semibold ${isOver ? 'bg-light-gray' : ''}`}
       {...attributes}
-      onClick={handleAddRow}
+      {...listeners}
+      onMouseDown={() => handleAddRow()}
     >
       + Anadir Fila
     </button>

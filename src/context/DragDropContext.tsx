@@ -1,11 +1,13 @@
 import Product from '@components/Product'
 import {
   closestCenter,
+  defaultDropAnimationSideEffects,
   DndContext,
   DragEndEvent,
   DragOverEvent,
   DragOverlay,
   DragStartEvent,
+  DropAnimation,
   MouseSensor,
   TouchSensor,
   UniqueIdentifier,
@@ -28,6 +30,8 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     handleDragEnd,
     handleDragOver,
     handleMoveRows,
+    handleAddRow,
+    removeItemFromRow,
     products: { productsData }
   } = useTemplate()
 
@@ -68,6 +72,8 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     const overId = over?.id
     const activeId = active.id
 
+    console.log({ overId, activeId, NEW_ROW_ID })
+
     if (rowContainers.includes(activeId as number) && overId) {
       handleMoveRows(activeId as number, overId as number)
       return
@@ -80,14 +86,30 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       return
     }
 
+    if (overId === NEW_ROW_ID) {
+      handleAddRow([activeId])
+      removeItemFromRow(activeContainer)(activeId as string)
+      return
+    }
+
     const overContainer = dragDropUtils.findContainer(rows, overId)
     if (!overContainer) return
 
+    console.log('A')
+
     handleDragEnd(activeId, overId, activeContainer, overContainer)
 
-    // removeShowedProduct(activeId as string)
-
     setActiveId(null)
+  }
+
+  const dropAnimation: DropAnimation = {
+    sideEffects: defaultDropAnimationSideEffects({
+      styles: {
+        active: {
+          opacity: '0.5'
+        }
+      }
+    })
   }
 
   return (
@@ -106,7 +128,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
         {children}
       </SortableContext>
       {createPortal(
-        <DragOverlay>
+        <DragOverlay dropAnimation={dropAnimation}>
           {activeId ? (
             rowContainers.includes(activeId as number) ? (
               <Row

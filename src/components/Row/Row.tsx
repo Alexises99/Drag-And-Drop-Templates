@@ -42,13 +42,17 @@ export default function Row({
       }
     >
       <header className="group border-medium-gray hover:bg-light-gray flex items-center justify-between border-b-1 p-4 hover:rounded-t-md">
-        <Category id={id} name={name} handleChangeName={changeCategoryName} />
+        <Category
+          id={id as number}
+          name={name}
+          handleChangeName={changeCategoryName}
+        />
         <TemplateButtons
           selectedAligment={alignment}
           listeners={listeners}
           attributes={attributes}
           changeAligment={changeAligment}
-          handleDelete={() => handleDeleteRow(id)}
+          handleDelete={() => handleDeleteRow(id as number)}
         />
       </header>
       {isDraggable ? (

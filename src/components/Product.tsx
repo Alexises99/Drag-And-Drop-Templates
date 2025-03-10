@@ -21,7 +21,7 @@ export default function Product({ product, handleDelete }: ProductProps) {
 
   return (
     <article
-      className="group relative shrink-0 cursor-pointer flex-col select-none"
+      className="group relative max-w-[120px] cursor-pointer flex-col select-none"
       ref={setNodeRef}
       style={style}
       {...attributes}
@@ -31,10 +31,10 @@ export default function Product({ product, handleDelete }: ProductProps) {
         <img
           src={image}
           alt={name}
-          className="max-h-40 object-cover select-none md:max-h-48"
+          className="max-h-40 max-w-[120px] object-cover select-none md:max-h-48"
           draggable={false}
         />
-        <h3>{name}</h3>
+        <h3 className="text-wrap text-ellipsis">{name}</h3>
         <span>{price} EUR</span>
       </div>
       {handleDelete ? (

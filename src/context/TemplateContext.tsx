@@ -19,9 +19,9 @@ interface TemplateContextValue {
   rowContainers: number[]
   handleMoveRows: (activeId: number, overId: number) => void
   handleDeleteRow: (id: number) => void
-  handleAddRow: () => void
+  handleAddRow: (items?: UniqueIdentifier[]) => void
   changeCategoryName: (id: number, value: string) => void
-  removeItemFromRow: (rowId: number) => (itemId: string) => void
+  removeItemFromRow: (rowId: UniqueIdentifier) => (itemId: string) => void
   addProductToInitialRow: (productId: string) => void
   handleDragOver: (
     activeId: UniqueIdentifier,
@@ -59,14 +59,16 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
       .map((item) => Number(item))
   )
 
-  const handleAddRow = () => {
+  const handleAddRow = (items: UniqueIdentifier[] = []) => {
     const size = Object.keys(rows).length
     const newRow: Row = {
       alignment: 'left',
       id: size + 1,
-      items: [],
+      items,
       name: 'Sin nombre'
     }
+
+    console.log(newRow)
 
     startTransition(() => {
       setRows((prev) => ({ ...prev, [newRow.id]: newRow }))
@@ -177,7 +179,7 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
     }
   }
 
-  const removeItemFromRow = (rowId: number) => (itemId: string) => {
+  const removeItemFromRow = (rowId: UniqueIdentifier) => (itemId: string) => {
     setRows((prev) => {
       const copy = { ...prev }
       return {

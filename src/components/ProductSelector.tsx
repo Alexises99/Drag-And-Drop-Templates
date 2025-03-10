@@ -12,9 +12,13 @@ import {
   useSortable
 } from '@dnd-kit/sortable'
 import { PRODUCTS_ID } from '@context/TemplateContext'
+import { useHorizontalDrag } from '@hooks/useHorizontalDrag'
 
 export default function ProductSelector() {
   const { products, rows } = useTemplate()
+  const divRef = useRef<HTMLDivElement>(null)
+
+  const { scroll } = useHorizontalDrag(divRef)
 
   const { showProducts, productsData } = products
 
@@ -43,21 +47,42 @@ export default function ProductSelector() {
           Anadir Productos
         </button>
       </header>
-      <div ref={setNodeRef} className="flex gap-4 overflow-auto p-4">
-        <SortableContext
-          items={firstRow.items}
-          id={PRODUCTS_ID}
-          strategy={horizontalListSortingStrategy}
+      <div className="flex items-center justify-center gap-2 p-1 sm:p-4">
+        <button
+          onClick={() => scroll('left')}
+          className="h-fit rounded-full bg-gray-800 px-3 py-2 text-white"
         >
-          {firstRow.items.map((name) => {
-            const product = productUtils.getProduct(
-              name as string,
-              productsData
-            )
-            return <Product product={product} key={name} />
-          })}
-        </SortableContext>
+          ◀
+        </button>
+        <div
+          ref={(node) => {
+            setNodeRef(node)
+            divRef.current = node
+          }}
+          className="flex gap-2 overflow-x-auto sm:gap-4"
+        >
+          <SortableContext
+            items={firstRow.items}
+            id={PRODUCTS_ID}
+            strategy={horizontalListSortingStrategy}
+          >
+            {firstRow.items.map((name) => {
+              const product = productUtils.getProduct(
+                name as string,
+                productsData
+              )
+              return <Product product={product} key={name} />
+            })}
+          </SortableContext>
+        </div>
+        <button
+          onClick={() => scroll('right')}
+          className="h-fit rounded-full bg-gray-800 px-3 py-2 text-white"
+        >
+          ▶
+        </button>
       </div>
+
       {createPortal(<ProductDialog ref={dialogRef} />, document.body)}
     </section>
   )
