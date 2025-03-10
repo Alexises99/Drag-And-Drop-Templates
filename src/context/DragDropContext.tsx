@@ -8,6 +8,7 @@ import {
   DragOverlay,
   DragStartEvent,
   MouseSensor,
+  TouchSensor,
   UniqueIdentifier,
   useSensor,
   useSensors
@@ -26,7 +27,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
 
-  const sensors = useSensors(useSensor(MouseSensor))
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor))
 
   const onDragStart = (event: DragStartEvent) => setActiveId(event.active.id)
 
@@ -77,6 +78,8 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     if (!overContainer) return
 
     handleDragEnd(activeId, overId, activeContainer, overContainer)
+
+    setActiveId(null)
   }
 
   return (
@@ -86,6 +89,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}
+      onDragCancel={() => setActiveId(null)}
     >
       <SortableContext
         items={[...rowContainers, NEW_ROW_ID]}

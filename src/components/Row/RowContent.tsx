@@ -7,9 +7,14 @@ import Product from '@components/Product'
 interface RowContentProps {
   row: Row
   alignment: Alignment
+  handleDelete?: (productId: string) => void
 }
 
-export default function RowContent({ row, alignment }: RowContentProps) {
+export default function RowContent({
+  row,
+  alignment,
+  handleDelete
+}: RowContentProps) {
   const { items } = row
   const selectedAligment = aligmentUtils.getJustifyAligment(alignment)
   return (
@@ -18,7 +23,13 @@ export default function RowContent({ row, alignment }: RowContentProps) {
     >
       {items.map((item) => {
         const jean = jeans.find((jean) => jean.name === item)
-        return <Product product={jean!} key={jean?.name} />
+        return (
+          <Product
+            product={jean!}
+            key={jean?.name}
+            handleDelete={handleDelete}
+          />
+        )
       })}
     </div>
   )

@@ -28,9 +28,12 @@ export default function Row({
 
   const [alignment, setAlignment] = useState<Alignment>(initialAligment)
 
-  const { handleDeleteRow, changeCategoryName } = useTemplate()
+  const { handleDeleteRow, changeCategoryName, removeItemFromRow } =
+    useTemplate()
 
   const changeAligment = (alignment: Alignment) => setAlignment(alignment)
+
+  const removeItem = removeItemFromRow(id)
 
   return (
     <section
@@ -50,7 +53,11 @@ export default function Row({
       </header>
       {isDraggable ? (
         <SortableContext items={items} strategy={horizontalListSortingStrategy}>
-          <RowContent row={row} alignment={alignment} />
+          <RowContent
+            row={row}
+            alignment={alignment}
+            handleDelete={removeItem}
+          />
         </SortableContext>
       ) : (
         <RowContent row={row} alignment={alignment} />

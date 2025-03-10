@@ -49,7 +49,7 @@ export default function TemplateButtons({
   return (
     <div className="flex items-center gap-8">
       <div className="flex items-center gap-4">
-        <span>{labelAlignment}</span>
+        <span className="hidden sm:block">{labelAlignment}</span>
         <TemplateButton
           selectedAligment={selectedAligment}
           aligment={'left'}

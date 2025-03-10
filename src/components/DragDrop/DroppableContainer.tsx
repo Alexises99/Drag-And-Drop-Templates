@@ -13,12 +13,12 @@ interface DroppableContainerProps {
     listeners: SyntheticListenerMap | undefined,
     attributes: DraggableAttributes
   ) => ReactNode
-  onRemove?: () => void
 }
 
 export default function DroppableContainer({
   id,
   items,
+  className,
   children
 }: DroppableContainerProps) {
   const {
@@ -37,15 +37,17 @@ export default function DroppableContainer({
     }
   })
 
-  console.log({ over, active })
-
   const style = {
     transform: CSS.Transform.toString(transform),
     transition
   }
 
   return (
-    <div ref={setNodeRef} style={style} className={`h-full w-full`}>
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`h-full w-full ${className}`}
+    >
       {children(listeners, attributes)}
     </div>
   )

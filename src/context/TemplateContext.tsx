@@ -21,6 +21,7 @@ interface TemplateContextValue {
   handleDeleteRow: (id: number) => void
   handleAddRow: () => void
   changeCategoryName: (id: number, value: string) => void
+  removeItemFromRow: (rowId: number) => (itemId: string) => void
   handleDragOver: (
     activeId: UniqueIdentifier,
     overId: UniqueIdentifier,
@@ -167,6 +168,19 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
     }
   }
 
+  const removeItemFromRow = (rowId: number) => (itemId: string) => {
+    setRows((prev) => {
+      const copy = { ...prev }
+      return {
+        ...copy,
+        [rowId]: {
+          ...copy[rowId],
+          items: copy[rowId].items.filter((item) => item !== itemId)
+        }
+      }
+    })
+  }
+
   const value: TemplateContextValue = {
     rows,
     showProducts,
@@ -177,7 +191,8 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
     handleShowProducts,
     changeCategoryName,
     handleDragEnd,
-    handleDragOver
+    handleDragOver,
+    removeItemFromRow
   }
 
   return <TemplateContext value={value}>{children}</TemplateContext>
