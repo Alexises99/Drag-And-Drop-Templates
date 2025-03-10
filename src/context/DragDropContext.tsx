@@ -13,16 +13,16 @@ import {
   useSensor,
   useSensors
 } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import useTemplate from '@hooks/useTemplate'
 import dragDropUtils from '@utils/drag-drop'
 import { PropsWithChildren, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { NEW_ROW_ID } from './TemplateContext'
 
 export default function DragDropContext({ children }: PropsWithChildren) {
-  const { rows, handleDragEnd, handleDragOver } = useTemplate()
-  const rowsContainers = Object.keys(rows)
-    .slice(1)
-    .map((item) => Number(item))
+  const { rows, rowContainers, handleDragEnd, handleDragOver, handleMoveRows } =
+    useTemplate()
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
 
@@ -61,6 +61,11 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     const overId = over?.id
     const activeId = active.id
 
+    if (rowContainers.includes(activeId as number) && overId) {
+      handleMoveRows(activeId as number, overId as number)
+      return
+    }
+
     const activeContainer = dragDropUtils.findContainer(rows, activeId)
 
     if (!activeContainer || !overId) {
@@ -82,11 +87,16 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}
     >
-      {children}
+      <SortableContext
+        items={[...rowContainers, NEW_ROW_ID]}
+        strategy={verticalListSortingStrategy}
+      >
+        {children}
+      </SortableContext>
       {createPortal(
         <DragOverlay>
           {activeId ? (
-            rowsContainers.includes(activeId as number) ? (
+            rowContainers.includes(activeId as number) ? (
               <RowOverlay row={rows[activeId]} />
             ) : (
               <Product

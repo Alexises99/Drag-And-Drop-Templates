@@ -2,17 +2,19 @@
 import Header from '@components/Header'
 import ProductSelector from '@components/ProductSelector'
 import RowContainer from '@components/RowContainer'
+import DragDropContext from '@context/DragDropContext'
 
 function App() {
   return (
     <>
       <Header />
-      <main>
-        <h2 className="my-8 text-center text-4xl">Jeans</h2>
-
-        <ProductSelector />
-        <RowContainer />
-      </main>
+      <DragDropContext>
+        <main>
+          <ProductSelector />
+          <h2 className="my-8 text-center text-4xl">Jeans</h2>
+          <RowContainer />
+        </main>
+      </DragDropContext>
     </>
   )
 }

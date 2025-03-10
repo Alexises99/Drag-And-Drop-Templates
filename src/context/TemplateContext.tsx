@@ -1,4 +1,9 @@
-import { createContext, PropsWithChildren, useState } from 'react'
+import {
+  createContext,
+  PropsWithChildren,
+  startTransition,
+  useState
+} from 'react'
 import { Row } from '../types'
 import { jeans } from '@data/jeans'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -10,6 +15,8 @@ export const NEW_ROW_ID = 'add_row'
 interface TemplateContextValue {
   rows: Record<UniqueIdentifier, Row>
   showProducts: boolean
+  rowContainers: number[]
+  handleMoveRows: (activeId: number, overId: number) => void
   handleShowProducts: () => void
   handleAddRow: () => void
   handleDragOver: (
@@ -41,12 +48,32 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
     }
   })
 
+  const [rowContainers, setRowContainers] = useState<number[]>(
+    Object.keys(rows)
+      .slice(1)
+      .map((item) => Number(item))
+  )
+
+  console.log(rowContainers)
+
   const handleShowProducts = () => setShowProducts((prev) => !prev)
 
   const handleAddRow = () => {
     const size = Object.keys(rows).length
     const newRow: Row = { alignment: 'left', id: size + 1, items: [] }
-    setRows((prev) => ({ ...prev, [newRow.id]: newRow }))
+
+    startTransition(() => {
+      setRows((prev) => ({ ...prev, [newRow.id]: newRow }))
+      setRowContainers((prev) => [...prev, newRow.id])
+    })
+  }
+
+  const handleMoveRows = (activeId: number, overId: number) => {
+    const activeIndex = rowContainers.indexOf(activeId)
+    const overIndex = rowContainers.indexOf(overId)
+
+    const newRowContainers = arrayMove(rowContainers, activeIndex, overIndex)
+    setRowContainers(newRowContainers)
   }
 
   const handleDragOver = (
@@ -116,6 +143,8 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
   const value: TemplateContextValue = {
     rows,
     showProducts,
+    rowContainers,
+    handleMoveRows,
     handleShowProducts,
     handleAddRow,
     handleDragEnd,
