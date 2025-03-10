@@ -1,8 +1,8 @@
 import { UniqueIdentifier } from '@dnd-kit/core'
-import { type Row } from '@types'
+import { DragItem } from '@types'
 
 function findContainer(
-  rows: Record<UniqueIdentifier, Row>,
+  rows: Record<UniqueIdentifier, DragItem>,
   activeItemId: UniqueIdentifier
 ) {
   // Find rows (container) id
@@ -15,7 +15,7 @@ function findContainer(
 }
 
 function getItemIndex(
-  rows: Record<UniqueIdentifier, Row>,
+  rows: Record<UniqueIdentifier, DragItem>,
   activeItemId: UniqueIdentifier
 ) {
   const container = findContainer(rows, activeItemId)
@@ -30,7 +30,7 @@ function getItemIndex(
 }
 
 function getIndex(
-  rows: Record<UniqueIdentifier, Row>,
+  rows: Record<UniqueIdentifier, DragItem>,
   container: UniqueIdentifier,
   id: UniqueIdentifier
 ) {

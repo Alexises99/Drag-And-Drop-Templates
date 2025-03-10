@@ -2,7 +2,8 @@ import useTemplate from '@hooks/useTemplate'
 import zaraLogo from '/logo.svg'
 
 export default function Header() {
-  const { showProducts, handleShowProducts } = useTemplate()
+  const { products } = useTemplate()
+  const { handleShowProducts, showProducts } = products
   return (
     <header className="flex items-end justify-between">
       <img src={zaraLogo} alt="Zara logo" className="max-h-14" />

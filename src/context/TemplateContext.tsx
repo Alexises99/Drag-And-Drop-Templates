@@ -5,23 +5,24 @@ import {
   useState
 } from 'react'
 import { Row } from '../types'
-import { jeans } from '@data/jeans'
 import { arrayMove } from '@dnd-kit/sortable'
 import { ClientRect, UniqueIdentifier } from '@dnd-kit/core'
 import dragDropUtils from '@utils/drag-drop'
+import useProducts from '@hooks/useProducts'
 
 export const NEW_ROW_ID = 'add_row'
+export const PRODUCTS_ID = 'products'
 
 interface TemplateContextValue {
+  products: ReturnType<typeof useProducts>
   rows: Record<UniqueIdentifier, Row>
-  showProducts: boolean
   rowContainers: number[]
-  handleShowProducts: () => void
   handleMoveRows: (activeId: number, overId: number) => void
   handleDeleteRow: (id: number) => void
   handleAddRow: () => void
   changeCategoryName: (id: number, value: string) => void
   removeItemFromRow: (rowId: number) => (itemId: string) => void
+  addProductToInitialRow: (productId: string) => void
   handleDragOver: (
     activeId: UniqueIdentifier,
     overId: UniqueIdentifier,
@@ -41,14 +42,14 @@ interface TemplateContextValue {
 export const TemplateContext = createContext<TemplateContextValue | null>(null)
 
 export default function TemplateProvider({ children }: PropsWithChildren) {
-  const [showProducts, setShowProducts] = useState<boolean>(false)
+  const products = useProducts()
 
   const [rows, setRows] = useState<Record<UniqueIdentifier, Row>>({
-    1: {
+    [PRODUCTS_ID]: {
       alignment: 'left',
-      name: 'Productos',
-      id: 1,
-      items: jeans.map((jean) => jean.name)
+      id: PRODUCTS_ID,
+      items: Object.keys(products.productsData),
+      name: 'Productos'
     }
   })
 
@@ -57,8 +58,6 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
       .slice(1)
       .map((item) => Number(item))
   )
-
-  const handleShowProducts = () => setShowProducts((prev) => !prev)
 
   const handleAddRow = () => {
     const size = Object.keys(rows).length
@@ -71,7 +70,7 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
 
     startTransition(() => {
       setRows((prev) => ({ ...prev, [newRow.id]: newRow }))
-      setRowContainers((prev) => [...prev, newRow.id])
+      setRowContainers((prev) => [...prev, Number(newRow.id)])
     })
   }
 
@@ -86,6 +85,16 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
         prev.filter((containerId) => containerId !== id)
       )
     })
+  }
+
+  const addProductToInitialRow = (productId: string) => {
+    setRows((prev) => ({
+      ...prev,
+      [PRODUCTS_ID]: {
+        ...prev[PRODUCTS_ID],
+        items: [...prev[PRODUCTS_ID].items, productId]
+      }
+    }))
   }
 
   const changeCategoryName = (id: number, value: string) => {
@@ -183,12 +192,12 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
 
   const value: TemplateContextValue = {
     rows,
-    showProducts,
     rowContainers,
+    products,
+    addProductToInitialRow,
     handleAddRow,
     handleMoveRows,
     handleDeleteRow,
-    handleShowProducts,
     changeCategoryName,
     handleDragEnd,
     handleDragOver,

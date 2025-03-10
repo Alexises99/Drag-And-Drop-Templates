@@ -1,8 +1,8 @@
-import { Alignment, Row } from '@types'
-
-import { jeans } from '@data/jeans'
+import type { Alignment, Row } from '@types'
 import aligmentUtils from '@utils/aligment'
 import Product from '@components/Product'
+import productUtils from '@utils/products'
+import useTemplate from '@hooks/useTemplate'
 
 interface RowContentProps {
   row: Row
@@ -15,6 +15,10 @@ export default function RowContent({
   alignment,
   handleDelete
 }: RowContentProps) {
+  const {
+    products: { productsData }
+  } = useTemplate()
+
   const { items } = row
   const selectedAligment = aligmentUtils.getJustifyAligment(alignment)
   return (
@@ -22,13 +26,9 @@ export default function RowContent({
       className={`flex min-h-44 w-full items-center gap-4 p-4 ${selectedAligment}`}
     >
       {items.map((item) => {
-        const jean = jeans.find((jean) => jean.name === item)
+        const product = productUtils.getProduct(item as string, productsData)
         return (
-          <Product
-            product={jean!}
-            key={jean?.name}
-            handleDelete={handleDelete}
-          />
+          <Product product={product} key={item} handleDelete={handleDelete} />
         )
       })}
     </div>

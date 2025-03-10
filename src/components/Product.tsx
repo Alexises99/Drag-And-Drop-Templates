@@ -21,17 +21,17 @@ export default function Product({ product, handleDelete }: ProductProps) {
 
   return (
     <article
-      className="group relative flex shrink-0 cursor-pointer flex-col select-none"
+      className="group relative shrink-0 cursor-pointer flex-col select-none"
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
     >
-      <div>
+      <div className="flex flex-col gap-1">
         <img
           src={image}
           alt={name}
-          className="max-h-40 object-cover select-none md:max-h-64"
+          className="max-h-40 object-cover select-none md:max-h-48"
           draggable={false}
         />
         <h3>{name}</h3>

@@ -7,7 +7,7 @@ export default function RowContainer() {
 
   return (
     <ul>
-      {rowContainers.map((rowId) => (
+      {rowContainers.slice(1).map((rowId) => (
         <DroppableRow row={rows[rowId]} key={rowId} />
       ))}
       <CreateRow />

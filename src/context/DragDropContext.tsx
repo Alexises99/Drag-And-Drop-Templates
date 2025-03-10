@@ -1,5 +1,4 @@
 import Product from '@components/Product'
-import { jeans } from '@data/jeans'
 import {
   closestCenter,
   DndContext,
@@ -18,12 +17,19 @@ import useTemplate from '@hooks/useTemplate'
 import dragDropUtils from '@utils/drag-drop'
 import { PropsWithChildren, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { NEW_ROW_ID } from './TemplateContext'
+import { NEW_ROW_ID, PRODUCTS_ID } from './TemplateContext'
 import Row from '@components/Row/Row'
+import productUtils from '@utils/products'
 
 export default function DragDropContext({ children }: PropsWithChildren) {
-  const { rows, rowContainers, handleDragEnd, handleDragOver, handleMoveRows } =
-    useTemplate()
+  const {
+    rows,
+    rowContainers,
+    handleDragEnd,
+    handleDragOver,
+    handleMoveRows,
+    products: { productsData }
+  } = useTemplate()
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
 
@@ -79,6 +85,8 @@ export default function DragDropContext({ children }: PropsWithChildren) {
 
     handleDragEnd(activeId, overId, activeContainer, overContainer)
 
+    // removeShowedProduct(activeId as string)
+
     setActiveId(null)
   }
 
@@ -92,7 +100,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       onDragCancel={() => setActiveId(null)}
     >
       <SortableContext
-        items={[...rowContainers, NEW_ROW_ID]}
+        items={[PRODUCTS_ID, ...rowContainers, NEW_ROW_ID]}
         strategy={verticalListSortingStrategy}
       >
         {children}
@@ -109,7 +117,10 @@ export default function DragDropContext({ children }: PropsWithChildren) {
               />
             ) : (
               <Product
-                product={jeans.find((jean) => jean.name === activeId)!}
+                product={productUtils.getProduct(
+                  activeId as string,
+                  productsData
+                )}
               />
             )
           ) : null}
