@@ -15,6 +15,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@theme {
+  --color-light-gray: rgba(0, 0, 0, 0.08);
+  --color-medium-gray: rgba(0, 0, 0, 0.15);
+  --color-dark-gray: rgba(0, 0, 0, 0.5);
+}
+
 body {
   min-width: 320px;
   max-width: 1024px;

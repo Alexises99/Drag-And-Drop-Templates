@@ -5,8 +5,12 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { ClientRect, UniqueIdentifier } from '@dnd-kit/core'
 import dragDropUtils from '@utils/drag-drop'
 
+export const NEW_ROW_ID = 'add_row'
+
 interface TemplateContextValue {
   rows: Record<UniqueIdentifier, Row>
+  showProducts: boolean
+  handleShowProducts: () => void
   handleAddRow: () => void
   handleDragOver: (
     activeId: UniqueIdentifier,
@@ -27,6 +31,8 @@ interface TemplateContextValue {
 export const TemplateContext = createContext<TemplateContextValue | null>(null)
 
 export default function TemplateProvider({ children }: PropsWithChildren) {
+  const [showProducts, setShowProducts] = useState<boolean>(false)
+
   const [rows, setRows] = useState<Record<UniqueIdentifier, Row>>({
     1: {
       alignment: 'left',
@@ -34,6 +40,8 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
       items: jeans.map((jean) => jean.name)
     }
   })
+
+  const handleShowProducts = () => setShowProducts((prev) => !prev)
 
   const handleAddRow = () => {
     const size = Object.keys(rows).length
@@ -107,6 +115,8 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
 
   const value: TemplateContextValue = {
     rows,
+    showProducts,
+    handleShowProducts,
     handleAddRow,
     handleDragEnd,
     handleDragOver

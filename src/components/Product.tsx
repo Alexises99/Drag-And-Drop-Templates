@@ -19,7 +19,7 @@ export default function Product({ product }: ProductProps) {
 
   return (
     <article
-      className="flex cursor-pointer flex-col select-none"
+      className="flex shrink-0 cursor-pointer flex-col select-none"
       ref={setNodeRef}
       style={style}
       {...attributes}
@@ -28,7 +28,7 @@ export default function Product({ product }: ProductProps) {
       <img
         src={image}
         alt={name}
-        className="max-w-64 object-cover select-none"
+        className="max-h-40 object-cover select-none md:max-h-80"
         draggable={false}
       />
       <h3>{name}</h3>

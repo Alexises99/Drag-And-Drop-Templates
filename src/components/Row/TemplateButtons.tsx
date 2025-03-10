@@ -1,7 +1,11 @@
 import { aligmentRecord } from '@assets/icons'
-import { Alignment } from '@types'
 
-interface TemplateButtonProps extends TemplateButtonsProps {
+import type { DraggableAttributes } from '@dnd-kit/core'
+import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
+import type { Alignment } from '@types'
+
+interface TemplateButtonProps
+  extends Pick<TemplateButtonsProps, 'changeAligment'> {
   aligment: Alignment
 }
 
@@ -18,16 +22,23 @@ function TemplateButton({ aligment, changeAligment }: TemplateButtonProps) {
 
 interface TemplateButtonsProps {
   changeAligment: (alignment: Alignment) => void
+  listeners: SyntheticListenerMap | undefined
+  attributes: DraggableAttributes | undefined
 }
 
 export default function TemplateButtons({
-  changeAligment
+  changeAligment,
+  listeners,
+  attributes
 }: TemplateButtonsProps) {
   return (
-    <div className="absolute right-0 bottom-[100%] flex items-center gap-4">
+    <div className="flex items-center gap-4">
       <TemplateButton aligment={'left'} changeAligment={changeAligment} />
       <TemplateButton aligment={'center'} changeAligment={changeAligment} />
       <TemplateButton aligment={'right'} changeAligment={changeAligment} />
+      <button {...listeners} {...attributes}>
+        Move
+      </button>
     </div>
   )
 }

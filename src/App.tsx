@@ -8,8 +8,8 @@ function App() {
     <>
       <Header />
       <main>
-        <h2 className="my-8 text-center text-5xl">Jeans</h2>
-        <h3>Products</h3>
+        <h2 className="my-8 text-center text-4xl">Jeans</h2>
+
         <ProductSelector />
         <RowContainer />
       </main>
