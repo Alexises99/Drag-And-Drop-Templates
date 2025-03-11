@@ -1,12 +1,11 @@
-import useTemplate from '@/hooks/useTemplate'
+import { useTemplate } from '@/hooks/useTemplate'
 import CreateRow from './DragDrop/CreateRow'
 import DroppableRow from './Row/DroppableRow'
-import useDialogContext from '@hooks/useDialogContext'
+import { useDialogContext } from '@hooks/useDialogContext'
 
 export default function RowContainer() {
   const {
-    rows,
-    rowContainers,
+    rows: { rowContainers, rows },
     zoom: { decreaseZoom, increaseZoom, zoom }
   } = useTemplate()
 

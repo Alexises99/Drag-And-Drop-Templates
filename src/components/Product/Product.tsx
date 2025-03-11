@@ -1,5 +1,4 @@
 import { DeleteIcon } from '@assets/icons'
-// import useTemplate from '@hooks/useTemplate'
 import { Product as ProductType } from '@types'
 
 interface ProductProps {

@@ -3,7 +3,7 @@ import { Data, Product } from '@types'
 import productUtils from '@utils/products'
 import { useState } from 'react'
 
-export default function useProducts() {
+export function useProducts() {
   const [products, setProducts] = useState<Data>(initialProducts)
 
   const addProduct = (product: Product) => {

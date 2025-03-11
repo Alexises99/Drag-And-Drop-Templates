@@ -2,7 +2,7 @@ import type { Alignment, Row } from '@types'
 import aligmentUtils from '@utils/aligment'
 import Product from '@components/Product/Product'
 import productUtils from '@utils/products'
-import useTemplate from '@hooks/useTemplate'
+import { useTemplate } from '@hooks/useTemplate'
 import DraggableItem from '@components/DragDrop/DraggableItem'
 
 interface RowContentProps {

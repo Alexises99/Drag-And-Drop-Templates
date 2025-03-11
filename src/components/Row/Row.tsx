@@ -1,14 +1,11 @@
 import { useState } from 'react'
 import TemplateButtons from './TemplateButtons'
-import {
-  horizontalListSortingStrategy,
-  SortableContext
-} from '@dnd-kit/sortable'
+import { SortableContext } from '@dnd-kit/sortable'
 import RowContent from './RowContent'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import type { DraggableAttributes } from '@dnd-kit/core'
 import type { Alignment, Row as RowType } from '@types'
-import useTemplate from '@hooks/useTemplate'
+import { useTemplate } from '@hooks/useTemplate'
 import Category from './Category'
 
 interface RowProps {
@@ -30,12 +27,13 @@ export default function Row({
 
   const [alignment, setAlignment] = useState<Alignment>(initialAligment)
 
-  const { handleDeleteRow, changeCategoryName, removeItemFromRow } =
-    useTemplate()
+  const {
+    rows: { deleteItemFromRow, changeCategoryName, deleteRow }
+  } = useTemplate()
 
   const changeAligment = (alignment: Alignment) => setAlignment(alignment)
 
-  const removeItem = removeItemFromRow(id)
+  const removeItem = deleteItemFromRow(id)
 
   return (
     <section
@@ -54,7 +52,7 @@ export default function Row({
           listeners={listeners}
           attributes={attributes}
           changeAligment={changeAligment}
-          handleDelete={() => handleDeleteRow(id as number)}
+          handleDelete={() => deleteRow(id as number)}
           openDialog={openDialog}
         />
       </header>

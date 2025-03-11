@@ -4,7 +4,7 @@ import { CSS } from '@dnd-kit/utilities'
 
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
-import useTemplate from '@hooks/useTemplate'
+import { useTemplate } from '@hooks/useTemplate'
 
 interface DroppableContainerProps {
   id: UniqueIdentifier

@@ -2,9 +2,8 @@ import useDialog, { DialogMethods } from '@hooks/useDialog'
 import { Ref } from 'react'
 import { UniqueIdentifier } from '@dnd-kit/core'
 import CreateProduct from './CreateProduct'
-
 import ProductList from './ProductList'
-import useDialogContext from '@hooks/useDialogContext'
+import { useDialogContext } from '@hooks/useDialogContext'
 
 interface ProductDialogProps {
   ref: Ref<DialogMethods>

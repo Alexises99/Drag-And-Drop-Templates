@@ -1,44 +1,16 @@
-import {
-  createContext,
-  PropsWithChildren,
-  startTransition,
-  useState
-} from 'react'
-import { Row } from '../types'
-import { arrayMove } from '@dnd-kit/sortable'
-import { ClientRect, UniqueIdentifier } from '@dnd-kit/core'
-import dragDropUtils from '@utils/drag-drop'
-import useProducts from '@hooks/useProducts'
+import { createContext, PropsWithChildren } from 'react'
+import { useProducts } from '@hooks/useProducts'
 import useZoom from '@hooks/useZoom'
+import { useRows } from '@hooks/useRows'
+import { useDragDrop } from '@hooks/useDragDrop'
 
 export const NEW_ROW_ID = 'add_row'
 
 interface TemplateContextValue {
   products: ReturnType<typeof useProducts>
   zoom: ReturnType<typeof useZoom>
-  rows: Record<UniqueIdentifier, Row>
-  rowContainers: number[]
-  handleMoveRows: (activeId: number, overId: number) => void
-  handleDeleteRow: (id: number) => void
-  handleAddRow: (items?: UniqueIdentifier[]) => void
-  changeCategoryName: (id: number, value: string) => void
-  removeItemFromRow: (rowId: UniqueIdentifier) => (itemId: string) => void
-  handleEditRow: (rowId: UniqueIdentifier, item: UniqueIdentifier) => void
-  setRowContainers: (value: React.SetStateAction<number[]>) => void
-  handleDragOver: (
-    activeId: UniqueIdentifier,
-    overId: UniqueIdentifier,
-    activeContainer: UniqueIdentifier,
-    overContainer: UniqueIdentifier,
-    activeRect: ClientRect | null,
-    overRect: ClientRect
-  ) => void
-  handleDragEnd: (
-    activeId: UniqueIdentifier,
-    overId: UniqueIdentifier,
-    activeContainer: UniqueIdentifier,
-    overContainer: UniqueIdentifier
-  ) => void
+  rows: ReturnType<typeof useRows>
+  dragDrop: ReturnType<typeof useDragDrop>
 }
 
 export const TemplateContext = createContext<TemplateContextValue | null>(null)
@@ -46,157 +18,17 @@ export const TemplateContext = createContext<TemplateContextValue | null>(null)
 export default function TemplateProvider({ children }: PropsWithChildren) {
   const products = useProducts()
   const zoom = useZoom()
+  const rowsState = useRows()
 
-  const [rows, setRows] = useState<Record<UniqueIdentifier, Row>>({})
+  const { rows, updateRows } = rowsState
 
-  console.log({ rows })
-
-  const [rowContainers, setRowContainers] = useState<number[]>(
-    Object.keys(rows).map((item) => Number(item))
-  )
-
-  const handleAddRow = (items: UniqueIdentifier[] = []) => {
-    const size = Object.keys(rows).length
-    const newRow: Row = {
-      alignment: 'left',
-      id: size + 1,
-      items,
-      name: 'Sin nombre'
-    }
-
-    startTransition(() => {
-      setRows((prev) => ({ ...prev, [newRow.id]: newRow }))
-      setRowContainers((prev) => [...prev, Number(newRow.id)])
-    })
-  }
-
-  const handleEditRow = (rowId: UniqueIdentifier, item: UniqueIdentifier) => {
-    setRows((prev) => ({
-      ...prev,
-      [rowId]: { ...prev[rowId], items: [...prev[rowId].items, item] }
-    }))
-  }
-
-  const handleDeleteRow = (id: number) => {
-    startTransition(() => {
-      setRows((prev) => {
-        const copy = { ...prev }
-        delete copy[id]
-        return copy
-      })
-      setRowContainers((prev) =>
-        prev.filter((containerId) => containerId !== id)
-      )
-    })
-  }
-
-  const changeCategoryName = (id: number, value: string) => {
-    setRows((prev) => {
-      const copy = { ...prev }
-      copy[id].name = value
-      return copy
-    })
-  }
-
-  const handleMoveRows = (activeId: number, overId: number) => {
-    const activeIndex = rowContainers.indexOf(activeId)
-    const overIndex = rowContainers.indexOf(overId)
-
-    const newRowContainers = arrayMove(rowContainers, activeIndex, overIndex)
-    setRowContainers(newRowContainers)
-  }
-
-  const handleDragOver = (
-    activeId: UniqueIdentifier,
-    overId: UniqueIdentifier,
-    activeContainer: UniqueIdentifier,
-    overContainer: UniqueIdentifier,
-    activeRect: ClientRect | null,
-    overRect: ClientRect
-  ) => {
-    const activeIndex = dragDropUtils.getIndex(rows, activeContainer, activeId)
-    const overIndex = dragDropUtils.getIndex(rows, overContainer, overId)
-
-    const overItems = rows[overContainer].items
-
-    let newIndex: number
-    // Is a container
-    if (overId in rows) {
-      newIndex = overItems.length + 1
-    } else {
-      const isBelow =
-        activeRect && activeRect.right > overRect.right + overRect.width
-      const modifier = isBelow ? 1 : 0
-      newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1
-    }
-
-    setRows((prev) => ({
-      ...prev,
-      [activeContainer]: {
-        ...prev[activeContainer],
-        items: prev[activeContainer].items.filter((item) => item !== activeId)
-      },
-      [overContainer]: {
-        ...prev[overContainer],
-        items: [
-          ...prev[overContainer].items.slice(0, newIndex),
-          prev[activeContainer].items[activeIndex],
-          ...prev[overContainer].items.slice(
-            newIndex,
-            prev[overContainer].items.length
-          )
-        ]
-      }
-    }))
-  }
-
-  const handleDragEnd = (
-    activeId: UniqueIdentifier,
-    overId: UniqueIdentifier,
-    activeContainer: UniqueIdentifier,
-    overContainer: UniqueIdentifier
-  ) => {
-    const activeIndex = dragDropUtils.getIndex(rows, activeContainer, activeId)
-    const overIndex = dragDropUtils.getIndex(rows, overContainer, overId)
-
-    if (activeIndex !== overIndex) {
-      setRows((prev) => ({
-        ...prev,
-        [overContainer]: {
-          ...prev[overContainer],
-          items: arrayMove(rows[overContainer].items, activeIndex, overIndex)
-        }
-      }))
-    }
-  }
-
-  const removeItemFromRow = (rowId: UniqueIdentifier) => (itemId: string) => {
-    setRows((prev) => {
-      const copy = { ...prev }
-      return {
-        ...copy,
-        [rowId]: {
-          ...copy[rowId],
-          items: copy[rowId].items.filter((item) => item !== itemId)
-        }
-      }
-    })
-  }
+  const dragDrop = useDragDrop(rows, updateRows)
 
   const value: TemplateContextValue = {
-    rows,
-    rowContainers,
     products,
     zoom,
-    handleAddRow,
-    handleMoveRows,
-    handleDeleteRow,
-    changeCategoryName,
-    handleDragEnd,
-    handleDragOver,
-    handleEditRow,
-    removeItemFromRow,
-    setRowContainers
+    rows: rowsState,
+    dragDrop
   }
 
   return <TemplateContext value={value}>{children}</TemplateContext>

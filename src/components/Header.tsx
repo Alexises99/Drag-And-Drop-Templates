@@ -1,5 +1,5 @@
 import zaraLogo from '/logo.svg'
-import useDialogContext from '@hooks/useDialogContext'
+import { useDialogContext } from '@hooks/useDialogContext'
 
 export default function Header() {
   const { openDialog } = useDialogContext()

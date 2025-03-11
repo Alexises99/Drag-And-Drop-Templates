@@ -1,5 +1,5 @@
 import { UniqueIdentifier } from '@dnd-kit/core'
-import useTemplate from '@hooks/useTemplate'
+import { useTemplate } from '@hooks/useTemplate'
 import { useState, DragEvent, ChangeEvent, FormEvent } from 'react'
 import ProductField from './ProductField'
 
@@ -14,7 +14,9 @@ interface CreateProductProps {
 }
 
 export default function CreateProduct({ editedRowId }: CreateProductProps) {
-  const { handleAddRow, handleEditRow } = useTemplate()
+  const {
+    rows: { addItemToRow, addNewRow }
+  } = useTemplate()
 
   const {
     products: { addProduct }
@@ -56,8 +58,8 @@ export default function CreateProduct({ editedRowId }: CreateProductProps) {
     e.preventDefault()
     if (product.price === undefined) return
     addProduct(product)
-    if (!editedRowId) handleAddRow([product.name])
-    else handleEditRow(editedRowId, product.name)
+    if (!editedRowId) addNewRow([product.name])
+    else addItemToRow(editedRowId, product.name)
   }
 
   return (

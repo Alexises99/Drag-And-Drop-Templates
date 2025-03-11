@@ -14,12 +14,8 @@ import {
   useSensor,
   useSensors
 } from '@dnd-kit/core'
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy
-} from '@dnd-kit/sortable'
-import useTemplate from '@hooks/useTemplate'
+import { arrayMove, SortableContext } from '@dnd-kit/sortable'
+import { useTemplate } from '@hooks/useTemplate'
 import dragDropUtils from '@utils/drag-drop'
 import { PropsWithChildren, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -29,17 +25,20 @@ import productUtils from '@utils/products'
 
 export default function DragDropContext({ children }: PropsWithChildren) {
   const {
-    rows,
-    rowContainers,
-    handleDragEnd,
-    handleDragOver,
-    handleMoveRows,
-    handleAddRow,
-    removeItemFromRow,
-    setRowContainers,
-    zoom: { zoom },
+    rows: rowsState,
+    dragDrop: { handleDragEnd, handleDragOver },
     products: { productsData }
+    // zoom: { zoom },
   } = useTemplate()
+
+  const {
+    addNewRow,
+    deleteItemFromRow,
+    handleMoveRows,
+    rowContainers,
+    rows,
+    updateRowContainers
+  } = rowsState
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
 
@@ -67,7 +66,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
         .map(Number)
         .indexOf(overContainer as number)
 
-      setRowContainers((prev) => arrayMove(prev, a, b))
+      updateRowContainers((prev) => arrayMove(prev, a, b))
       return
     }
 
@@ -79,7 +78,6 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     if (!activeContainer || !overContainer) return
 
     if (activeContainer !== overContainer) {
-      console.log('IN')
       handleDragOver(
         activeId,
         overId,
@@ -112,8 +110,8 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     }
 
     if (overId === NEW_ROW_ID) {
-      handleAddRow([activeId])
-      removeItemFromRow(activeContainer)(activeId as string)
+      addNewRow([activeId])
+      deleteItemFromRow(activeContainer)(activeId as string)
       return
     }
 

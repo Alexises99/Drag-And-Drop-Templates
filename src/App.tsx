@@ -3,7 +3,7 @@ import Header from '@components/Header'
 import ProductDialog from '@components/ProductDialog/ProductDialog'
 import RowContainer from '@components/RowContainer'
 import DragDropContext from '@context/DragDropContext'
-import useDialogContext from '@hooks/useDialogContext'
+import { useDialogContext } from '@hooks/useDialogContext'
 import { createPortal } from 'react-dom'
 
 function App() {

@@ -1,5 +1,5 @@
 import Product from '@components/Product/Product'
-import useTemplate from '@hooks/useTemplate'
+import { useTemplate } from '@hooks/useTemplate'
 import productUtils from '@utils/products'
 import { FormEvent, useState } from 'react'
 
@@ -12,9 +12,7 @@ interface ProductListProps {
 export default function ProductList({ editedRowId }: ProductListProps) {
   const {
     products: { productsData },
-    rows,
-    handleAddRow,
-    handleEditRow
+    rows: { addNewRow, addItemToRow, rows }
   } = useTemplate()
 
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null)
@@ -30,8 +28,8 @@ export default function ProductList({ editedRowId }: ProductListProps) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!selectedProduct) return
-    if (!editedRowId) handleAddRow([selectedProduct])
-    else handleEditRow(editedRowId, selectedProduct)
+    if (!editedRowId) addNewRow([selectedProduct])
+    else addItemToRow(editedRowId, selectedProduct)
     setSelectedProduct(null)
   }
 
