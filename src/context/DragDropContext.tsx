@@ -17,7 +17,7 @@ import {
 import { arrayMove, SortableContext } from '@dnd-kit/sortable'
 import { useTemplate } from '@hooks/useTemplate'
 import dragDropUtils from '@utils/drag-drop'
-import { PropsWithChildren, useState } from 'react'
+import { PropsWithChildren, useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { NEW_ROW_ID } from './TemplateContext'
 import Row from '@components/Row/Row'
@@ -44,6 +44,14 @@ export default function DragDropContext({ children }: PropsWithChildren) {
 
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor))
 
+  const findContainers = useCallback(
+    (activeId: UniqueIdentifier, overId: UniqueIdentifier) => ({
+      activeContainer: dragDropUtils.findContainer(rows, activeId),
+      overContainer: dragDropUtils.findContainer(rows, overId)
+    }),
+    [rows]
+  )
+
   const onDragStart = (event: DragStartEvent) => setActiveId(event.active.id)
 
   const onDragOver = (event: DragOverEvent) => {
@@ -54,29 +62,23 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     // Active.id in rows for move containers
     if (!overId) return
 
-    if (active.id in rows) {
-      const activeContainer = dragDropUtils.findContainer(rows, activeId)
-      const overContainer = dragDropUtils.findContainer(rows, overId)
-      if (!activeContainer || !overContainer) return
+    const { activeContainer, overContainer } = findContainers(activeId, overId)
+    if (!activeContainer || !overContainer) return
 
-      const a = Object.keys(rows)
+    // Reorder rows
+    if (activeId in rows) {
+      const activeIndex = Object.keys(rows)
         .map(Number)
         .indexOf(activeContainer as number)
-      const b = Object.keys(rows)
+      const overIndex = Object.keys(rows)
         .map(Number)
         .indexOf(overContainer as number)
 
-      updateRowContainers((prev) => arrayMove(prev, a, b))
+      updateRowContainers((state) => arrayMove(state, activeIndex, overIndex))
       return
     }
 
-    const activeContainer = dragDropUtils.findContainer(rows, activeId)
-    const overContainer = dragDropUtils.findContainer(rows, overId)
-
-    console.log({ activeContainer, overContainer, activeId, overId })
-
-    if (!activeContainer || !overContainer) return
-
+    // Move items between containers
     if (activeContainer !== overContainer) {
       handleDragOver(
         activeId,
@@ -87,6 +89,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
         over.rect
       )
     } else {
+      // Move items inside the same container
       handleDragEnd(activeId, overId, activeContainer, overContainer)
     }
   }
@@ -97,25 +100,31 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     const overId = over?.id
     const activeId = active.id
 
-    if (rowContainers.includes(activeId as number) && overId) {
-      handleMoveRows(activeId as number, overId as number)
-      return
-    }
-
-    const activeContainer = dragDropUtils.findContainer(rows, activeId)
-
-    if (!activeContainer || !overId) {
+    if (!overId) {
       setActiveId(null)
       return
     }
 
+    const { activeContainer, overContainer } = findContainers(activeId, overId)
+
+    if (!activeContainer) {
+      setActiveId(null)
+      return
+    }
+
+    // Change row position
+    if (rowContainers.includes(activeId)) {
+      handleMoveRows(activeId as number, overId as number)
+      return
+    }
+
+    // Create new row draggin in add row
     if (overId === NEW_ROW_ID) {
       addNewRow([activeId])
       deleteItemFromRow(activeContainer)(activeId as string)
       return
     }
 
-    const overContainer = dragDropUtils.findContainer(rows, overId)
     if (!overContainer) return
 
     handleDragEnd(activeId, overId, activeContainer, overContainer)
@@ -141,6 +150,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}
       onDragCancel={() => setActiveId(null)}
+      onDragAbort={() => setActiveId(null)}
     >
       <SortableContext items={[...rowContainers, NEW_ROW_ID]}>
         {children}

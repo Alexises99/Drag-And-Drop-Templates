@@ -52,7 +52,6 @@ export function useHorizontalDrag(sliderRef: RefObject<HTMLElement | null>) {
     if (!sliderRef.current) return
 
     const itemWidth = sliderRef.current.children[0]?.clientWidth
-    console.log(sliderRef.current.children[0].clientWidth)
 
     sliderRef.current.scrollBy({
       left: direction === 'left' ? -itemWidth : itemWidth,
