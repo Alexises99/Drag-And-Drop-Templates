@@ -13,15 +13,18 @@ function createNewRow(size: number, initialItems?: UniqueIdentifier[]) {
   return newRow
 }
 
-function addItem(rowId: UniqueIdentifier, item: UniqueIdentifier) {
+function addItem(rowId: UniqueIdentifier, items: UniqueIdentifier[]) {
   return (state: RowState) => {
     const row = state[rowId]
     if (!row) return state
-    if (row.items.includes(item)) return state
+    const isIncludedItems = items.filter((product) =>
+      row.items.includes(product)
+    )
+    if (isIncludedItems.length === items.length) return state
 
     return {
       ...state,
-      [rowId]: { ...row, items: [...row.items, item] }
+      [rowId]: { ...row, items: [...row.items, ...items] }
     }
   }
 }

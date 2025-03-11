@@ -50,8 +50,8 @@ export function useRows() {
   )
 
   const addItemToRow = useCallback(
-    (rowId: UniqueIdentifier, item: UniqueIdentifier) => {
-      updateRows(rowsUtils.addItem(rowId, item))
+    (rowId: UniqueIdentifier, items: UniqueIdentifier[]) => {
+      updateRows(rowsUtils.addItem(rowId, items))
     },
     [updateRows]
   )

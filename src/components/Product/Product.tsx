@@ -1,16 +1,26 @@
 import { DeleteIcon } from '@assets/icons'
 import { Product as ProductType } from '@types'
+import { ReactNode } from 'react'
 
 interface ProductProps {
   product: ProductType
   handleDelete?: (productId: string) => void
+  children?: ReactNode
+  className?: string
 }
 
-export default function Product({ product, handleDelete }: ProductProps) {
+export default function Product({
+  product,
+  children,
+  className,
+  handleDelete
+}: ProductProps) {
   const { image, name, price } = product
 
   return (
-    <article className="group relative max-w-[120px] cursor-pointer flex-col select-none">
+    <article
+      className={`group relative max-w-[120px] cursor-pointer flex-col select-none ${className ?? ''}`}
+    >
       <div className="flex flex-col gap-1">
         <img
           src={image}
@@ -30,6 +40,7 @@ export default function Product({ product, handleDelete }: ProductProps) {
           }}
         />
       ) : null}
+      {children}
     </article>
   )
 }
