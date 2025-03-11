@@ -14,8 +14,6 @@ export function useRows() {
     Object.keys(rows).map(Number)
   )
 
-  console.log(rowContainers)
-
   // Avoid re-renders
   const updateRows = useCallback((updater: (prev: RowState) => RowState) => {
     setRows((prev) => {
@@ -27,9 +25,8 @@ export function useRows() {
   const updateRowContainers = useCallback(
     (updater: (prev: UniqueIdentifier[]) => UniqueIdentifier[]) => {
       setRowContainers((prev) => {
-        console.log(updater)
         const newState = updater(prev)
-        console.log({ newState })
+
         return newState !== prev ? newState : prev
       })
     },
