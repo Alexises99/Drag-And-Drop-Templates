@@ -1,4 +1,4 @@
-import Product from '@components/Product'
+import Product from '@components/Product/Product'
 import {
   closestCenter,
   defaultDropAnimationSideEffects,
@@ -19,7 +19,7 @@ import useTemplate from '@hooks/useTemplate'
 import dragDropUtils from '@utils/drag-drop'
 import { PropsWithChildren, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { NEW_ROW_ID, PRODUCTS_ID } from './TemplateContext'
+import { NEW_ROW_ID } from './TemplateContext'
 import Row from '@components/Row/Row'
 import productUtils from '@utils/products'
 
@@ -72,8 +72,6 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     const overId = over?.id
     const activeId = active.id
 
-    console.log({ overId, activeId, NEW_ROW_ID })
-
     if (rowContainers.includes(activeId as number) && overId) {
       handleMoveRows(activeId as number, overId as number)
       return
@@ -94,8 +92,6 @@ export default function DragDropContext({ children }: PropsWithChildren) {
 
     const overContainer = dragDropUtils.findContainer(rows, overId)
     if (!overContainer) return
-
-    console.log('A')
 
     handleDragEnd(activeId, overId, activeContainer, overContainer)
 
@@ -122,7 +118,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       onDragCancel={() => setActiveId(null)}
     >
       <SortableContext
-        items={[PRODUCTS_ID, ...rowContainers, NEW_ROW_ID]}
+        items={[...rowContainers, NEW_ROW_ID]}
         strategy={verticalListSortingStrategy}
       >
         {children}
@@ -132,6 +128,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
           {activeId ? (
             rowContainers.includes(activeId as number) ? (
               <Row
+                openDialog={() => null}
                 row={rows[activeId]}
                 attributes={undefined}
                 listeners={undefined}

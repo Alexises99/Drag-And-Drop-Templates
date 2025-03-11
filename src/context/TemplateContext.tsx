@@ -11,7 +11,6 @@ import dragDropUtils from '@utils/drag-drop'
 import useProducts from '@hooks/useProducts'
 
 export const NEW_ROW_ID = 'add_row'
-export const PRODUCTS_ID = 'products'
 
 interface TemplateContextValue {
   products: ReturnType<typeof useProducts>
@@ -22,7 +21,7 @@ interface TemplateContextValue {
   handleAddRow: (items?: UniqueIdentifier[]) => void
   changeCategoryName: (id: number, value: string) => void
   removeItemFromRow: (rowId: UniqueIdentifier) => (itemId: string) => void
-  addProductToInitialRow: (productId: string) => void
+  handleEditRow: (rowId: UniqueIdentifier, item: UniqueIdentifier) => void
   handleDragOver: (
     activeId: UniqueIdentifier,
     overId: UniqueIdentifier,
@@ -44,19 +43,10 @@ export const TemplateContext = createContext<TemplateContextValue | null>(null)
 export default function TemplateProvider({ children }: PropsWithChildren) {
   const products = useProducts()
 
-  const [rows, setRows] = useState<Record<UniqueIdentifier, Row>>({
-    [PRODUCTS_ID]: {
-      alignment: 'left',
-      id: PRODUCTS_ID,
-      items: Object.keys(products.productsData),
-      name: 'Productos'
-    }
-  })
+  const [rows, setRows] = useState<Record<UniqueIdentifier, Row>>({})
 
   const [rowContainers, setRowContainers] = useState<number[]>(
-    Object.keys(rows)
-      .slice(1)
-      .map((item) => Number(item))
+    Object.keys(rows).map((item) => Number(item))
   )
 
   const handleAddRow = (items: UniqueIdentifier[] = []) => {
@@ -68,12 +58,17 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
       name: 'Sin nombre'
     }
 
-    console.log(newRow)
-
     startTransition(() => {
       setRows((prev) => ({ ...prev, [newRow.id]: newRow }))
       setRowContainers((prev) => [...prev, Number(newRow.id)])
     })
+  }
+
+  const handleEditRow = (rowId: UniqueIdentifier, item: UniqueIdentifier) => {
+    setRows((prev) => ({
+      ...prev,
+      [rowId]: { ...prev[rowId], items: [...prev[rowId].items, item] }
+    }))
   }
 
   const handleDeleteRow = (id: number) => {
@@ -87,16 +82,6 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
         prev.filter((containerId) => containerId !== id)
       )
     })
-  }
-
-  const addProductToInitialRow = (productId: string) => {
-    setRows((prev) => ({
-      ...prev,
-      [PRODUCTS_ID]: {
-        ...prev[PRODUCTS_ID],
-        items: [...prev[PRODUCTS_ID].items, productId]
-      }
-    }))
   }
 
   const changeCategoryName = (id: number, value: string) => {
@@ -196,13 +181,13 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
     rows,
     rowContainers,
     products,
-    addProductToInitialRow,
     handleAddRow,
     handleMoveRows,
     handleDeleteRow,
     changeCategoryName,
     handleDragEnd,
     handleDragOver,
+    handleEditRow,
     removeItemFromRow
   }
 

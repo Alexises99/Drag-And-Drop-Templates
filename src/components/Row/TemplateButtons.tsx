@@ -1,4 +1,4 @@
-import { aligmentRecord, DragIcon, DeleteIcon } from '@assets/icons'
+import { aligmentRecord, DragIcon, DeleteIcon, AddIcon } from '@assets/icons'
 
 import type { DraggableAttributes } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
@@ -35,17 +35,20 @@ interface TemplateButtonsProps {
   attributes: DraggableAttributes | undefined
   changeAligment: (alignment: Alignment) => void
   handleDelete: () => void
+  openDialog: () => void
 }
 
 export default function TemplateButtons({
   changeAligment,
   handleDelete,
+  openDialog,
   listeners,
   attributes,
   selectedAligment
 }: TemplateButtonsProps) {
   const labelAlignment = aligmentUtils.getAligmentText(selectedAligment)
 
+  // Mostrar lista de elementos o crear desde el dialogo
   return (
     <div className="flex items-center gap-8">
       <div className="flex items-center gap-4">
@@ -73,6 +76,13 @@ export default function TemplateButtons({
           onClick={handleDelete}
         >
           <DeleteIcon />
+        </button>
+        <button
+          className="flex cursor-pointer items-center gap-2 border-1 px-4 py-2"
+          onClick={() => openDialog()}
+        >
+          <AddIcon />
+          Anadir Productos
         </button>
         <button className="cursor-pointer" {...listeners} {...attributes}>
           <DragIcon />

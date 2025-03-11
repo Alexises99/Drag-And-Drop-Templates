@@ -5,15 +5,17 @@ import type { Row as RowType } from '@types'
 
 interface RowProps {
   row: RowType
+  openDialog: () => void
 }
 
-export default function DroppableRow({ row }: RowProps) {
+export default function DroppableRow({ row, openDialog }: RowProps) {
   const { id, items } = row
 
   return (
     <DroppableContainer id={id} items={items}>
       {(listeners, attributes) => (
         <Row
+          openDialog={openDialog}
           row={row}
           isDraggable
           attributes={attributes}

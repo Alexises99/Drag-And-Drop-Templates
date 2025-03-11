@@ -4,10 +4,7 @@ import productUtils from '@utils/products'
 import { useState } from 'react'
 
 export default function useProducts() {
-  const [showProducts, setShowProducts] = useState<boolean>(false)
   const [products, setProducts] = useState<Data>(initialProducts)
-
-  const handleShowProducts = () => setShowProducts((prev) => !prev)
 
   const addProduct = (product: Product) => {
     const newProducts = productUtils.addProduct(product, products)
@@ -20,10 +17,8 @@ export default function useProducts() {
   }
 
   return {
-    showProducts,
     productsData: products,
     addProduct,
-    removeProduct,
-    handleShowProducts
+    removeProduct
   }
 }

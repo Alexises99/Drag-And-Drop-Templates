@@ -16,13 +16,15 @@ interface RowProps {
   isDraggable: boolean
   listeners: SyntheticListenerMap | undefined
   attributes: DraggableAttributes | undefined
+  openDialog: () => void
 }
 
 export default function Row({
   row,
   isDraggable,
   attributes,
-  listeners
+  listeners,
+  openDialog
 }: RowProps) {
   const { alignment: initialAligment, id, items, name } = row
 
@@ -53,6 +55,7 @@ export default function Row({
           attributes={attributes}
           changeAligment={changeAligment}
           handleDelete={() => handleDeleteRow(id as number)}
+          openDialog={openDialog}
         />
       </header>
       {isDraggable ? (

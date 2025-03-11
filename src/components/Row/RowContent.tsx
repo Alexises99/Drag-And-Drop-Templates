@@ -1,8 +1,9 @@
 import type { Alignment, Row } from '@types'
 import aligmentUtils from '@utils/aligment'
-import Product from '@components/Product'
+import Product from '@components/Product/Product'
 import productUtils from '@utils/products'
 import useTemplate from '@hooks/useTemplate'
+import DraggableItem from '@components/DragDrop/DraggableItem'
 
 interface RowContentProps {
   row: Row
@@ -26,7 +27,9 @@ export default function RowContent({
       {items.map((item) => {
         const product = productUtils.getProduct(item as string, productsData)
         return (
-          <Product product={product} key={item} handleDelete={handleDelete} />
+          <DraggableItem id={product.name} key={item}>
+            <Product product={product} handleDelete={handleDelete} />
+          </DraggableItem>
         )
       })}
     </div>

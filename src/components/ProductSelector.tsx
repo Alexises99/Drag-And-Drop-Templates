@@ -3,8 +3,6 @@ import { useRef } from 'react'
 import useTemplate from '@hooks/useTemplate'
 import { AddIcon } from '@assets/icons'
 import { DialogMethods } from '@hooks/useDialog'
-import { createPortal } from 'react-dom'
-import ProductDialog from './ProductDialog/ProductDialog'
 import productUtils from '@utils/products'
 import {
   horizontalListSortingStrategy,
@@ -83,7 +81,7 @@ export default function ProductSelector() {
         </button>
       </div>
 
-      {createPortal(<ProductDialog ref={dialogRef} />, document.body)}
+      {/* {createPortal(<ProductDialog ref={dialogRef} />, document.body)} */}
     </section>
   )
 }
