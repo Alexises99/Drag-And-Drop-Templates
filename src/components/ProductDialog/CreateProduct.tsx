@@ -78,7 +78,6 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
             placeholder="Precio del producto"
             handleChange={handleChangeFields('price')}
             extra={{ step: 0.01 }}
-            className="before:absolute before:top-1/2 before:right-4 before:-translate-y-1/2 before:content-['EUR'] sm:before:right-12"
           />
         </div>
         <div

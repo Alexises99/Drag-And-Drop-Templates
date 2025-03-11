@@ -6,17 +6,13 @@ import { useDialogContext } from '@hooks/useDialogContext'
 export default function RowContainer() {
   const {
     rows: { rowContainers, rows },
-    zoom: { decreaseZoom, increaseZoom, zoom }
+    zoom: { zoom }
   } = useTemplate()
 
   const { openDialog } = useDialogContext()
 
   return (
     <>
-      <div className="flex w-full justify-between">
-        <span onClick={increaseZoom}>+ Zoom</span>
-        <span onClick={decreaseZoom}>- Zoom</span>
-      </div>
       <ul
         className="flex flex-col gap-4"
         style={{ transform: `scale(${zoom})`, transformOrigin: 'top center' }}
