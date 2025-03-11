@@ -78,6 +78,12 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       return
     }
 
+    if (
+      activeContainer !== overContainer &&
+      rows[overContainer].items.length >= 3
+    )
+      return
+
     // Move items between containers
     if (activeContainer !== overContainer) {
       handleDragOver(
@@ -126,6 +132,12 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     }
 
     if (!overContainer) return
+
+    if (
+      activeContainer !== overContainer &&
+      rows[overContainer].items.length >= 3
+    )
+      return
 
     handleDragEnd(activeId, overId, activeContainer, overContainer)
 
