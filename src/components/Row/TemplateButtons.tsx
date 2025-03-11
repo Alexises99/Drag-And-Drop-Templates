@@ -50,9 +50,9 @@ export default function TemplateButtons({
 
   // Mostrar lista de elementos o crear desde el dialogo
   return (
-    <div className="flex items-center gap-8">
-      <div className="flex items-center gap-4">
-        <span className="hidden sm:block">{labelAlignment}</span>
+    <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-6">
+      <div className="order-2 flex items-center gap-4 sm:order-1">
+        <span className="">{labelAlignment}</span>
         <TemplateButton
           selectedAligment={selectedAligment}
           aligment={'left'}
@@ -70,9 +70,9 @@ export default function TemplateButtons({
         />
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 sm:order-2">
         <button
-          className="hidden cursor-pointer group-hover:block hover:text-red-400"
+          className="cursor-pointer group-hover:block hover:text-red-400 sm:hidden"
           onClick={handleDelete}
         >
           <DeleteIcon />

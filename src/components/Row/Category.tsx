@@ -20,23 +20,21 @@ export default function Category({
     inputRef.current?.focus()
   }
 
-  return (
-    <div className="flex items-center gap-3">
-      {isEditing ? (
-        <input
-          ref={inputRef}
-          type="text"
-          value={name}
-          onChange={({ target: { value } }) => handleChangeName(id, value)}
-          className="border-medium-gray rounded-lg border-1 bg-white px-2 py-1 outline-0"
-          onBlur={() => setIsEditing(false)}
-        />
-      ) : (
-        <h3 className="flex items-center gap-3" onClick={handleClickEdit}>
-          {name}
-          <PencilIcon className="text-dark-gray" />
-        </h3>
-      )}
+  return isEditing ? (
+    <div className="h-fit min-w-0">
+      <input
+        ref={inputRef}
+        type="text"
+        value={name}
+        onChange={({ target: { value } }) => handleChangeName(id, value)}
+        className="border-medium-gray rounded-lg border-1 bg-white px-2 py-1 outline-0"
+        onBlur={() => setIsEditing(false)}
+      />
+    </div>
+  ) : (
+    <div className="flex h-fit gap-3" onClick={handleClickEdit}>
+      <h3>{name}</h3>
+      <PencilIcon className="text-dark-gray" />
     </div>
   )
 }

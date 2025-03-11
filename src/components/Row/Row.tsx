@@ -41,7 +41,7 @@ export default function Row({
         'border-medium-gray flex w-full flex-col gap-3 rounded-xl border-1'
       }
     >
-      <header className="group border-medium-gray hover:bg-light-gray flex items-center justify-between border-b-1 p-4 hover:rounded-t-md">
+      <header className="group border-medium-gray hover:bg-light-gray flex justify-between border-b-1 p-4 hover:rounded-t-md sm:items-center">
         <Category
           id={id as number}
           name={name}
