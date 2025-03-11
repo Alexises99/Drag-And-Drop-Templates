@@ -13,7 +13,6 @@ function App() {
       <Header />
       <DragDropContext>
         <main>
-          {/* <ProductSelector /> */}
           <h2 className="my-8 text-center text-4xl">Jeans</h2>
           <RowContainer />
         </main>

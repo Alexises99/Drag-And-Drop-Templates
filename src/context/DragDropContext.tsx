@@ -14,7 +14,11 @@ import {
   useSensor,
   useSensors
 } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable'
 import useTemplate from '@hooks/useTemplate'
 import dragDropUtils from '@utils/drag-drop'
 import { PropsWithChildren, useState } from 'react'
@@ -32,6 +36,8 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     handleMoveRows,
     handleAddRow,
     removeItemFromRow,
+    setRowContainers,
+    zoom: { zoom },
     products: { productsData }
   } = useTemplate()
 
@@ -47,14 +53,33 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     const overId = over?.id
     const activeId = active.id
     // Active.id in rows for move containers
-    if (!overId || active.id in rows) return
+    if (!overId) return
+
+    if (active.id in rows) {
+      const activeContainer = dragDropUtils.findContainer(rows, activeId)
+      const overContainer = dragDropUtils.findContainer(rows, overId)
+      if (!activeContainer || !overContainer) return
+
+      const a = Object.keys(rows)
+        .map(Number)
+        .indexOf(activeContainer as number)
+      const b = Object.keys(rows)
+        .map(Number)
+        .indexOf(overContainer as number)
+
+      setRowContainers((prev) => arrayMove(prev, a, b))
+      return
+    }
 
     const activeContainer = dragDropUtils.findContainer(rows, activeId)
     const overContainer = dragDropUtils.findContainer(rows, overId)
 
+    console.log({ activeContainer, overContainer, activeId, overId })
+
     if (!activeContainer || !overContainer) return
 
     if (activeContainer !== overContainer) {
+      console.log('IN')
       handleDragOver(
         activeId,
         overId,
@@ -63,6 +88,8 @@ export default function DragDropContext({ children }: PropsWithChildren) {
         active.rect.current.translated,
         over.rect
       )
+    } else {
+      handleDragEnd(activeId, overId, activeContainer, overContainer)
     }
   }
 
@@ -117,14 +144,11 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       onDragEnd={onDragEnd}
       onDragCancel={() => setActiveId(null)}
     >
-      <SortableContext
-        items={[...rowContainers, NEW_ROW_ID]}
-        strategy={verticalListSortingStrategy}
-      >
+      <SortableContext items={[...rowContainers, NEW_ROW_ID]}>
         {children}
       </SortableContext>
       {createPortal(
-        <DragOverlay dropAnimation={dropAnimation}>
+        <DragOverlay dropAnimation={dropAnimation} modifiers={[]}>
           {activeId ? (
             rowContainers.includes(activeId as number) ? (
               <Row

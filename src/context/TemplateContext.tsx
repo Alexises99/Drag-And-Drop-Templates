@@ -9,11 +9,13 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { ClientRect, UniqueIdentifier } from '@dnd-kit/core'
 import dragDropUtils from '@utils/drag-drop'
 import useProducts from '@hooks/useProducts'
+import useZoom from '@hooks/useZoom'
 
 export const NEW_ROW_ID = 'add_row'
 
 interface TemplateContextValue {
   products: ReturnType<typeof useProducts>
+  zoom: ReturnType<typeof useZoom>
   rows: Record<UniqueIdentifier, Row>
   rowContainers: number[]
   handleMoveRows: (activeId: number, overId: number) => void
@@ -22,6 +24,7 @@ interface TemplateContextValue {
   changeCategoryName: (id: number, value: string) => void
   removeItemFromRow: (rowId: UniqueIdentifier) => (itemId: string) => void
   handleEditRow: (rowId: UniqueIdentifier, item: UniqueIdentifier) => void
+  setRowContainers: (value: React.SetStateAction<number[]>) => void
   handleDragOver: (
     activeId: UniqueIdentifier,
     overId: UniqueIdentifier,
@@ -42,8 +45,11 @@ export const TemplateContext = createContext<TemplateContextValue | null>(null)
 
 export default function TemplateProvider({ children }: PropsWithChildren) {
   const products = useProducts()
+  const zoom = useZoom()
 
   const [rows, setRows] = useState<Record<UniqueIdentifier, Row>>({})
+
+  console.log({ rows })
 
   const [rowContainers, setRowContainers] = useState<number[]>(
     Object.keys(rows).map((item) => Number(item))
@@ -181,6 +187,7 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
     rows,
     rowContainers,
     products,
+    zoom,
     handleAddRow,
     handleMoveRows,
     handleDeleteRow,
@@ -188,7 +195,8 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
     handleDragEnd,
     handleDragOver,
     handleEditRow,
-    removeItemFromRow
+    removeItemFromRow,
+    setRowContainers
   }
 
   return <TemplateContext value={value}>{children}</TemplateContext>

@@ -4,6 +4,7 @@ import { CSS } from '@dnd-kit/utilities'
 
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
+import useTemplate from '@hooks/useTemplate'
 
 interface DroppableContainerProps {
   id: UniqueIdentifier
@@ -22,8 +23,12 @@ export default function DroppableContainer({
   children
 }: DroppableContainerProps) {
   const {
-    over,
-    active,
+    zoom: { zoom }
+  } = useTemplate()
+
+  const {
+    // over,
+    // active,
     setNodeRef,
     transform,
     transition,
@@ -38,7 +43,15 @@ export default function DroppableContainer({
   })
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(
+      transform
+        ? {
+            ...transform,
+            scaleX: zoom,
+            scaleY: zoom
+          }
+        : null
+    ),
     transition
   }
 
@@ -46,7 +59,7 @@ export default function DroppableContainer({
     <div
       ref={setNodeRef}
       style={style}
-      className={`h-full w-full ${className}`}
+      className={`h-full w-full ${className ?? ''}`}
     >
       {children(listeners, attributes)}
     </div>
