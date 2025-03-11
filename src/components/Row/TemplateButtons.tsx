@@ -78,11 +78,11 @@ export default function TemplateButtons({
           <DeleteIcon />
         </button>
         <button
-          className="flex cursor-pointer items-center gap-2 border-1 px-4 py-2"
+          className="flex cursor-pointer items-center gap-2 rounded-full border-1 sm:px-4 sm:py-1"
           onClick={() => openDialog()}
         >
           <AddIcon />
-          Anadir Productos
+          <span className="hidden sm:inline">Anadir Productos</span>
         </button>
         <button className="cursor-pointer" {...listeners} {...attributes}>
           <DragIcon />

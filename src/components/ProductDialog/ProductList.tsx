@@ -23,6 +23,10 @@ export default function ProductList({ editedRowId }: ProductListProps) {
     .map((row) => row.items)
     .flat()
 
+  const showedProducts = Object.keys(productsData).filter(
+    (item) => !rowProducts.includes(item)
+  )
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!selectedProduct) return
@@ -33,15 +37,17 @@ export default function ProductList({ editedRowId }: ProductListProps) {
 
   return (
     <form id="product-form" onSubmit={handleSubmit}>
-      <section className="grid grid-cols-3 gap-4 sm:grid-cols-4">
-        {Object.keys(productsData).map((product) => (
+      <section className="grid max-h-full snap-y snap-proximity grid-cols-3 items-start gap-4 overflow-y-auto sm:grid-cols-4">
+        {showedProducts.map((product) => (
           <button
             type="button"
             key={product}
-            onClick={() => setSelectedProduct(product)}
-            className={`${product === selectedProduct ? 'bg-medium-gray' : ''}`}
+            onClick={() => setSelectedProduct(product as string)}
+            className={`${product === selectedProduct ? 'bg-medium-gray' : ''} snap-center`}
           >
-            <Product product={productUtils.getProduct(product, productsData)} />
+            <Product
+              product={productUtils.getProduct(product as string, productsData)}
+            />
           </button>
         ))}
       </section>

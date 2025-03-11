@@ -28,7 +28,9 @@ export default function ProductField({
 }: ProductFieldProps) {
   return (
     <div className={`flex w-full items-center gap-2 ${className}`}>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name} className="min-w-1/4">
+        {label}
+      </label>
       <input
         type={type}
         name={name}

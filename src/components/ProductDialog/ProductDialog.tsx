@@ -25,7 +25,7 @@ export default function ProductDialog({
   return (
     <dialog
       ref={dialogRef}
-      className="backdrop:bg-dark-gray top-1/2 left-1/2 min-h-96 max-w-3xl -translate-1/2 rounded-lg bg-white p-12 py-8 text-gray-800 backdrop:backdrop-blur-[2px]"
+      className="backdrop:bg-dark-gray top-1/2 left-1/2 max-h-[712px] min-h-96 max-w-3xl -translate-1/2 rounded-lg bg-white p-12 py-8 text-gray-800 backdrop:backdrop-blur-[2px] sm:max-h-[812px]"
     >
       <h3 className="mb-8 text-center text-2xl text-black">
         {dialogMode === 'list' ? 'Elige un Producto' : 'Crear Producto'}

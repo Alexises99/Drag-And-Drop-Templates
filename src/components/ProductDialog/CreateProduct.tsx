@@ -62,7 +62,7 @@ export default function CreateProduct({ editedRowId }: CreateProductProps) {
 
   return (
     <form onSubmit={handleSubmit} id="product-form">
-      <div className="my-12 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+      <div className="my-12 flex flex-col gap-4 sm:grid sm:grid-cols-2">
         <ProductField
           label="Nombre:"
           name="name"
@@ -82,7 +82,7 @@ export default function CreateProduct({ editedRowId }: CreateProductProps) {
             placeholder="Precio del producto"
             handleChange={handleChangeFields('price')}
             extra={{ step: 0.01 }}
-            className="before:absolute before:top-1/2 before:right-12 before:-translate-y-1/2 before:content-['EUR']"
+            className="before:absolute before:top-1/2 before:right-4 before:-translate-y-1/2 before:content-['EUR'] sm:before:right-12"
           />
         </div>
         <div
@@ -93,7 +93,7 @@ export default function CreateProduct({ editedRowId }: CreateProductProps) {
           {image ? (
             <img src={image} alt="Image Preview" className="max-h-48" />
           ) : (
-            <span>
+            <span className="text-center">
               Arrastra y suelta una imagen aqui o{' '}
               <label
                 htmlFor="fileInput"
