@@ -9,7 +9,7 @@ const defaultProduct = {
 }
 
 interface CreateProductProps {
-  handleClose: () => void
+  handleClose: (reset: () => void) => void
 }
 
 export default function CreateProduct({ handleClose }: CreateProductProps) {
@@ -22,6 +22,8 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
     name: string
     image: string
   }>(defaultProduct)
+
+  const [error, setError] = useState<string>('')
 
   const { image, name, price } = product
 
@@ -51,9 +53,12 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (product.price === undefined) return
+    if (!product.image) {
+      setError('Inserta una imagen')
+      return
+    }
     addProduct(product)
-    handleClose()
+    handleClose(() => setProduct(defaultProduct))
   }
 
   return (
@@ -99,10 +104,11 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
             </span>
           )}
           <input
+            name="file"
             type="file"
             id="fileInput"
             accept="image/*"
-            className="hidden"
+            className="w-0 opacity-0"
             onChange={handleFileInput}
           />
         </div>

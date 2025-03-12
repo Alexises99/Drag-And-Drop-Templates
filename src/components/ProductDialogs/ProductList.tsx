@@ -80,7 +80,9 @@ export default function ProductList({
               {[...alreadyProducts, ...selectedProducts].includes(product) ? (
                 <div className="bg-medium-gray absolute inset-0 flex items-center justify-center rounded-md">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-400 text-3xl text-white">
-                    {selectedProducts.indexOf(product) + 1}
+                    {[...alreadyProducts, ...selectedProducts].indexOf(
+                      product
+                    ) + 1}
                   </span>
                 </div>
               ) : null}

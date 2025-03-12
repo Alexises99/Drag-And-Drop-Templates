@@ -1,6 +1,6 @@
 // import './App.css'
 import Header from '@components/Header'
-import ProductDialog from '@components/ProductDialog/ProductDialog'
+import ProductDialog from '@components/ProductDialogs/ProductDialog'
 import RowContainer from '@components/RowContainer'
 import Zoom from '@components/Zoom'
 import DragDropContext from '@context/DragDropContext'
@@ -14,11 +14,9 @@ function App() {
       <Header />
       <DragDropContext>
         <main>
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-between">
             <h2 className="my-8 text-center text-4xl">Jeans</h2>
-            <div className="absolute top-1/2 right-0 -translate-y-1/2">
-              <Zoom />
-            </div>
+            <Zoom />
           </div>
           <RowContainer />
         </main>
