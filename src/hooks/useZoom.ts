@@ -6,13 +6,13 @@ export default function useZoom() {
   const increaseZoom = () =>
     setZoom((prev) => {
       if (prev >= 1) return prev
-      return prev + 0.1
+      return +parseFloat(String(prev + 0.1)).toFixed(1)
     })
 
   const decreaseZoom = () =>
     setZoom((prev) => {
-      if (prev <= 0) return prev
-      return prev - 0.1
+      if (prev <= 0.3) return prev
+      return +parseFloat(String(prev - 0.1)).toFixed(1)
     })
 
   return {

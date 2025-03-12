@@ -5,6 +5,7 @@ export default function Zoom() {
     zoom: { decreaseZoom, increaseZoom, zoom }
   } = useTemplate()
 
+  console.log(zoom)
   return (
     <div className="flex w-fit items-center space-x-4 rounded-lg p-4 shadow-lg">
       <span>Zoom</span>
