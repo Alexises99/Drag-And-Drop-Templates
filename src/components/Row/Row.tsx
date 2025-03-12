@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import TemplateButtons from './TemplateButtons'
 import { SortableContext } from '@dnd-kit/sortable'
 import RowContent from './RowContent'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import type { DraggableAttributes } from '@dnd-kit/core'
-import type { Alignment, Row as RowType } from '@types'
+import type { Row as RowType } from '@types'
 import { useTemplate } from '@hooks/useTemplate'
 import Category from './Category'
 
@@ -23,15 +22,11 @@ export default function Row({
   listeners,
   openDialog
 }: RowProps) {
-  const { alignment: initialAligment, id, items, name } = row
-
-  const [alignment, setAlignment] = useState<Alignment>(initialAligment)
+  const { alignment, id, items, name } = row
 
   const {
-    rows: { deleteItemFromRow, changeCategoryName, deleteRow }
+    rows: { deleteItemFromRow, changeCategoryName, deleteRow, changeAligment }
   } = useTemplate()
-
-  const changeAligment = (alignment: Alignment) => setAlignment(alignment)
 
   const removeItem = deleteItemFromRow(id)
 
@@ -48,10 +43,11 @@ export default function Row({
           handleChangeName={changeCategoryName}
         />
         <TemplateButtons
+          items={items}
           selectedAligment={alignment}
           listeners={listeners}
           attributes={attributes}
-          changeAligment={changeAligment}
+          changeAligment={(aligment) => changeAligment(id, aligment)}
           handleDelete={() => deleteRow(id as number)}
           openDialog={openDialog}
         />

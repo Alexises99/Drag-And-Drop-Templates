@@ -1,4 +1,4 @@
-import { startTransition, useCallback } from 'react'
+import { useCallback } from 'react'
 import { RowState } from './useRows'
 import dragDropUtils from '@utils/drag-drop'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -6,10 +6,7 @@ import { ClientRect, UniqueIdentifier } from '@dnd-kit/core'
 
 export function useDragDrop(
   rows: RowState,
-  updateRows: (updater: (prev: RowState) => RowState) => void,
-  updateRowContainers: (
-    updater: (prev: UniqueIdentifier[]) => UniqueIdentifier[]
-  ) => void
+  updateRows: (updater: (prev: RowState) => RowState) => void
 ) {
   const getItemIndexes = useCallback(
     (
@@ -59,8 +56,6 @@ export function useDragDrop(
         newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1
       }
 
-      const deleteContainer = rows[activeContainer].items.length === 1
-
       updateRows((state) => {
         const updatedRows = { ...state }
         updatedRows[activeContainer] = {
@@ -81,22 +76,9 @@ export function useDragDrop(
 
         return updatedRows
       })
-
-      if (deleteContainer) {
-        startTransition(() => {
-          updateRowContainers((prev) =>
-            prev.filter((container) => container !== activeContainer)
-          )
-          updateRows((state) => {
-            const updatedRows = { ...state }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { [activeContainer]: _, ...rest } = updatedRows
-            return rest
-          })
-        })
-      }
+      // }
     },
-    [rows, updateRows, getItemIndexes, updateRowContainers]
+    [rows, updateRows, getItemIndexes]
   )
 
   const handleDragEnd = useCallback(
@@ -116,17 +98,19 @@ export function useDragDrop(
       )
 
       if (activeIndex !== overIndex) {
-        updateRows((state) => ({
-          ...state,
-          [overContainer]: {
-            ...state[overContainer],
-            items: reorderItems(
-              state[overContainer].items,
-              activeIndex,
-              overIndex
-            )
+        updateRows((state) => {
+          return {
+            ...state,
+            [overContainer]: {
+              ...state[overContainer],
+              items: reorderItems(
+                state[overContainer].items,
+                activeIndex,
+                overIndex
+              )
+            }
           }
-        }))
+        })
       }
     },
     [rows, updateRows, getItemIndexes, reorderItems]

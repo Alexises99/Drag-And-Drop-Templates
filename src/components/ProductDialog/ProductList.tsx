@@ -1,17 +1,21 @@
 import Product from '@components/Product/Product'
 import { useTemplate } from '@hooks/useTemplate'
 import productUtils from '@utils/products'
-import { FormEvent, useState } from 'react'
+import { Dispatch, FormEvent, SetStateAction } from 'react'
 
 import { UniqueIdentifier } from '@dnd-kit/core'
 
 interface ProductListProps {
   editedRowId: UniqueIdentifier | null
   handleClose: () => void
+  setSelectedProducts: Dispatch<SetStateAction<string[]>>
+  selectedProducts: string[]
 }
 
 export default function ProductList({
   editedRowId,
+  selectedProducts,
+  setSelectedProducts,
   handleClose
 }: ProductListProps) {
   const {
@@ -23,11 +27,11 @@ export default function ProductList({
     .map((row) => row.items)
     .flat()
 
-  const [selectedProducts, setSelectedProducts] = useState<string[]>([])
-
   const showedProducts = Object.keys(productsData).filter(
     (item) => !rowProducts.includes(item)
   )
+
+  const alreadyProducts = editedRowId ? rows[editedRowId].items : []
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -41,7 +45,7 @@ export default function ProductList({
   const handleClick = (product: string) => {
     setSelectedProducts((prev) => {
       if (prev.includes(product)) return prev.filter((item) => item !== product)
-      if (prev.length === 3) return prev
+      if ([...alreadyProducts, ...prev].length === 3) return prev
       return [...prev, product as string]
     })
   }
@@ -73,7 +77,7 @@ export default function ProductList({
               product={productUtils.getProduct(product as string, productsData)}
               className={`h-full rounded-md ${selectedProducts.includes(product) ? 'text-blue-400' : ''}`}
             >
-              {selectedProducts.includes(product) ? (
+              {[...alreadyProducts, ...selectedProducts].includes(product) ? (
                 <div className="bg-medium-gray absolute inset-0 flex items-center justify-center rounded-md">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-400 text-3xl text-white">
                     {selectedProducts.indexOf(product) + 1}

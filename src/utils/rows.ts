@@ -1,6 +1,6 @@
 import { UniqueIdentifier } from '@dnd-kit/core'
 import { RowState } from '@hooks/useRows'
-import type { Row } from '@types'
+import type { Alignment, Row } from '@types'
 
 function createNewRow(size: number, initialItems?: UniqueIdentifier[]) {
   const newRow: Row = {
@@ -49,6 +49,17 @@ function changeCategoryName(rowId: UniqueIdentifier, value: string) {
   }
 }
 
+function changeAligment(rowId: UniqueIdentifier, alignment: Alignment) {
+  return (state: RowState) => {
+    const row = state[rowId]
+    if (!row || row.alignment === alignment) return state
+    return {
+      ...state,
+      [rowId]: { ...row, alignment }
+    }
+  }
+}
+
 function removeItemFromRow(rowId: UniqueIdentifier, itemId: UniqueIdentifier) {
   return (state: RowState) => {
     const copy = { ...state }
@@ -68,7 +79,8 @@ const rowsUtils = {
   addItem,
   removeRow,
   changeCategoryName,
-  removeItemFromRow
+  removeItemFromRow,
+  changeAligment
 }
 
 export default rowsUtils

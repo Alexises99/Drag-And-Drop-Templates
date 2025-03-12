@@ -1,5 +1,5 @@
 import useDialog, { DialogMethods } from '@hooks/useDialog'
-import { Ref } from 'react'
+import { Ref, useState } from 'react'
 import { UniqueIdentifier } from '@dnd-kit/core'
 import CreateProduct from './CreateProduct'
 import ProductList from './ProductList'
@@ -17,7 +17,12 @@ export default function ProductDialog({
   const dialogRef = useDialog(ref)
   const { dialogMode } = useDialogContext()
 
-  const handleClose = () => dialogRef.current?.close()
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([])
+
+  const handleClose = () => {
+    dialogRef.current?.close()
+    setSelectedProducts([])
+  }
 
   return (
     <dialog
@@ -28,7 +33,12 @@ export default function ProductDialog({
         {dialogMode === 'list' ? 'Selecciona Productos' : 'Crear Producto'}
       </h3>
       {dialogMode === 'list' ? (
-        <ProductList editedRowId={editedRowId} handleClose={handleClose} />
+        <ProductList
+          editedRowId={editedRowId}
+          handleClose={handleClose}
+          selectedProducts={selectedProducts}
+          setSelectedProducts={setSelectedProducts}
+        />
       ) : (
         <CreateProduct handleClose={handleClose} />
       )}

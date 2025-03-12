@@ -1,6 +1,6 @@
 import { aligmentRecord, DragIcon, DeleteIcon, AddIcon } from '@assets/icons'
 
-import type { DraggableAttributes } from '@dnd-kit/core'
+import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import type { Alignment } from '@types'
 import aligmentUtils from '@utils/aligment'
@@ -33,6 +33,7 @@ interface TemplateButtonsProps {
   selectedAligment: Alignment
   listeners: SyntheticListenerMap | undefined
   attributes: DraggableAttributes | undefined
+  items: UniqueIdentifier[]
   changeAligment: (alignment: Alignment) => void
   handleDelete: () => void
   openDialog: () => void
@@ -42,6 +43,7 @@ export default function TemplateButtons({
   changeAligment,
   handleDelete,
   openDialog,
+  items,
   listeners,
   attributes,
   selectedAligment
@@ -69,7 +71,6 @@ export default function TemplateButtons({
           changeAligment={changeAligment}
         />
       </div>
-
       <div className="flex items-center gap-4 sm:order-2">
         <button
           className="cursor-pointer group-hover:block hover:text-red-400 sm:hidden"
@@ -78,8 +79,9 @@ export default function TemplateButtons({
           <DeleteIcon />
         </button>
         <button
-          className="flex cursor-pointer items-center gap-2 rounded-full border-1 sm:px-4 sm:py-1"
+          className="disabled:bg-light-gray flex cursor-pointer items-center gap-2 rounded-full border-1 disabled:cursor-auto sm:px-4 sm:py-1"
           onClick={() => openDialog()}
+          disabled={items.length === 3}
         >
           <AddIcon />
           <span className="hidden sm:inline">Anadir Productos</span>

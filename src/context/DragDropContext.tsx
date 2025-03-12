@@ -37,7 +37,8 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     handleMoveRows,
     rowContainers,
     rows,
-    updateRowContainers
+    updateRowContainers,
+    deleteRow
   } = rowsState
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
@@ -63,6 +64,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     if (!overId) return
 
     const { activeContainer, overContainer } = findContainers(activeId, overId)
+
     if (!activeContainer || !overContainer) return
 
     // Reorder rows
@@ -126,8 +128,14 @@ export default function DragDropContext({ children }: PropsWithChildren) {
 
     // Create new row draggin in add row
     if (overId === NEW_ROW_ID) {
+      if (rows[activeContainer].items.length === 1) {
+        deleteRow(activeContainer)
+      } else {
+        deleteItemFromRow(activeContainer)(activeId as string)
+      }
+
       addNewRow([activeId])
-      deleteItemFromRow(activeContainer)(activeId as string)
+
       return
     }
 
@@ -140,6 +148,12 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       return
 
     handleDragEnd(activeId, overId, activeContainer, overContainer)
+
+    const toDeleteRow = Object.values(rows)
+      .filter((row) => row.items.length === 0)
+      .map((row) => row.id)
+
+    if (toDeleteRow.length !== 0) deleteRow(toDeleteRow[0])
 
     setActiveId(null)
   }

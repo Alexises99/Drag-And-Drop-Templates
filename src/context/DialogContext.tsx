@@ -13,6 +13,7 @@ type DialogMode = 'list' | 'form'
 interface DialogContextValues {
   openDialog: (mode: DialogMode, editedRow?: UniqueIdentifier) => void
   closeDialog: () => void
+
   dialogMode: DialogMode
   dialogRef: RefObject<DialogMethods | null>
   editedRow: UniqueIdentifier | null
@@ -29,6 +30,7 @@ export default function DialogProvider({ children }: PropsWithChildren) {
   const openDialog = (mode: DialogMode, editedRow?: UniqueIdentifier) => {
     setMode(mode)
     setEditedRow(editedRow ?? null)
+
     dialogRef.current?.show()
   }
 
