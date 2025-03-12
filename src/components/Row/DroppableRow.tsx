@@ -12,7 +12,11 @@ export default function DroppableRow({ row, openDialog }: RowProps) {
   const { id, items } = row
 
   return (
-    <DroppableContainer id={id} items={items}>
+    <DroppableContainer
+      id={id}
+      items={items}
+      overStyles="bg-light-gray rounded-xl"
+    >
       {(listeners, attributes) => (
         <Row
           openDialog={openDialog}

@@ -27,8 +27,8 @@ export default function DragDropContext({ children }: PropsWithChildren) {
   const {
     rows: rowsState,
     dragDrop: { handleDragEnd, handleDragOver },
-    products: { productsData }
-    // zoom: { zoom },
+    products: { productsData },
+    zoom: { zoom }
   } = useTemplate()
 
   const {
@@ -181,29 +181,33 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       <SortableContext items={[...rowContainers, NEW_ROW_ID]}>
         {children}
       </SortableContext>
-      {createPortal(
-        <DragOverlay dropAnimation={dropAnimation} modifiers={[]}>
-          {activeId ? (
-            rowContainers.includes(activeId as number) ? (
-              <Row
-                openDialog={() => null}
-                row={rows[activeId]}
-                attributes={undefined}
-                listeners={undefined}
-                isDraggable={false}
-              />
-            ) : (
-              <Product
-                product={productUtils.getProduct(
-                  activeId as string,
-                  productsData
-                )}
-              />
-            )
-          ) : null}
-        </DragOverlay>,
-        document.body
-      )}
+      {zoom === 1
+        ? createPortal(
+            <DragOverlay dropAnimation={dropAnimation}>
+              {activeId ? (
+                <div>
+                  {rowContainers.includes(activeId as number) ? (
+                    <Row
+                      openDialog={() => null}
+                      row={rows[activeId]}
+                      attributes={undefined}
+                      listeners={undefined}
+                      isDraggable={false}
+                    />
+                  ) : (
+                    <Product
+                      product={productUtils.getProduct(
+                        activeId as string,
+                        productsData
+                      )}
+                    />
+                  )}
+                </div>
+              ) : null}
+            </DragOverlay>,
+            document.body
+          )
+        : null}
     </DndContext>
   )
 }

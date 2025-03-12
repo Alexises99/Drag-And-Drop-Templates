@@ -4,12 +4,11 @@ import { CSS } from '@dnd-kit/utilities'
 
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
-import { useTemplate } from '@hooks/useTemplate'
 
 interface DroppableContainerProps {
   id: UniqueIdentifier
   items: UniqueIdentifier[]
-  className?: string
+  overStyles?: string
   children: (
     listeners: SyntheticListenerMap | undefined,
     attributes: DraggableAttributes
@@ -19,39 +18,20 @@ interface DroppableContainerProps {
 export default function DroppableContainer({
   id,
   items,
-  className,
+  overStyles,
   children
 }: DroppableContainerProps) {
-  const {
-    zoom: { zoom }
-  } = useTemplate()
-
-  const {
-    // over,
-    // active,
-    setNodeRef,
-    transform,
-    transition,
-    listeners,
-    attributes
-  } = useSortable({
-    id,
-    data: {
-      type: 'row',
-      items
-    }
-  })
+  const { setNodeRef, transform, transition, listeners, attributes, isOver } =
+    useSortable({
+      id,
+      data: {
+        type: 'row',
+        items
+      }
+    })
 
   const style = {
-    transform: CSS.Translate.toString(
-      transform
-        ? {
-            ...transform,
-            scaleX: zoom,
-            scaleY: zoom
-          }
-        : null
-    ),
+    transform: CSS.Translate.toString(transform),
     transition
   }
 
@@ -59,7 +39,7 @@ export default function DroppableContainer({
     <div
       ref={setNodeRef}
       style={style}
-      className={`h-full w-full ${className ?? ''}`}
+      className={`h-fit w-full ${isOver ? (overStyles ?? '') : ''}`}
     >
       {children(listeners, attributes)}
     </div>

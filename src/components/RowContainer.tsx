@@ -15,7 +15,12 @@ export default function RowContainer() {
     <>
       <ul
         className="flex flex-col gap-4"
-        style={{ transform: `scale(${zoom})`, transformOrigin: 'top center' }}
+        style={{
+          transform: `scale(${zoom})`,
+          transformOrigin: 'top left',
+          width: `${100 / zoom}%`,
+          height: `${100 / zoom}%`
+        }}
       >
         {rowContainers.map((rowId) => (
           <DroppableRow
