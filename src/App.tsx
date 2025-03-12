@@ -1,4 +1,4 @@
-// import './App.css'
+import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 import Header from '@components/Header'
 import ProductDialog from '@components/ProductDialogs/ProductDialog'
 import RowContainer from '@components/RowContainer'
@@ -15,7 +15,9 @@ function App() {
       <DragDropContext>
         <main>
           <div className="relative flex items-center justify-between">
-            <h2 className="my-8 text-center text-4xl">Jeans</h2>
+            <h2 className="my-8 text-center text-4xl">
+              <FormattedMessage id="category.name" />
+            </h2>
             <Zoom />
           </div>
           <RowContainer />

@@ -1,6 +1,7 @@
 import { DeleteIcon } from '@assets/icons'
 import { Product as ProductType } from '@types'
 import { ReactNode } from 'react'
+import { FormattedNumber } from 'react-intl'
 
 interface ProductProps {
   product: ProductType
@@ -29,7 +30,9 @@ export default function Product({
           draggable={false}
         />
         <h3 className="text-wrap text-ellipsis">{name}</h3>
-        <span>{price} EUR</span>
+        <span>
+          <FormattedNumber value={price} style="currency" currency="EUR" />{' '}
+        </span>
       </div>
       {handleDelete ? (
         <DeleteIcon

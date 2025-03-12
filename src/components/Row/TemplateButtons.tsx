@@ -1,9 +1,10 @@
 import { aligmentRecord, DragIcon, DeleteIcon, AddIcon } from '@assets/icons'
+import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import type { Alignment } from '@types'
-import aligmentUtils from '@utils/aligment'
+import { useIntl } from 'react-intl'
 
 interface TemplateButtonProps
   extends Pick<TemplateButtonsProps, 'changeAligment'> {
@@ -48,13 +49,15 @@ export default function TemplateButtons({
   attributes,
   selectedAligment
 }: TemplateButtonsProps) {
-  const labelAlignment = aligmentUtils.getAligmentText(selectedAligment)
-
-  // Mostrar lista de elementos o crear desde el dialogo
+  const intl = useIntl()
   return (
     <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-6">
       <div className="order-2 flex items-center gap-4 sm:order-1">
-        <span className="">{labelAlignment}</span>
+        <span>
+          {intl.formatMessage({
+            id: `aligment.${selectedAligment}`
+          })}
+        </span>
         <TemplateButton
           selectedAligment={selectedAligment}
           aligment={'left'}
@@ -84,7 +87,9 @@ export default function TemplateButtons({
           disabled={items.length === 3}
         >
           <AddIcon />
-          <span className="hidden sm:inline">Añadir Productos</span>
+          <span className="hidden sm:inline">
+            <FormattedMessage id="row.add-product" />
+          </span>
         </button>
         <button className="cursor-pointer" {...listeners} {...attributes}>
           <DragIcon />

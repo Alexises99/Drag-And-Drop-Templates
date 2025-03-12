@@ -11,20 +11,8 @@ function getJustifyAligment(aligment: Alignment) {
   }
 }
 
-function getAligmentText(aligment: Alignment) {
-  switch (aligment) {
-    case 'left':
-      return 'Izquierda'
-    case 'center':
-      return 'Centro'
-    case 'right':
-      return 'Derecha'
-  }
-}
-
 const aligmentUtils = {
-  getJustifyAligment,
-  getAligmentText
+  getJustifyAligment
 }
 
 export default aligmentUtils

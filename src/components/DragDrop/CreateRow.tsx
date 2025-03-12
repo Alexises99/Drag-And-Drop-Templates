@@ -1,5 +1,6 @@
 import { NEW_ROW_ID } from '@context/TemplateContext'
 import DroppableContainer from './DroppableContainer'
+import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 
 interface CreateRowProps {
   openCreateDialog: () => void
@@ -11,11 +12,10 @@ export default function CreateRow({ openCreateDialog }: CreateRowProps) {
       {(_listeners, attributes) => (
         <button
           className={`border-light-gray text-dark-gray hover:border-medium-gray w-full cursor-pointer border-1 border-dashed py-4 font-semibold`}
-          // {...listeners}
           {...attributes}
           onMouseDown={() => openCreateDialog()}
         >
-          + Añadir Fila
+          <FormattedMessage id="list.create-row" />
         </button>
       )}
     </DroppableContainer>

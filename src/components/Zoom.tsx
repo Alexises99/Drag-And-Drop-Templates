@@ -1,4 +1,5 @@
 import { useTemplate } from '@hooks/useTemplate'
+import { FormattedMessage } from './FormattedMessage/FormattedMessage'
 
 export default function Zoom() {
   const {
@@ -7,7 +8,9 @@ export default function Zoom() {
 
   return (
     <div className="flex w-fit items-center space-x-3 rounded-lg p-2 shadow-lg sm:p-4">
-      <span>Zoom</span>
+      <span>
+        <FormattedMessage id="zoom" />
+      </span>
       <button
         id="zoomOut"
         className="bg-light-gray cursor-pointer rounded-lg px-4 py-2 text-gray-700 hover:scale-115 hover:bg-gray-300"
