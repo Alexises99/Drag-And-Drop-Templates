@@ -54,7 +54,7 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!product.image) {
-      setError('Inserta una imagen')
+      setError('Por favor, inserta una imagen')
       return
     }
     addProduct(product)
@@ -108,11 +108,12 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
             type="file"
             id="fileInput"
             accept="image/*"
-            className="w-0 opacity-0"
+            className="hidden"
             onChange={handleFileInput}
           />
         </div>
       </div>
+      <span className="mx-auto block w-fit text-red-400">{error}</span>
     </form>
   )
 }

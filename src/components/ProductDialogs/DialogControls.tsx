@@ -1,3 +1,5 @@
+import Button from '@components/Button'
+
 interface DialogControlsProps {
   handleClose: () => void
 }
@@ -12,13 +14,9 @@ export default function DialogControls({ handleClose }: DialogControlsProps) {
       >
         Cancelar
       </button>
-      <button
-        form="product-form"
-        className="cursor-pointer border-1 border-black px-12 py-2 text-black"
-        type="submit"
-      >
+      <Button type="submit" extraProps={{ form: 'product-form' }}>
         Guardar
-      </button>
+      </Button>
     </div>
   )
 }
