@@ -15,7 +15,7 @@ export default function CreateRow({ openCreateDialog }: CreateRowProps) {
           {...attributes}
           onMouseDown={() => openCreateDialog()}
         >
-          + Anadir Fila
+          + Añadir Fila
         </button>
       )}
     </DroppableContainer>

@@ -17,7 +17,7 @@ export default function Category({
 
   const handleClickEdit = () => {
     setIsEditing(true)
-    inputRef.current?.focus()
+    requestAnimationFrame(() => inputRef.current?.select())
   }
 
   return isEditing ? (

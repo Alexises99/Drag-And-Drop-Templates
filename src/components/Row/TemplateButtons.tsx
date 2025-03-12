@@ -84,7 +84,7 @@ export default function TemplateButtons({
           disabled={items.length === 3}
         >
           <AddIcon />
-          <span className="hidden sm:inline">Anadir Productos</span>
+          <span className="hidden sm:inline">Añadir Productos</span>
         </button>
         <button className="cursor-pointer" {...listeners} {...attributes}>
           <DragIcon />
