@@ -29,7 +29,9 @@ export default function RowContainer() {
             />
           </li>
         ))}
-        <CreateRow openCreateDialog={() => openDialog('list')} />
+        <li>
+          <CreateRow openCreateDialog={() => openDialog('list')} />
+        </li>
       </ul>
     </>
   )

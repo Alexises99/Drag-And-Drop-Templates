@@ -11,7 +11,7 @@ export default function CreateRow({ openCreateDialog }: CreateRowProps) {
     <DroppableContainer id={NEW_ROW_ID} items={[]} overStyles="bg-light-gray">
       {(_listeners, attributes) => (
         <button
-          className={`border-light-gray text-dark-gray hover:border-medium-gray w-full cursor-pointer border-1 border-dashed py-4 font-semibold`}
+          className={`border-light-gray hover:border-medium-gray w-full cursor-pointer border-1 border-dashed py-4 font-semibold text-gray-900`}
           {...attributes}
           onMouseDown={() => openCreateDialog()}
         >
