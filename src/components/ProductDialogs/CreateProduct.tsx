@@ -1,6 +1,7 @@
 import { useTemplate } from '@hooks/useTemplate'
 import { useState, DragEvent, ChangeEvent, FormEvent } from 'react'
 import ProductField from './ProductField'
+import { useIntl } from 'react-intl'
 
 const defaultProduct = {
   name: '',
@@ -14,7 +15,7 @@ interface CreateProductProps {
 
 export default function CreateProduct({ handleClose }: CreateProductProps) {
   const {
-    products: { addProduct }
+    products: { addProduct, productsData }
   } = useTemplate()
 
   const [product, setProduct] = useState<{
@@ -24,6 +25,8 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
   }>(defaultProduct)
 
   const [error, setError] = useState<string>('')
+
+  const intl = useIntl()
 
   const { image, name, price } = product
 
@@ -49,12 +52,25 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
   const handleFileInput = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
     handleFile(event.target.files[0])
+    setError('')
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!product.image) {
-      setError('Por favor, inserta una imagen')
+      setError(
+        intl.formatMessage({
+          id: 'dialog.create.error.image'
+        })
+      )
+      return
+    }
+    if (Object.keys(productsData).includes(product.name)) {
+      setError(
+        intl.formatMessage({
+          id: 'dialog.create.error.name'
+        })
+      )
       return
     }
     addProduct(product)

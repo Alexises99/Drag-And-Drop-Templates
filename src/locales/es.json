@@ -6,5 +6,7 @@
   "row.add-product": "Añadir Productos",
   "aligment.left": "Izquierda",
   "aligment.center": "Centro",
-  "aligment.right": "Derecha"
+  "aligment.right": "Derecha",
+  "dialog.create.error.image": "Por favor, inserta una imagen",
+  "dialog.create.error.name": "Este producto ya existe actualmente."
 }
