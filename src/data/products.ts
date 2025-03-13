@@ -25,5 +25,25 @@ export const initialProducts: Record<string, Omit<Product, 'name'>> = {
   'Flare Fit': {
     image: jeansImages.jeans6,
     price: 39.95
+  },
+  'Jeans Straight Fit Relaxed': {
+    image: jeansImages.jeans7,
+    price: 39.95
+  },
+  'Jeans Baggy Fit': {
+    image: jeansImages.jeans8,
+    price: 59.95
+  },
+  'Jeans Slim Fit': {
+    image: jeansImages.jeans9,
+    price: 19.95
+  },
+  'Jeans Fit Relaxed': {
+    image: jeansImages.jeans10,
+    price: 49.95
+  },
+  'Jeans Baggy Fit Estampado Lavado': {
+    image: jeansImages.jeans11,
+    price: 49.95
   }
 }

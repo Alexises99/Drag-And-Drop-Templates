@@ -65,7 +65,7 @@ export default function ProductList({
           ? `Maximo ${3 - rows[editedRowId].items.length} productos`
           : 'Maximo 3 productos'}
       </h4>
-      <section className="grid max-h-full snap-y snap-proximity grid-cols-3 items-start gap-4 overflow-y-auto sm:grid-cols-4">
+      <section className="grid max-h-96 snap-y snap-proximity grid-cols-3 items-start gap-4 overflow-y-auto sm:max-h-[560px] sm:grid-cols-4">
         {showedProducts.map((product) => (
           <button
             type="button"

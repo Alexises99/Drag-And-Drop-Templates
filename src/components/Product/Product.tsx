@@ -29,7 +29,9 @@ export default function Product({
           className="max-h-40 max-w-24 object-cover select-none sm:max-w-32 md:max-h-48"
           draggable={false}
         />
-        <h3 className="text-wrap text-ellipsis">{name}</h3>
+        <h3 className="line-clamp-2" aria-label={name} title={name}>
+          {name}
+        </h3>
         <span>
           <FormattedNumber value={price} style="currency" currency="EUR" />{' '}
         </span>
