@@ -9,15 +9,15 @@ import Category from './Category'
 
 interface RowProps {
   row: RowType
-  isDraggable: boolean
-  listeners: SyntheticListenerMap | undefined
-  attributes: DraggableAttributes | undefined
+  isDraggable?: boolean
+  listeners?: SyntheticListenerMap
+  attributes?: DraggableAttributes
   openDialog: () => void
 }
 
 export default function Row({
   row,
-  isDraggable,
+  isDraggable = false,
   attributes,
   listeners,
   openDialog

@@ -59,7 +59,7 @@ export default function ProductList({
   }
 
   return (
-    <form id="product-form" onSubmit={handleSubmit}>
+    <form id="product-form" onSubmit={handleSubmit} data-testid="product-form">
       <h4 className="mb-4 text-center font-light">
         {editedRowId
           ? `Maximo ${3 - rows[editedRowId].items.length} productos`

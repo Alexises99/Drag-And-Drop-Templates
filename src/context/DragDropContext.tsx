@@ -187,13 +187,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
               {activeId ? (
                 <div>
                   {rowContainers.includes(activeId as number) ? (
-                    <Row
-                      openDialog={() => null}
-                      row={rows[activeId]}
-                      attributes={undefined}
-                      listeners={undefined}
-                      isDraggable={false}
-                    />
+                    <Row openDialog={() => null} row={rows[activeId]} />
                   ) : (
                     <Product
                       product={productUtils.getProduct(

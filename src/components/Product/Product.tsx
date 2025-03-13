@@ -35,13 +35,16 @@ export default function Product({
         </span>
       </div>
       {handleDelete ? (
-        <DeleteIcon
-          className="top-0 right-0 hidden aspect-square h-6 w-6 bg-red-400 text-white group-hover:absolute group-hover:block"
+        <button
+          className="top-0 right-0 hidden aspect-square h-6 w-6 cursor-pointer bg-red-400 text-white group-hover:absolute group-hover:block"
+          data-testid="delete-product"
           onMouseDown={(e) => {
             handleDelete(product.name)
             e.stopPropagation()
           }}
-        />
+        >
+          <DeleteIcon />
+        </button>
       ) : null}
       {children}
     </article>

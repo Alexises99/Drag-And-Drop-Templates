@@ -32,7 +32,11 @@ export default function Category({
       />
     </div>
   ) : (
-    <div className="flex h-fit gap-3" onClick={handleClickEdit}>
+    <div
+      className="flex h-fit gap-3"
+      onClick={handleClickEdit}
+      data-testid="change-category-name"
+    >
       <h3>{name}</h3>
       <PencilIcon className="text-dark-gray" />
     </div>

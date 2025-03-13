@@ -62,7 +62,7 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} id="product-form">
+    <form onSubmit={handleSubmit} id="product-form" data-testid="product-form">
       <div className="my-12 flex flex-col gap-4 sm:grid sm:grid-cols-2">
         <ProductField
           label="Nombre:"

@@ -22,6 +22,7 @@ function TemplateButton({
     <button
       className="text-medium-gray hover:text-dark-gray cursor-pointer"
       onClick={() => changeAligment(aligment)}
+      data-testid={`${aligment}-alignment-button`}
     >
       <IconComponent
         className={selectedAligment === aligment ? 'text-blue-300' : ''}
@@ -76,6 +77,7 @@ export default function TemplateButtons({
       </div>
       <div className="flex items-center gap-4 sm:order-2">
         <button
+          data-testid="remove-row"
           className="cursor-pointer group-hover:block hover:text-red-400 sm:hidden"
           onClick={handleDelete}
         >
@@ -91,7 +93,12 @@ export default function TemplateButtons({
             <FormattedMessage id="row.add-product" />
           </span>
         </button>
-        <button className="cursor-pointer" {...listeners} {...attributes}>
+        <button
+          className="cursor-pointer"
+          {...listeners}
+          {...attributes}
+          data-testid="row-drag-handle"
+        >
           <DragIcon />
         </button>
       </div>

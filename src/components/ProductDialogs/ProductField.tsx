@@ -35,7 +35,7 @@ export default function ProductField({
         type={type}
         name={name}
         id={name}
-        value={value}
+        value={value ?? ''}
         onChange={({ target: { value } }) => handleChange(value)}
         className="border-medium-gray w-full rounded-md border-1 px-3 py-2 outline-none"
         required={required}
