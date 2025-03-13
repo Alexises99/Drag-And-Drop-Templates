@@ -7,7 +7,12 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
     setupFiles: './src/setupTests.tsx',
-    mockReset: true
+    mockReset: true,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html']
+      // exclude: ['src/mocks/*']
+    }
   },
   resolve: {
     alias: {
@@ -32,6 +37,10 @@ export default defineConfig({
             const SvgComponent = () => React.createElement('svg', { 'data-testid': 'mock-svg' });
             export default SvgComponent;
           `
+          }
+        else if (id.endsWith('.svg'))
+          return {
+            code: 'export default "mock-svg"'
           }
       }
     }
