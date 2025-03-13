@@ -2,12 +2,14 @@ import { UniqueIdentifier } from '@dnd-kit/core'
 import { RowState } from '@hooks/useRows'
 import type { Alignment, Row } from '@types'
 
+export const initialName = 'Sin nombre'
+
 function createNewRow(size: number, initialItems?: UniqueIdentifier[]) {
   const newRow: Row = {
     alignment: 'left',
     id: size + 1,
     items: initialItems ?? [],
-    name: 'Sin nombre'
+    name: initialName
   }
 
   return newRow

@@ -6,6 +6,12 @@ import localesEs from '../locales/es.json'
 import { templateContextMock } from './mocks/useTemplate.mock'
 import { TemplateContext } from '@context/TemplateContext'
 
+export const wrapperIntl = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="es" messages={localesEs}>
+    {children}
+  </IntlProvider>
+)
+
 function TestTemplateProvider({ children }: PropsWithChildren) {
   return (
     <TemplateContext value={templateContextMock}>{children}</TemplateContext>

@@ -18,16 +18,16 @@ export default function RowContainer() {
         style={{
           transform: `scale(${zoom})`,
           transformOrigin: 'top left',
-          width: `${100 / zoom}%`,
-          height: `${100 / zoom}%`
+          width: `${100 / zoom}%`
         }}
       >
         {rowContainers.map((rowId) => (
-          <DroppableRow
-            row={rows[rowId]}
-            key={rowId}
-            openDialog={() => openDialog('list', rowId)}
-          />
+          <li key={rowId}>
+            <DroppableRow
+              row={rows[rowId]}
+              openDialog={() => openDialog('list', rowId)}
+            />
+          </li>
         ))}
         <CreateRow openCreateDialog={() => openDialog('list')} />
       </ul>

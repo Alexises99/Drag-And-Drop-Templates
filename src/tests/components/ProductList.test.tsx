@@ -1,9 +1,9 @@
 import { describe, test, expect, vi } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import ProductList from '@components/ProductDialogs/ProductList'
-import { renderWithContext } from './test-utils'
+import { renderWithContext } from '../test-utils'
 import { initialProducts } from '@data/products'
-import { mockRow, templateContextMock } from './mocks/useTemplate.mock'
+import { mockRow, templateContextMock } from '../mocks/useTemplate.mock'
 
 describe.only('ProductList', () => {
   const mockProps = {
@@ -13,7 +13,7 @@ describe.only('ProductList', () => {
     selectedProducts: []
   }
 
-  const [firstProduct, secondProduct, thridProduct] =
+  const [firstProduct, secondProduct, thridProduct, fourthProduct] =
     Object.keys(initialProducts)
 
   beforeEach(() => {
@@ -23,14 +23,16 @@ describe.only('ProductList', () => {
   test('renders products correctly', () => {
     renderWithContext(<ProductList {...mockProps} />)
 
-    expect(screen.getByText(firstProduct)).toBeInTheDocument()
-    expect(screen.getByText(secondProduct)).toBeInTheDocument()
+    expect(screen.queryByText(firstProduct)).not.toBeInTheDocument()
+    expect(screen.queryByText(secondProduct)).not.toBeInTheDocument()
+    expect(screen.getByText(thridProduct)).toBeInTheDocument()
+    expect(screen.getByText(fourthProduct)).toBeInTheDocument()
   })
 
   test('selects and deselects products on click', () => {
     renderWithContext(<ProductList {...mockProps} />)
 
-    const productButton = screen.getByText(firstProduct).closest('button')
+    const productButton = screen.getByText(thridProduct).closest('button')
     fireEvent.click(productButton!)
 
     expect(mockProps.setSelectedProducts).toHaveBeenCalled()

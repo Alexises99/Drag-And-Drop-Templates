@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { TemplateContextValue } from '@context/TemplateContext'
 import { initialProducts } from '@data/products'
 import { UniqueIdentifier, ClientRect } from '@dnd-kit/core'
 import type { Alignment, Data, Product, Row } from '@types'
 
+const [firstProduct, secondProduct] = Object.keys(initialProducts)
+
 export const mockRow: Row = {
   id: '1',
-  items: ['item1', 'item2'],
+  items: [firstProduct, secondProduct],
   name: 'Test Category',
   alignment: 'center'
 }
@@ -14,7 +17,7 @@ export const mockRows: Record<UniqueIdentifier, Row> = {
   1: mockRow
 }
 
-export const templateContextMock = {
+export const templateContextMock: TemplateContextValue = {
   products: {
     productsData: initialProducts as Data,
     addProduct: (_product: Product) => {},

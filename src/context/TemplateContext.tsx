@@ -6,7 +6,7 @@ import { useDragDrop } from '@hooks/useDragDrop'
 
 export const NEW_ROW_ID = 'add_row'
 
-interface TemplateContextValue {
+export interface TemplateContextValue {
   products: ReturnType<typeof useProducts>
   zoom: ReturnType<typeof useZoom>
   rows: ReturnType<typeof useRows>

@@ -1,8 +1,8 @@
 import { describe, test, expect, vi } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import CreateProduct from '@components/ProductDialogs/CreateProduct'
-import { renderWithContext } from './test-utils'
-import { templateContextMock } from './mocks/useTemplate.mock'
+import { renderWithContext } from '../test-utils'
+import { templateContextMock } from '../mocks/useTemplate.mock'
 import { act } from 'react'
 
 describe.only('CreateProduct', () => {

@@ -1,8 +1,8 @@
 import { describe, test, expect, vi } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import Zoom from '@components/Zoom'
-import { renderWithContext } from './test-utils'
-import { templateContextMock } from './mocks/useTemplate.mock'
+import { renderWithContext } from '../test-utils'
+import { templateContextMock } from '../mocks/useTemplate.mock'
 
 describe('Zoom', () => {
   test('renders zoom controls correctly', () => {

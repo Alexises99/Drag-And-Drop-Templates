@@ -1,9 +1,9 @@
-import Row from '../components/Row/Row'
+import Row from '../../components/Row/Row'
 import { screen, fireEvent } from '@testing-library/react'
 import { type Row as RowType } from '@types'
-import { renderWithContext } from './test-utils'
-import { initialProducts } from '../data/products'
-import { templateContextMock } from './mocks/useTemplate.mock'
+import { renderWithContext } from '../test-utils'
+import { initialProducts } from '../../data/products'
+import { templateContextMock } from '../mocks/useTemplate.mock'
 // import userEvent from '@testing-library/user-event'
 
 const [first, second] = Object.keys(initialProducts)
@@ -51,28 +51,22 @@ describe('Row', () => {
   //   )
   //   renderWithContext(<Row openDialog={openDialogMock} row={row} />)
 
-  //   // Click en el div para activar el modo edición
   //   const categoryDiv = screen.getByTestId('change-category-name')
   //   await userEvent.click(categoryDiv)
 
-  //   // Ahora buscamos el input que aparece después del click
   //   const input = screen.getByRole('textbox')
   //   expect(input).toBeInTheDocument()
 
-  //   // Cambiamos el valor
   //   await userEvent.clear(input)
   //   await userEvent.type(input, 'New Category Name')
 
-  //   // Simulamos perder el foco
   //   fireEvent.blur(input)
 
-  //   // Verificamos que se llamó al método con los argumentos correctos
   //   expect(changeCategoryNameSpy).toHaveBeenCalledWith(
   //     row.id,
   //     'New Category Name'
   //   )
 
-  //   // Verificamos que volvemos al modo visualización
   //   expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   // })
 
