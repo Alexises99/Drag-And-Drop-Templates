@@ -30,6 +30,15 @@ export default function Row({
 
   const removeItem = deleteItemFromRow(id)
 
+  const handleDelete = (itemId: string) => {
+    if (items.length !== 1) {
+      removeItem(itemId)
+      return
+    }
+    removeItem(itemId)
+    deleteRow(id)
+  }
+
   return (
     <section
       className={
@@ -57,7 +66,7 @@ export default function Row({
           <RowContent
             row={row}
             alignment={alignment}
-            handleDelete={removeItem}
+            handleDelete={handleDelete}
           />
         </SortableContext>
       ) : (

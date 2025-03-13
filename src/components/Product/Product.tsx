@@ -20,13 +20,13 @@ export default function Product({
 
   return (
     <article
-      className={`group relative max-w-[120px] cursor-pointer flex-col select-none ${className ?? ''}`}
+      className={`group relative max-w-24 cursor-pointer select-none sm:max-w-32 ${className ?? ''}`}
     >
       <div className="flex flex-col gap-1">
         <img
           src={image}
           alt={name}
-          className="max-h-40 max-w-[120px] object-cover select-none md:max-h-48"
+          className="max-h-40 max-w-24 object-cover select-none sm:max-w-32 md:max-h-48"
           draggable={false}
         />
         <h3 className="text-wrap text-ellipsis">{name}</h3>
