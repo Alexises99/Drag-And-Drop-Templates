@@ -23,12 +23,20 @@ export default function RowContent({
   const { items } = row
   const selectedAligment = aligmentUtils.getJustifyAligment(alignment)
   return (
-    <div className={`flex w-full gap-4 p-2 sm:p-4 ${selectedAligment}`}>
+    <div
+      className={`flex min-h-60 w-full gap-4 p-2 sm:p-4 ${selectedAligment}`}
+    >
       {items.map((item) => {
         const product = productUtils.getProduct(item as string, productsData)
         return (
           <DraggableItem id={product.name} key={item}>
-            <Product product={product} handleDelete={handleDelete} />
+            {(isActive) => (
+              <Product
+                product={product}
+                handleDelete={handleDelete}
+                isActive={isActive}
+              />
+            )}
           </DraggableItem>
         )
       })}

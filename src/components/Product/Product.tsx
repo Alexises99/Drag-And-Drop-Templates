@@ -1,4 +1,5 @@
 import { DeleteIcon } from '@assets/icons'
+
 import { Product as ProductType } from '@types'
 import { ReactNode } from 'react'
 import { FormattedNumber } from 'react-intl'
@@ -7,6 +8,7 @@ interface ProductProps {
   product: ProductType
   handleDelete?: (productId: string) => void
   children?: ReactNode
+  isActive?: boolean
   className?: string
 }
 
@@ -14,6 +16,7 @@ export default function Product({
   product,
   children,
   className,
+  isActive,
   handleDelete
 }: ProductProps) {
   const { image, name, price } = product
@@ -22,7 +25,7 @@ export default function Product({
     <article
       className={`group relative max-w-24 cursor-pointer select-none sm:max-w-32 ${className ?? ''}`}
     >
-      <div className="flex flex-col gap-1">
+      <div className={`flex flex-col gap-1 ${isActive ? 'opacity-30' : ''}`}>
         <img
           src={image}
           alt={name}
