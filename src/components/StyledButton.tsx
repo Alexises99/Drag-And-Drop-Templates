@@ -19,7 +19,7 @@ export default function StyledButton({
 }: PropsWithChildren<ButtonProps>) {
   return (
     <button
-      className="hover:bg-light-gray cursor-pointer border-1 border-black px-12 py-2 text-black"
+      className="hover:bg-light-gray disabled:bg-light-gray cursor-pointer border-1 border-black px-12 py-2 text-black transition-colors disabled:cursor-auto"
       type={type}
       {...extraProps}
     >

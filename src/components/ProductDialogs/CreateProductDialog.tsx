@@ -3,7 +3,7 @@ import CreateProduct from './CreateProduct'
 import DialogControls from './DialogControls'
 import { useState } from 'react'
 import { ProductDialog } from '@types'
-import { defaultProduct } from '@utils/products'
+import productUtils, { defaultProduct } from '@utils/products'
 
 interface CreateProductDialogProps {
   handleClose: (reset?: () => void) => void
@@ -35,7 +35,10 @@ export default function CreateProductDialog({
         error={error}
         setProduct={setProduct}
       />
-      <DialogControls handleClose={closeDialog} />
+      <DialogControls
+        handleClose={closeDialog}
+        disabledSubmit={!productUtils.checkProductIsCompleted(product)}
+      />
     </>
   )
 }

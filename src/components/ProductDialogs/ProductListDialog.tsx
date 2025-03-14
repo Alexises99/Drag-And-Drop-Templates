@@ -28,7 +28,10 @@ export default function ProductListDialog({
         selectedProducts={selectedProducts}
         setSelectedProducts={setSelectedProducts}
       />
-      <DialogControls handleClose={closeDialog} />
+      <DialogControls
+        handleClose={closeDialog}
+        disabledSubmit={selectedProducts.length === 0}
+      />
     </>
   )
 }

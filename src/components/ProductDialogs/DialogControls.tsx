@@ -3,9 +3,13 @@ import StyledButton from '@components/StyledButton'
 
 interface DialogControlsProps {
   handleClose: () => void
+  disabledSubmit?: boolean
 }
 
-export default function DialogControls({ handleClose }: DialogControlsProps) {
+export default function DialogControls({
+  handleClose,
+  disabledSubmit = false
+}: DialogControlsProps) {
   return (
     <div className="flex justify-center gap-8">
       <button
@@ -15,7 +19,10 @@ export default function DialogControls({ handleClose }: DialogControlsProps) {
       >
         <FormattedMessage id="dialog.dialog-controls.cancel" />
       </button>
-      <StyledButton type="submit" extraProps={{ form: 'product-form' }}>
+      <StyledButton
+        type="submit"
+        extraProps={{ form: 'product-form', disabled: disabledSubmit }}
+      >
         <FormattedMessage id="dialog.dialog-controls.save" />
       </StyledButton>
     </div>

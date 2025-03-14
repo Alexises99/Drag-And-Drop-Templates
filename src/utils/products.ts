@@ -11,6 +11,11 @@ function getProduct(id: string, products: Data): Product {
   return { name: id, ...products[id] }
 }
 
+function checkProductIsCompleted(product: ProductDialog): boolean {
+  const { image, name, price } = product
+  return image !== '' && name !== '' && price !== ''
+}
+
 function addProduct(product: Product, products: Data): Data {
   const copy = { ...products }
   const { name, ...rest } = product
@@ -27,7 +32,8 @@ function removeProduct(productId: string, products: Data): Data {
 const productUtils = {
   getProduct,
   addProduct,
-  removeProduct
+  removeProduct,
+  checkProductIsCompleted
 }
 
 export default productUtils
