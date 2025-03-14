@@ -15,20 +15,14 @@ export function useRows() {
   )
 
   // Avoid re-renders
-  const updateRows = useCallback((updater: (prev: RowState) => RowState) => {
-    setRows((prev) => {
-      const newState = updater(prev)
-      return newState !== prev ? newState : prev
-    })
-  }, [])
+  const updateRows = useCallback(
+    (updater: (prev: RowState) => RowState) => setRows((prev) => updater(prev)),
+    []
+  )
 
   const updateRowContainers = useCallback(
-    (updater: (prev: UniqueIdentifier[]) => UniqueIdentifier[]) => {
-      setRowContainers((prev) => {
-        const newState = updater(prev)
-        return newState !== prev ? newState : prev
-      })
-    },
+    (updater: (prev: UniqueIdentifier[]) => UniqueIdentifier[]) =>
+      setRowContainers((prev) => updater(prev)),
     []
   )
 

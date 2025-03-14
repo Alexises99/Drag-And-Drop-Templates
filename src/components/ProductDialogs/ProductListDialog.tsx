@@ -2,6 +2,7 @@ import { useState } from 'react'
 import ProductList from './ProductList'
 import DialogControls from './DialogControls'
 import { UniqueIdentifier } from '@dnd-kit/core'
+import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 
 interface ProductListDialogProps {
   handleClose: (reset?: () => void) => void
@@ -14,18 +15,20 @@ export default function ProductListDialog({
 }: ProductListDialogProps) {
   const [selectedProducts, setSelectedProducts] = useState<string[]>([])
 
+  const closeDialog = () => handleClose(() => setSelectedProducts([]))
+
   return (
     <>
       <h3 className="mb-4 text-center text-2xl text-black">
-        Selecciona Productos
+        <FormattedMessage id="dialog.list.title" />
       </h3>
       <ProductList
         editedRowId={editedRowId}
-        handleClose={() => handleClose(() => setSelectedProducts([]))}
+        handleClose={closeDialog}
         selectedProducts={selectedProducts}
         setSelectedProducts={setSelectedProducts}
       />
-      <DialogControls handleClose={() => handleClose()} />
+      <DialogControls handleClose={closeDialog} />
     </>
   )
 }

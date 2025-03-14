@@ -1,4 +1,5 @@
-import Button from '@components/Button'
+import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
+import StyledButton from '@components/StyledButton'
 
 interface DialogControlsProps {
   handleClose: () => void
@@ -12,11 +13,11 @@ export default function DialogControls({ handleClose }: DialogControlsProps) {
         onClick={handleClose}
         type="button"
       >
-        Cancelar
+        <FormattedMessage id="dialog.dialog-controls.cancel" />
       </button>
-      <Button type="submit" extraProps={{ form: 'product-form' }}>
-        Guardar
-      </Button>
+      <StyledButton type="submit" extraProps={{ form: 'product-form' }}>
+        <FormattedMessage id="dialog.dialog-controls.save" />
+      </StyledButton>
     </div>
   )
 }

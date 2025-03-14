@@ -12,7 +12,7 @@ interface ButtonProps {
   >
 }
 
-export default function Button({
+export default function StyledButton({
   extraProps,
   type,
   children

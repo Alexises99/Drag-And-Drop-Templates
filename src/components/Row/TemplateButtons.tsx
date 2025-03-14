@@ -23,6 +23,7 @@ function TemplateButton({
       className="text-medium-gray hover:text-dark-gray cursor-pointer"
       onClick={() => changeAligment(aligment)}
       data-testid={`${aligment}-alignment-button`}
+      aria-controls="aligment"
     >
       <IconComponent
         className={selectedAligment === aligment ? 'text-blue-300' : ''}
@@ -53,8 +54,14 @@ export default function TemplateButtons({
   const intl = useIntl()
   return (
     <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-6">
-      <div className="order-2 flex items-center gap-4 sm:order-1">
-        <span>
+      <div className="order-2 flex items-center gap-4 sm:order-1" role="group">
+        <span
+          id="aligment"
+          aria-live="polite"
+          aria-label={intl.formatMessage({
+            id: 'row.aligment.aria-label'
+          })}
+        >
           {intl.formatMessage({
             id: `aligment.${selectedAligment}`
           })}
@@ -84,6 +91,10 @@ export default function TemplateButtons({
           <DeleteIcon />
         </button>
         <button
+          type="button"
+          aria-label={intl.formatMessage({
+            id: 'row.remove.aria-label'
+          })}
           className="disabled:bg-light-gray flex cursor-pointer items-center gap-2 rounded-full border-1 disabled:cursor-auto sm:px-4 sm:py-1"
           onClick={() => openDialog()}
           disabled={items.length === 3}
@@ -98,6 +109,9 @@ export default function TemplateButtons({
           {...listeners}
           {...attributes}
           data-testid="row-drag-handle"
+          aria-label={intl.formatMessage({
+            id: 'row.drag.aria-label'
+          })}
         >
           <DragIcon />
         </button>

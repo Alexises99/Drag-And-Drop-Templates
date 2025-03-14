@@ -2,6 +2,7 @@ import { useTemplate } from '@hooks/useTemplate'
 import { useState, DragEvent, ChangeEvent, FormEvent } from 'react'
 import ProductField from './ProductField'
 import { useIntl } from 'react-intl'
+import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 
 const defaultProduct = {
   name: '',
@@ -107,16 +108,28 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
           onDragOver={(event) => event.preventDefault()}
         >
           {image ? (
-            <img src={image} alt="Image Preview" className="max-h-48" />
+            <img
+              src={image}
+              alt={intl.formatMessage({
+                id: 'dialog.create.file-input.image.alt'
+              })}
+              className="max-h-48"
+            />
           ) : (
             <span className="text-center">
-              Arrastra y suelta una imagen aqui o{' '}
-              <label
-                htmlFor="fileInput"
-                className="cursor-pointer text-blue-500"
-              >
-                selecciona una
-              </label>
+              <FormattedMessage
+                id="dialog.create.file-input"
+                values={{
+                  select: (
+                    <label
+                      htmlFor="fileInput"
+                      className="cursor-pointer text-blue-500"
+                    >
+                      <FormattedMessage id="dialog.create.file-input.select" />
+                    </label>
+                  )
+                }}
+              />
             </span>
           )}
           <input

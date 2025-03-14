@@ -1,4 +1,4 @@
-import Button from './Button'
+import StyledButton from './StyledButton'
 import { FormattedMessage } from './FormattedMessage/FormattedMessage'
 import zaraLogo from '/logo.svg'
 import { useDialogContext } from '@hooks/useDialogContext'
@@ -6,7 +6,7 @@ import { useDialogContext } from '@hooks/useDialogContext'
 export default function Header() {
   const { openDialog } = useDialogContext()
   return (
-    <header className="flex items-end justify-between">
+    <header className="flex items-end justify-between" role="banner">
       <img
         src={zaraLogo}
         alt="Zara logo"
@@ -15,9 +15,15 @@ export default function Header() {
         height={56}
         loading="eager"
       />
-      <Button extraProps={{ onClick: () => openDialog('form') }} type="button">
+      <StyledButton
+        extraProps={{
+          onClick: () => openDialog('form'),
+          'aria-haspopup': 'dialog'
+        }}
+        type="button"
+      >
         <FormattedMessage id="header.create-product" />
-      </Button>
+      </StyledButton>
     </header>
   )
 }

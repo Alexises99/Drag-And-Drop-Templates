@@ -1,3 +1,4 @@
+import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 import CreateProduct from './CreateProduct'
 import DialogControls from './DialogControls'
 
@@ -10,7 +11,9 @@ export default function CreateProductDialog({
 }: CreateProductDialogProps) {
   return (
     <>
-      <h3 className="mb-4 text-center text-2xl text-black">Crear Producto</h3>
+      <h3 className="mb-4 text-center text-2xl text-black">
+        <FormattedMessage id="dialog.create.title" />
+      </h3>
       <CreateProduct handleClose={handleClose} />
       <DialogControls handleClose={() => handleClose()} />
     </>

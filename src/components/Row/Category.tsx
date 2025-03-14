@@ -1,5 +1,5 @@
 import { PencilIcon } from '@assets/icons'
-import { useRef, useState } from 'react'
+import { useRef, useState, KeyboardEvent } from 'react'
 
 interface CategoryProps {
   name: string
@@ -20,6 +20,15 @@ export default function Category({
     requestAnimationFrame(() => inputRef.current?.select())
   }
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setIsEditing(false)
+    } else if (e.key === 'Escape') {
+      inputRef.current!.value = name
+      setIsEditing(false)
+    }
+  }
+
   return isEditing ? (
     <div className="h-fit min-w-0">
       <input
@@ -27,6 +36,7 @@ export default function Category({
         type="text"
         value={name}
         onChange={({ target: { value } }) => handleChangeName(id, value)}
+        onKeyDown={handleKeyDown}
         className="border-medium-gray rounded-lg border-1 bg-white px-2 py-1 outline-0"
         onBlur={() => setIsEditing(false)}
       />
