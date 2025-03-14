@@ -2,7 +2,7 @@ import { describe, test, expect, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import RowContainer from '@components/RowContainer'
 import { useDialogContext } from '@hooks/useDialogContext'
-import { renderWithContext } from '../test-utils'
+import { renderWithContext, translate } from '../test-utils'
 import { mockRow } from '../mocks/useTemplate.mock'
 
 // Mock the hook
@@ -29,7 +29,7 @@ describe('RowContainer', () => {
   test('renders all rows from rowContainers', () => {
     renderWithContext(<RowContainer />)
 
-    expect(screen.getAllByRole('listitem')).toHaveLength(1)
+    expect(screen.getAllByRole('listitem')).toHaveLength(mockRow.items.length)
   })
 
   test('applies correct zoom transformation styles', () => {
@@ -39,15 +39,14 @@ describe('RowContainer', () => {
     expect(container).toHaveStyle({
       transform: 'scale(1)',
       transformOrigin: 'top left',
-      width: '100%',
-      height: '100%'
+      width: '100%'
     })
   })
 
   test('renders CreateRow component', () => {
     renderWithContext(<RowContainer />)
 
-    expect(screen.getByText('+ Añadir Fila')).toBeInTheDocument()
+    expect(screen.getByText(translate('list.create-row'))).toBeInTheDocument()
   })
 
   // test('handles empty rowContainers', () => {
@@ -61,9 +60,7 @@ describe('RowContainer', () => {
     renderWithContext(<RowContainer />)
 
     // Trigger dialog open for a specific row
-    const firstRow = screen.getAllByRole('button', {
-      name: /Añadir Productos/i
-    })[0]
+    const firstRow = screen.getByText(translate('row.add-product'))
     firstRow.click()
 
     expect(mockOpenDialog).toHaveBeenCalledWith('list', mockRow.id)

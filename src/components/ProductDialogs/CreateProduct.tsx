@@ -124,6 +124,7 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
                     <label
                       htmlFor="fileInput"
                       className="cursor-pointer text-blue-500"
+                      key={'select-file'}
                     >
                       <FormattedMessage id="dialog.create.file-input.select" />
                     </label>

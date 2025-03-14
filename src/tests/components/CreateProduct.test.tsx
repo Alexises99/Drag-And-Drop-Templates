@@ -1,7 +1,7 @@
 import { describe, test, expect, vi } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import CreateProduct from '@components/ProductDialogs/CreateProduct'
-import { renderWithContext } from '../test-utils'
+import { renderWithContext, translate } from '../test-utils'
 import { templateContextMock } from '../mocks/useTemplate.mock'
 import { act } from 'react'
 
@@ -82,11 +82,21 @@ describe.only('CreateProduct', () => {
       }
     })
 
-    expect(await screen.findByAltText('Image Preview')).toBeInTheDocument()
+    expect(
+      await screen.findByAltText(
+        translate('dialog.create.file-input.image.alt')
+      )
+    ).toBeInTheDocument()
   })
 
   test('submits form with valid data', () => {
     renderWithContext(<CreateProduct handleClose={mockHandleClose} />)
+
+    const product = {
+      name: 'Test Product',
+      price: 99.99,
+      image: 'data:image/png;base64,dummy'
+    }
 
     const addProducSpyOn = vi.spyOn(templateContextMock.products, 'addProduct')
 
@@ -96,17 +106,17 @@ describe.only('CreateProduct', () => {
     // Fill form data
     act(() => {
       fireEvent.change(screen.getByLabelText(/nombre:/i), {
-        target: { value: 'Test Product' }
+        target: { value: product.name }
       })
       fireEvent.change(screen.getByLabelText(/precio:/i), {
-        target: { value: '99.99' }
+        target: { value: product.price }
       })
     })
 
     // Mock image upload
     const mockFileReader = {
       readAsDataURL: vi.fn(),
-      result: 'data:image/png;base64,dummy',
+      result: product.image,
       onload: null as
         | ((this: FileReader, ev: ProgressEvent<FileReader>) => unknown)
         | null
@@ -130,9 +140,9 @@ describe.only('CreateProduct', () => {
     fireEvent.submit(screen.getByTestId('product-form'))
 
     expect(addProducSpyOn).toHaveBeenCalledWith({
-      name: 'Test Product',
-      price: 99.99,
-      image: 'data:image/png;base64,dummy'
+      name: product.name,
+      price: product.price,
+      image: product.image
     })
     expect(mockHandleClose).toHaveBeenCalled()
   })

@@ -16,7 +16,7 @@ describe('Category', () => {
 
   test('renders category name correctly', () => {
     render(<Category {...defaultProps} />)
-    expect(screen.getByText('Test Category')).toBeInTheDocument()
+    expect(screen.getByText(defaultProps.name)).toBeInTheDocument()
   })
 
   test('change category name works correctly', async () => {
@@ -27,7 +27,7 @@ describe('Category', () => {
 
     const input = screen.getByRole('textbox')
     expect(input).toBeInTheDocument()
-    expect(input).toHaveValue('Test Category')
+    expect(input).toHaveValue(defaultProps.name)
 
     const newName = 'New Name'
 

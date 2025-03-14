@@ -56,7 +56,7 @@ export default function Product({
           {name}
         </h3>
         <span>
-          <FormattedNumber value={price} style="currency" currency="EUR" />{' '}
+          <FormattedNumber value={price} style="currency" currency="EUR" />
         </span>
       </div>
       {handleDelete ? (

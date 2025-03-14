@@ -1,7 +1,7 @@
 import Row from '../../components/Row/Row'
 import { screen, fireEvent } from '@testing-library/react'
 import { type Row as RowType } from '@types'
-import { renderWithContext } from '../test-utils'
+import { renderWithContext, translate } from '../test-utils'
 import { initialProducts } from '../../data/products'
 import { templateContextMock } from '../mocks/useTemplate.mock'
 // import userEvent from '@testing-library/user-event'
@@ -24,12 +24,12 @@ describe('Row', () => {
 
   test('Renders row with correct title', () => {
     renderWithContext(<Row openDialog={openDialogMock} row={row} />)
-    expect(screen.getByText('Untitled Row')).toBeInTheDocument()
+    expect(screen.getByText(row.name)).toBeInTheDocument()
   })
 
   test('Add product works correctl', async () => {
     renderWithContext(<Row openDialog={openDialogMock} row={row} />)
-    const button = await screen.findByText('Añadir Productos')
+    const button = await screen.findByText(translate('row.add-product'))
     fireEvent.click(button)
     expect(openDialogMock).toHaveBeenCalledTimes(1)
   })

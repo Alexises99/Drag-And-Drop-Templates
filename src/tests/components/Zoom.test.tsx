@@ -1,7 +1,7 @@
 import { describe, test, expect, vi } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import Zoom from '@components/Zoom'
-import { renderWithContext } from '../test-utils'
+import { renderWithContext, translate } from '../test-utils'
 import { templateContextMock } from '../mocks/useTemplate.mock'
 
 describe('Zoom', () => {
@@ -19,7 +19,9 @@ describe('Zoom', () => {
     const decreaseZoomSpy = vi.spyOn(templateContextMock.zoom, 'decreaseZoom')
     renderWithContext(<Zoom />)
 
-    const minusButton = screen.getByRole('button', { name: '-' })
+    const minusButton = screen.getByRole('button', {
+      name: translate('zoom.decrease.label')
+    })
     fireEvent.click(minusButton)
 
     expect(decreaseZoomSpy).toHaveBeenCalledTimes(1)
@@ -29,7 +31,9 @@ describe('Zoom', () => {
     const increaseZoomSpy = vi.spyOn(templateContextMock.zoom, 'increaseZoom')
     renderWithContext(<Zoom />)
 
-    const plusButton = screen.getByRole('button', { name: '+' })
+    const plusButton = screen.getByRole('button', {
+      name: translate('zoom.increase.label')
+    })
     fireEvent.click(plusButton)
 
     expect(increaseZoomSpy).toHaveBeenCalledTimes(1)
@@ -52,13 +56,11 @@ describe('Zoom', () => {
   test('buttons have correct accessibility attributes', () => {
     renderWithContext(<Zoom />)
 
-    expect(screen.getByRole('button', { name: '-' })).toHaveAttribute(
-      'id',
-      'zoomOut'
-    )
-    expect(screen.getByRole('button', { name: '+' })).toHaveAttribute(
-      'id',
-      'zoomIn'
-    )
+    expect(
+      screen.getByRole('button', { name: translate('zoom.decrease.label') })
+    ).toHaveAttribute('id', 'zoomOut')
+    expect(
+      screen.getByRole('button', { name: translate('zoom.increase.label') })
+    ).toHaveAttribute('id', 'zoomIn')
   })
 })

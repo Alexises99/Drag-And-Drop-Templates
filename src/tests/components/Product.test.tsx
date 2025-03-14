@@ -17,12 +17,13 @@ describe('Product', () => {
   test('renders product information correctly', () => {
     render(<Product {...defaultProps} />, { wrapper: wrapperIntl })
 
-    expect(screen.getByText('Test Product')).toBeInTheDocument()
-    expect(screen.getByAltText('Test Product')).toHaveAttribute(
-      'src',
-      'test-image.jpg'
-    )
-    expect(screen.getByText('99,99 €')).toBeInTheDocument()
+    expect(screen.getByText(mockProduct.name)).toBeInTheDocument()
+    expect(
+      screen.getByAltText(`Imagen del producto ${mockProduct.name}`)
+    ).toHaveAttribute('src', mockProduct.image)
+    expect(
+      screen.getByText(`${mockProduct.price.toString().replace('.', ',')} €`)
+    ).toBeInTheDocument()
   })
 
   test('applies custom className', () => {
@@ -53,7 +54,7 @@ describe('Product', () => {
     const deleteIcon = screen.getByTestId('delete-product')
     fireEvent.mouseDown(deleteIcon)
 
-    expect(handleDelete).toHaveBeenCalledWith('Test Product')
+    expect(handleDelete).toHaveBeenCalledWith(mockProduct.name)
   })
 
   test('does not show delete icon when handleDelete is not provided', () => {

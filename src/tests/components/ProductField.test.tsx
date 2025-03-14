@@ -19,7 +19,7 @@ describe.only('ProductField', () => {
   test('renders with basic props', () => {
     render(<ProductField {...defaultProps} />)
 
-    expect(screen.getByLabelText('Test Label')).toBeInTheDocument()
+    expect(screen.getByLabelText(defaultProps.label)).toBeInTheDocument()
     expect(screen.getByRole('textbox')).toBeInTheDocument()
   })
 
@@ -27,20 +27,22 @@ describe.only('ProductField', () => {
     render(<ProductField {...defaultProps} />)
 
     const input = screen.getByRole('textbox')
-    expect(input).toHaveAttribute('type', 'text')
-    expect(input).toHaveAttribute('name', 'test-field')
-    expect(input).toHaveAttribute('id', 'test-field')
-    expect(input).toHaveAttribute('value', 'test-value')
-    expect(input).toHaveAttribute('placeholder', 'Enter value')
+    expect(input).toHaveAttribute('type', defaultProps.type)
+    expect(input).toHaveAttribute('name', defaultProps.name)
+    expect(input).toHaveAttribute('id', defaultProps.name)
+    expect(input).toHaveAttribute('value', defaultProps.value)
+    expect(input).toHaveAttribute('placeholder', defaultProps.placeholder)
   })
 
   test('handles change events', () => {
     render(<ProductField {...defaultProps} />)
 
-    const input = screen.getByRole('textbox')
-    fireEvent.change(input, { target: { value: 'new value' } })
+    const newValue = 'new value'
 
-    expect(defaultProps.handleChange).toHaveBeenCalledWith('new value')
+    const input = screen.getByRole('textbox')
+    fireEvent.change(input, { target: { value: newValue } })
+
+    expect(defaultProps.handleChange).toHaveBeenCalledWith(newValue)
   })
 
   test('applies custom className', () => {
