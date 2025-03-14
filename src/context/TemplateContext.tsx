@@ -20,9 +20,9 @@ export default function TemplateProvider({ children }: PropsWithChildren) {
   const zoom = useZoom()
   const rowsState = useRows()
 
-  const { rows, updateRows } = rowsState
+  const { rows, setRows } = rowsState
 
-  const dragDrop = useDragDrop(rows, updateRows)
+  const dragDrop = useDragDrop(rows, setRows)
 
   const value: TemplateContextValue = {
     products,

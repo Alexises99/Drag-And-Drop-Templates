@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { TemplateContextValue } from '@context/TemplateContext'
 import { initialProducts } from '@data/products'
-import { UniqueIdentifier, ClientRect } from '@dnd-kit/core'
-import type { Alignment, Data, Product, Row } from '@types'
+import { UniqueIdentifier } from '@dnd-kit/core'
+import type { Data, Row } from '@types'
 
 const [firstProduct, secondProduct] = Object.keys(initialProducts)
 
@@ -20,8 +20,8 @@ export const mockRows: Record<UniqueIdentifier, Row> = {
 export const templateContextMock: TemplateContextValue = {
   products: {
     productsData: initialProducts as Data,
-    addProduct: (_product: Product) => {},
-    removeProduct: (_productId: string) => {}
+    addProduct: (_product) => {},
+    removeProduct: (_productId) => {}
   },
   zoom: {
     zoom: 1,
@@ -30,37 +30,26 @@ export const templateContextMock: TemplateContextValue = {
   },
   rows: {
     rows: mockRows,
-    rowContainers: ['1'],
-    addNewRow: (_items?: UniqueIdentifier[]) => {},
-    addItemToRow: (_rowId: UniqueIdentifier, _items: UniqueIdentifier[]) => {},
-    deleteRow: (_rowId: UniqueIdentifier) => {},
-    changeCategoryName: (_rowId: UniqueIdentifier, _value: string) => {},
-    handleMoveRows: (_activeId: number, _overId: number) => {},
-    deleteItemFromRow: (_rowId: UniqueIdentifier) => (_itemId: string) => {},
-    updateRows: (
-      _updater: (
-        prev: Record<UniqueIdentifier, Row>
-      ) => Record<UniqueIdentifier, Row>
-    ) => {},
-    updateRowContainers: (
-      _updater: (prev: UniqueIdentifier[]) => UniqueIdentifier[]
-    ) => {},
-    changeAligment: (_rowId: UniqueIdentifier, _alignment: Alignment) => {}
+    rowContainers: [mockRow.id],
+    addNewRow: (_items) => {},
+    addItemToRow: (_rowId, _items) => {},
+    deleteRow: (_rowId) => {},
+    changeCategoryName: (_rowId, _value) => {},
+    handleMoveRows: (_activeId, _overId) => {},
+    deleteItemFromRow: (_rowId) => (_itemId) => {},
+    setRows: (_prev) => {},
+    setRowContainers: (_prev) => {},
+    changeAligment: (_rowId, _alignment) => {}
   },
   dragDrop: {
-    handleDragEnd: (
-      _activeId: UniqueIdentifier,
-      _overId: UniqueIdentifier,
-      _activeContainer: UniqueIdentifier,
-      _overContainer: UniqueIdentifier
-    ) => {},
+    handleDragEnd: (_activeId, _overId, _activeContainer, _overContainer) => {},
     handleDragOver: (
-      _activeId: UniqueIdentifier,
-      _overId: UniqueIdentifier,
-      _activeContainer: UniqueIdentifier,
-      _overContainer: UniqueIdentifier,
-      _activeRect: ClientRect | null,
-      _overRect: ClientRect
+      _activeId,
+      _overId,
+      _activeContainer,
+      _overContainer,
+      _activeRect,
+      _overRect
     ) => {}
   }
 }

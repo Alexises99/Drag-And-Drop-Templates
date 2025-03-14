@@ -15,62 +15,60 @@ export function useRows() {
     Object.keys(rows).map(Number)
   )
 
-  // Avoid re-renders
-  const updateRows = useCallback(
-    (updater: (prev: RowState) => RowState) => setRows((prev) => updater(prev)),
-    []
-  )
-
-  const updateRowContainers = useCallback(
-    (updater: (prev: UniqueIdentifier[]) => UniqueIdentifier[]) =>
-      setRowContainers((prev) => updater(prev)),
-    []
-  )
-
   const addNewRow = useCallback(
     (items: UniqueIdentifier[] = []) => {
       const newRow = rowsUtils.createNewRow(createdRows, items)
       setCreatedRows((prev) => prev + 1)
-      updateRows((prev) => ({ ...prev, [newRow.id]: newRow }))
-      updateRowContainers((prev) =>
-        prev.includes(newRow.id) ? prev : [...prev, Number(newRow.id)]
+      setRows((prev) => ({ ...prev, [newRow.id]: newRow }))
+      setRowContainers((prev) =>
+        prev.includes(Number(newRow.id)) ? prev : [...prev, Number(newRow.id)]
       )
     },
-    [updateRows, updateRowContainers, createdRows]
+    [createdRows]
   )
 
   const addItemToRow = useCallback(
-    (rowId: UniqueIdentifier, items: UniqueIdentifier[]) => {
-      updateRows(rowsUtils.addItem(rowId, items))
-    },
-    [updateRows]
+    (rowId: UniqueIdentifier, items: UniqueIdentifier[]) =>
+      setRows(rowsUtils.addItem(rowId, items)),
+    []
   )
 
-  const deleteRow = (rowId: UniqueIdentifier) => {
-    updateRows(rowsUtils.removeRow(rowId))
-    updateRowContainers((prev) =>
+  const deleteRow = useCallback((rowId: UniqueIdentifier) => {
+    setRows(rowsUtils.removeRow(rowId))
+    setRowContainers((prev) =>
       prev.filter((containerId) => containerId !== rowId)
     )
-  }
+  }, [])
 
-  const deleteItemFromRow = (rowId: UniqueIdentifier) => (itemId: string) => {
-    updateRows(rowsUtils.removeItemFromRow(rowId, itemId))
-  }
+  const deleteItemFromRow = useCallback(
+    (rowId: UniqueIdentifier) => (itemId: string) =>
+      setRows(rowsUtils.removeItemFromRow(rowId, itemId)),
+    []
+  )
 
-  const changeCategoryName = (rowId: UniqueIdentifier, value: string) => {
-    updateRows(rowsUtils.changeCategoryName(rowId, value))
-  }
+  const changeCategoryName = useCallback(
+    (rowId: UniqueIdentifier, value: string) =>
+      setRows(rowsUtils.changeCategoryName(rowId, value)),
+    []
+  )
 
-  const changeAligment = (rowId: UniqueIdentifier, aligment: Alignment) => {
-    updateRows(rowsUtils.changeAligment(rowId, aligment))
-  }
+  const changeAligment = useCallback(
+    (rowId: UniqueIdentifier, aligment: Alignment) =>
+      setRows(rowsUtils.changeAligment(rowId, aligment)),
+    []
+  )
 
-  const handleMoveRows = (activeId: number, overId: number) => {
-    const activeIndex = rowContainers.indexOf(activeId)
-    const overIndex = rowContainers.indexOf(overId)
+  const handleMoveRows = useCallback(
+    (activeId: number, overId: number) => {
+      const activeIndex = rowContainers.indexOf(activeId)
+      const overIndex = rowContainers.indexOf(overId)
 
-    updateRowContainers((prev) => arrayMove(prev, activeIndex, overIndex))
-  }
+      if (activeIndex === -1 || overIndex === -1) return
+
+      setRowContainers((prev) => arrayMove(prev, activeIndex, overIndex))
+    },
+    [rowContainers]
+  )
 
   return {
     rows,
@@ -81,8 +79,8 @@ export function useRows() {
     changeCategoryName,
     handleMoveRows,
     deleteItemFromRow,
-    updateRows,
-    updateRowContainers,
+    setRowContainers,
+    setRows,
     changeAligment
   }
 }

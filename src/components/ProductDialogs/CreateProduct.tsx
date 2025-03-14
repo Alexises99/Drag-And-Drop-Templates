@@ -61,6 +61,7 @@ export default function CreateProduct({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     if (!product.image) {
       setError(
         intl.formatMessage({
@@ -77,7 +78,9 @@ export default function CreateProduct({
       )
       return
     }
+
     const copyProduct: Product = { ...product, price: Number(product.price) }
+
     addProduct(copyProduct)
     handleClose()
   }

@@ -43,7 +43,7 @@ describe('TemplateContext', () => {
   const mockRows = {
     rows: {},
     rowContainers: [],
-    updateRows: vi.fn()
+    setRows: vi.fn()
   }
 
   const mockDragDrop = {
@@ -66,7 +66,7 @@ describe('TemplateContext', () => {
       deleteItemFromRow: () => () => {},
       deleteRow: () => {},
       handleMoveRows: () => {},
-      updateRowContainers: () => {}
+      setRowContainers: () => {}
     })
     vi.mocked(useDragDrop).mockReturnValue(mockDragDrop)
   })
@@ -117,7 +117,7 @@ describe('TemplateContext', () => {
     expect(useProducts).toHaveBeenCalled()
     expect(useZoom).toHaveBeenCalled()
     expect(useRows).toHaveBeenCalled()
-    expect(useDragDrop).toHaveBeenCalledWith(mockRows.rows, mockRows.updateRows)
+    expect(useDragDrop).toHaveBeenCalledWith(mockRows.rows, mockRows.setRows)
   })
 
   test('context is null outside provider', () => {

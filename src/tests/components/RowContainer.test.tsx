@@ -27,13 +27,13 @@ describe('RowContainer', () => {
   })
 
   test('renders all rows from rowContainers', () => {
-    renderWithContext(<RowContainer />)
+    renderWithContext(<RowContainer isOrderingContainer={false} />)
 
     expect(screen.getAllByRole('listitem')).toHaveLength(mockRow.items.length)
   })
 
   test('applies correct zoom transformation styles', () => {
-    renderWithContext(<RowContainer />)
+    renderWithContext(<RowContainer isOrderingContainer={false} />)
 
     const container = screen.getByRole('list')
     expect(container).toHaveStyle({
@@ -44,7 +44,7 @@ describe('RowContainer', () => {
   })
 
   test('renders CreateRow component', () => {
-    renderWithContext(<RowContainer />)
+    renderWithContext(<RowContainer isOrderingContainer={false} />)
 
     expect(screen.getByText(translate('list.create-row'))).toBeInTheDocument()
   })
@@ -57,7 +57,7 @@ describe('RowContainer', () => {
   // })
 
   test('calls openDialog with correct parameters', () => {
-    renderWithContext(<RowContainer />)
+    renderWithContext(<RowContainer isOrderingContainer={false} />)
 
     // Trigger dialog open for a specific row
     const firstRow = screen.getByText(translate('row.add-product'))

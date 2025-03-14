@@ -37,7 +37,7 @@ describe('Row', () => {
   test('Delete row works correctly', async () => {
     const deleteRowSpy = vi.spyOn(templateContextMock.rows, 'deleteRow')
     renderWithContext(<Row openDialog={openDialogMock} row={row} />)
-    const deleteButton = screen.getByTestId('remove-row')
+    const deleteButton = screen.getAllByTestId('remove-row')[0]
     fireEvent.click(deleteButton)
 
     expect(deleteRowSpy).toHaveBeenCalled()

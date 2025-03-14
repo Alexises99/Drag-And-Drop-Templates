@@ -119,7 +119,7 @@ describe('useRows', () => {
       const { result } = renderHook(() => useRows())
 
       act(() => {
-        result.current.updateRows((prev) => prev)
+        result.current.setRows((prev) => prev)
       })
 
       expect(result.current.rows).toEqual({})
@@ -129,7 +129,7 @@ describe('useRows', () => {
       const { result } = renderHook(() => useRows())
 
       act(() => {
-        result.current.updateRowContainers((prev) => prev)
+        result.current.setRowContainers((prev) => prev)
       })
 
       expect(result.current.rowContainers).toEqual([])

@@ -1,13 +1,27 @@
-import { useCallback } from 'react'
+import { Dispatch, SetStateAction, useCallback } from 'react'
 import { RowState } from './useRows'
 import dragDropUtils from '@utils/drag-drop'
 import { arrayMove } from '@dnd-kit/sortable'
 import { ClientRect, UniqueIdentifier } from '@dnd-kit/core'
 
+/**
+ * Custom hook to handle drag-and-drop functionality for managing row items.
+ * @param {RowState} rows - The current state of rows.
+ * @param {(updater: (prev: RowState) => RowState) => void} updateRows - Function to update the row state.
+ * @returns {object} Handlers for drag over and drag end events.
+ */
 export function useDragDrop(
   rows: RowState,
-  updateRows: (updater: (prev: RowState) => RowState) => void
+  updateRows: Dispatch<SetStateAction<RowState>>
 ) {
+  /**
+   * Retrieves indexes of the active and over items in their respective containers.
+   * @param {UniqueIdentifier} activeId - The ID of the dragged item.
+   * @param {UniqueIdentifier} overId - The ID of the item being hovered over.
+   * @param {UniqueIdentifier} activeContainer - The container of the active item.
+   * @param {UniqueIdentifier} overContainer - The container of the over item.
+   * @returns {object} Object containing active index, over index, and over items.
+   */
   const getItemIndexes = useCallback(
     (
       activeId: UniqueIdentifier,
@@ -22,12 +36,15 @@ export function useDragDrop(
     [rows]
   )
 
-  const reorderItems = useCallback(
-    (items: UniqueIdentifier[], fromIndex: number, toIndex: number) =>
-      arrayMove(items, fromIndex, toIndex),
-    []
-  )
-
+  /**
+   * Handles the drag-over event, updating the row state accordingly.
+   * @param {UniqueIdentifier} activeId - The ID of the dragged item.
+   * @param {UniqueIdentifier} overId - The ID of the hovered item.
+   * @param {UniqueIdentifier} activeContainer - The container of the active item.
+   * @param {UniqueIdentifier} overContainer - The container of the hovered item.
+   * @param {ClientRect | null} activeRect - The bounding rect of the active item.
+   * @param {ClientRect} overRect - The bounding rect of the hovered item.
+   */
   const handleDragOver = useCallback(
     (
       activeId: UniqueIdentifier,
@@ -46,15 +63,14 @@ export function useDragDrop(
         overContainer
       )
 
-      let newIndex
-      if (overId in rows) {
-        newIndex = overItems.length + 1
-      } else {
-        const isBelow =
-          activeRect && activeRect.right > overRect.right + overRect.width
-        const modifier = isBelow ? 1 : 0
-        newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1
-      }
+      const isBelow =
+        activeRect && activeRect.right > overRect.right + overRect.width
+      const newIndex =
+        overId in rows
+          ? overItems.length + 1
+          : overIndex >= 0
+            ? overIndex + (isBelow ? 1 : 0)
+            : overItems.length + 1
 
       updateRows((state) => {
         const updatedRows = { ...state }
@@ -64,7 +80,6 @@ export function useDragDrop(
             (item) => item !== activeId
           )
         }
-
         updatedRows[overContainer] = {
           ...updatedRows[overContainer],
           items: [
@@ -76,11 +91,17 @@ export function useDragDrop(
 
         return updatedRows
       })
-      // }
     },
     [rows, updateRows, getItemIndexes]
   )
 
+  /**
+   * Handles the drag-end event, updating the row state accordingly.
+   * @param {UniqueIdentifier} activeId - The ID of the dragged item.
+   * @param {UniqueIdentifier} overId - The ID of the hovered item.
+   * @param {UniqueIdentifier} activeContainer - The container of the active item.
+   * @param {UniqueIdentifier} overContainer - The container of the hovered item.
+   */
   const handleDragEnd = useCallback(
     (
       activeId: UniqueIdentifier,
@@ -103,7 +124,7 @@ export function useDragDrop(
             ...state,
             [overContainer]: {
               ...state[overContainer],
-              items: reorderItems(
+              items: arrayMove(
                 state[overContainer].items,
                 activeIndex,
                 overIndex
@@ -113,7 +134,7 @@ export function useDragDrop(
         })
       }
     },
-    [rows, updateRows, getItemIndexes, reorderItems]
+    [rows, updateRows, getItemIndexes]
   )
 
   return {

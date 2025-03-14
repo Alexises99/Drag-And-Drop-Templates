@@ -17,22 +17,20 @@ import {
 import { arrayMove, SortableContext } from '@dnd-kit/sortable'
 import { useTemplate } from '@hooks/useTemplate'
 import dragDropUtils from '@utils/drag-drop'
-import { PropsWithChildren, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { NEW_ROW_ID } from './TemplateContext'
+import { NEW_ROW_ID } from '../../context/TemplateContext'
 import Row from '@components/Row/Row'
 import productUtils from '@utils/products'
-import CreateRow from '@components/DragDrop/CreateRow'
-import { useDialogContext } from '@hooks/useDialogContext'
+import RowContainer from '@components/RowContainer'
 
-export default function DragDropContext({ children }: PropsWithChildren) {
+export default function DragDrop() {
   const {
     rows: rowsState,
     dragDrop: { handleDragEnd, handleDragOver },
     products: { productsData },
     zoom: { zoom }
   } = useTemplate()
-  const { openDialog } = useDialogContext()
 
   const {
     addNewRow,
@@ -40,7 +38,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     handleMoveRows,
     rowContainers,
     rows,
-    updateRowContainers,
+    setRowContainers,
     deleteRow
   } = rowsState
 
@@ -86,7 +84,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
         .indexOf(overContainer as number)
 
       if (overIndex !== activeIndex) return
-      updateRowContainers((state) => arrayMove(state, activeIndex, overIndex))
+      setRowContainers((state) => arrayMove(state, activeIndex, overIndex))
       return
     }
 
@@ -115,7 +113,6 @@ export default function DragDropContext({ children }: PropsWithChildren) {
   }
 
   const onDragEnd = (event: DragEndEvent) => {
-    console.log('DRAG END')
     const { active, over } = event
 
     const overId = over?.id
@@ -139,12 +136,14 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       return
     }
 
-    // Create new row draggin in add row
+    // Create new row in add row button
     if (overId === NEW_ROW_ID) {
       if (rows[activeContainer].items.length === 1) {
         deleteRow(activeContainer)
       } else {
         deleteItemFromRow(activeContainer)(activeId as string)
+
+        // Check if some row is empty after create a new row (row with only one product moved to NEW_ROW)
         const toDeleteRow = Object.values(rows)
           .filter((row) => row.items.length === 0)
           .map((row) => row.id)
@@ -165,9 +164,14 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     )
       return
 
-    handleDragEnd(activeId, overId, activeContainer, overContainer)
+    // TODO REFACTOR Check if some row is empty after create a new row (row with only one product moved to NEW_ROW)
+    const toDeleteRow = Object.values(rows)
+      .filter((row) => row.items.length === 0)
+      .map((row) => row.id)
 
-    console.log(rows)
+    if (toDeleteRow.length !== 0) deleteRow(toDeleteRow[0])
+
+    handleDragEnd(activeId, overId, activeContainer, overContainer)
 
     setActiveId(null)
   }
@@ -189,21 +193,11 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}
-      onDragCancel={() => {
-        console.log('CANCEL')
-        setActiveId(null)
-      }}
-      onDragAbort={() => {
-        console.log('ABORT')
-        setActiveId(null)
-      }}
+      onDragCancel={() => setActiveId(null)}
+      onDragAbort={() => setActiveId(null)}
     >
       <SortableContext items={[...rowContainers, NEW_ROW_ID]}>
-        {children}
-        <CreateRow
-          openCreateDialog={() => openDialog('list')}
-          disabled={isOrderingContainer}
-        />
+        <RowContainer isOrderingContainer={isOrderingContainer} />
       </SortableContext>
       {zoom === 1
         ? createPortal(
