@@ -18,7 +18,8 @@ export default function RowContainer() {
         style={{
           transform: `scale(${zoom})`,
           transformOrigin: 'top left',
-          width: `${100 / zoom}%`
+          width: `${100 / zoom}%`,
+          position: zoom === 1 ? 'static' : 'absolute'
         }}
       >
         {rowContainers.map((rowId) => (

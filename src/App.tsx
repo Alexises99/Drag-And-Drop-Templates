@@ -13,7 +13,7 @@ function App() {
     <>
       <Header />
       <DragDropContext>
-        <main>
+        <main className="relative">
           <div className="relative flex items-center justify-between">
             <h2 className="my-8 text-center text-4xl">
               <FormattedMessage id="category.name" />
