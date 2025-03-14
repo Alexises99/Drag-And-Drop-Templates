@@ -7,15 +7,18 @@ import { IntlProvider } from 'react-intl'
 import localesEs from './locales/es.json'
 
 import './index.css'
+import ErrorBoundary from '@components/ErrorBoundary.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <IntlProvider locale="es" messages={localesEs}>
-      <DialogProvider>
-        <TemplateProvider>
-          <App />
-        </TemplateProvider>
-      </DialogProvider>
-    </IntlProvider>
+    <ErrorBoundary>
+      <IntlProvider locale="es" messages={localesEs}>
+        <DialogProvider>
+          <TemplateProvider>
+            <App />
+          </TemplateProvider>
+        </DialogProvider>
+      </IntlProvider>
+    </ErrorBoundary>
   </StrictMode>
 )

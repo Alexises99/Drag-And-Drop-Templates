@@ -9,6 +9,7 @@ interface DroppableContainerProps {
   id: UniqueIdentifier
   items: UniqueIdentifier[]
   overStyles?: string
+  disabled?: boolean
   children: (
     listeners: SyntheticListenerMap | undefined,
     attributes: DraggableAttributes
@@ -18,6 +19,7 @@ interface DroppableContainerProps {
 export default function DroppableContainer({
   id,
   items,
+  disabled = false,
   overStyles,
   children
 }: DroppableContainerProps) {
@@ -37,7 +39,7 @@ export default function DroppableContainer({
 
   return (
     <div
-      ref={setNodeRef}
+      ref={disabled ? null : setNodeRef}
       style={style}
       className={`h-fit w-full ${isOver ? (overStyles ?? '') : ''}`}
     >

@@ -97,7 +97,7 @@ export function useDragDrop(
         overContainer
       )
 
-      if (activeIndex !== overIndex) {
+      if (overIndex >= 0 && activeIndex !== overIndex) {
         updateRows((state) => {
           return {
             ...state,

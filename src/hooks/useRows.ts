@@ -2,11 +2,12 @@ import { UniqueIdentifier } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import type { Alignment, Row } from '@types'
 import rowsUtils from '@utils/rows'
-import { startTransition, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export type RowState = Record<UniqueIdentifier, Row>
 
 export function useRows() {
+  const [createdRows, setCreatedRows] = useState<number>(0)
   const [rows, setRows] = useState<RowState>({})
 
   // Change order of containers easily
@@ -28,15 +29,14 @@ export function useRows() {
 
   const addNewRow = useCallback(
     (items: UniqueIdentifier[] = []) => {
-      const size = Object.keys(rows).length
-      const newRow = rowsUtils.createNewRow(size, items)
-
-      startTransition(() => {
-        updateRows((prev) => ({ ...prev, [newRow.id]: newRow }))
-        updateRowContainers((prev) => [...prev, Number(newRow.id)])
-      })
+      const newRow = rowsUtils.createNewRow(createdRows, items)
+      setCreatedRows((prev) => prev + 1)
+      updateRows((prev) => ({ ...prev, [newRow.id]: newRow }))
+      updateRowContainers((prev) =>
+        prev.includes(newRow.id) ? prev : [...prev, Number(newRow.id)]
+      )
     },
-    [rows, updateRows, updateRowContainers]
+    [updateRows, updateRowContainers, createdRows]
   )
 
   const addItemToRow = useCallback(
@@ -47,12 +47,10 @@ export function useRows() {
   )
 
   const deleteRow = (rowId: UniqueIdentifier) => {
-    startTransition(() => {
-      updateRows(rowsUtils.removeRow(rowId))
-      updateRowContainers((prev) =>
-        prev.filter((containerId) => containerId !== rowId)
-      )
-    })
+    updateRows(rowsUtils.removeRow(rowId))
+    updateRowContainers((prev) =>
+      prev.filter((containerId) => containerId !== rowId)
+    )
   }
 
   const deleteItemFromRow = (rowId: UniqueIdentifier) => (itemId: string) => {

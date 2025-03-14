@@ -1,5 +1,5 @@
 import { useTemplate } from '@/hooks/useTemplate'
-import CreateRow from './DragDrop/CreateRow'
+
 import DroppableRow from './Row/DroppableRow'
 import { useDialogContext } from '@hooks/useDialogContext'
 
@@ -14,7 +14,7 @@ export default function RowContainer() {
   return (
     <>
       <ul
-        className="flex flex-col gap-4"
+        className="mb-8 flex flex-col gap-4"
         style={{
           transform: `scale(${zoom})`,
           transformOrigin: 'top left',
@@ -30,9 +30,6 @@ export default function RowContainer() {
             />
           </li>
         ))}
-        <li>
-          <CreateRow openCreateDialog={() => openDialog('list')} />
-        </li>
       </ul>
     </>
   )

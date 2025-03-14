@@ -22,6 +22,8 @@ import { createPortal } from 'react-dom'
 import { NEW_ROW_ID } from './TemplateContext'
 import Row from '@components/Row/Row'
 import productUtils from '@utils/products'
+import CreateRow from '@components/DragDrop/CreateRow'
+import { useDialogContext } from '@hooks/useDialogContext'
 
 export default function DragDropContext({ children }: PropsWithChildren) {
   const {
@@ -30,6 +32,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     products: { productsData },
     zoom: { zoom }
   } = useTemplate()
+  const { openDialog } = useDialogContext()
 
   const {
     addNewRow,
@@ -44,6 +47,9 @@ export default function DragDropContext({ children }: PropsWithChildren) {
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
 
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor))
+
+  const isOrderingContainer =
+    activeId != null ? rowContainers.includes(activeId) : false
 
   const findContainers = useCallback(
     (activeId: UniqueIdentifier, overId: UniqueIdentifier) => ({
@@ -61,14 +67,17 @@ export default function DragDropContext({ children }: PropsWithChildren) {
     const overId = over?.id
     const activeId = active.id
     // Active.id in rows for move containers
+
     if (!overId) return
 
     const { activeContainer, overContainer } = findContainers(activeId, overId)
 
+    console.log({ activeContainer, overContainer, activeId, rows })
+
     if (!activeContainer || !overContainer) return
 
-    // Reorder rows
-    if (activeId in rows) {
+    // Reorder rows list
+    if (rowContainers.includes(activeId)) {
       const activeIndex = Object.keys(rows)
         .map(Number)
         .indexOf(activeContainer as number)
@@ -76,15 +85,18 @@ export default function DragDropContext({ children }: PropsWithChildren) {
         .map(Number)
         .indexOf(overContainer as number)
 
+      if (overIndex !== activeIndex) return
       updateRowContainers((state) => arrayMove(state, activeIndex, overIndex))
       return
     }
 
+    // Moving product to another container, avoid more than 3 items
     if (
       activeContainer !== overContainer &&
       rows[overContainer].items.length >= 3
-    )
+    ) {
       return
+    }
 
     // Move items between containers
     if (activeContainer !== overContainer) {
@@ -103,6 +115,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
   }
 
   const onDragEnd = (event: DragEndEvent) => {
+    console.log('DRAG END')
     const { active, over } = event
 
     const overId = over?.id
@@ -132,6 +145,11 @@ export default function DragDropContext({ children }: PropsWithChildren) {
         deleteRow(activeContainer)
       } else {
         deleteItemFromRow(activeContainer)(activeId as string)
+        const toDeleteRow = Object.values(rows)
+          .filter((row) => row.items.length === 0)
+          .map((row) => row.id)
+
+        if (toDeleteRow.length !== 0) deleteRow(toDeleteRow[0])
       }
 
       addNewRow([activeId])
@@ -149,11 +167,7 @@ export default function DragDropContext({ children }: PropsWithChildren) {
 
     handleDragEnd(activeId, overId, activeContainer, overContainer)
 
-    const toDeleteRow = Object.values(rows)
-      .filter((row) => row.items.length === 0)
-      .map((row) => row.id)
-
-    if (toDeleteRow.length !== 0) deleteRow(toDeleteRow[0])
+    console.log(rows)
 
     setActiveId(null)
   }
@@ -175,11 +189,21 @@ export default function DragDropContext({ children }: PropsWithChildren) {
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}
-      onDragCancel={() => setActiveId(null)}
-      onDragAbort={() => setActiveId(null)}
+      onDragCancel={() => {
+        console.log('CANCEL')
+        setActiveId(null)
+      }}
+      onDragAbort={() => {
+        console.log('ABORT')
+        setActiveId(null)
+      }}
     >
       <SortableContext items={[...rowContainers, NEW_ROW_ID]}>
         {children}
+        <CreateRow
+          openCreateDialog={() => openDialog('list')}
+          disabled={isOrderingContainer}
+        />
       </SortableContext>
       {zoom === 1
         ? createPortal(

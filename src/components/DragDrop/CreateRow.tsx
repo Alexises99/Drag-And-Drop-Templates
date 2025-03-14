@@ -4,11 +4,20 @@ import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 
 interface CreateRowProps {
   openCreateDialog: () => void
+  disabled?: boolean
 }
 
-export default function CreateRow({ openCreateDialog }: CreateRowProps) {
+export default function CreateRow({
+  openCreateDialog,
+  disabled = false
+}: CreateRowProps) {
   return (
-    <DroppableContainer id={NEW_ROW_ID} items={[]} overStyles="bg-light-gray">
+    <DroppableContainer
+      id={NEW_ROW_ID}
+      items={[]}
+      overStyles="bg-light-gray"
+      disabled={disabled}
+    >
       {(_listeners, attributes) => (
         <button
           className={`border-light-gray hover:border-medium-gray w-full cursor-pointer border-1 border-dashed py-4 font-semibold text-gray-900`}
