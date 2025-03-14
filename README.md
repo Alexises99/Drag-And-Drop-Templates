@@ -1,4 +1,4 @@
-# 🖥️ Technical Test - TeInditex Templates
+# 🖥️ Technical Test - Inditex Templates
 
 This project is a technical assessment for Inditex, built using **React** and **TypeScript** with **Vite**.
 
@@ -61,16 +61,16 @@ pnpm dev
 
 ```bash
 /src
-  |-- assets        # Static assets (images, icons, etc.)
+  ├── assets        # Static assets (images, icons, etc.)
   ├── components    # Reusable UI components
-  |-- context       # Global state management
+  ├── context       # Global state management
   ├── hooks         # Custom Hooks
-  |-- locales       # Translations (i18n)
-  |-- tests         # Test Suites
-  |-- utils         # Utility functions and helper methods
+  ├── locales       # Translations (i18n)
+  ├── tests         # Test Suites
+  ├── utils         # Utility functions and helper methods
   ├── App.tsx       # Root component
   ├── main.tsx      # Entry point
-  |-- types.ts      # General types definitions
+  ├── types.ts      # General types definitions
 ```
 
 ## 🧪 Tests
