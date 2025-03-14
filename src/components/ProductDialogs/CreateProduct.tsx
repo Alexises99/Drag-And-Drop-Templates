@@ -1,31 +1,34 @@
 import { useTemplate } from '@hooks/useTemplate'
-import { useState, DragEvent, ChangeEvent, FormEvent } from 'react'
+import {
+  DragEvent,
+  ChangeEvent,
+  FormEvent,
+  Dispatch,
+  SetStateAction
+} from 'react'
 import ProductField from './ProductField'
 import { useIntl } from 'react-intl'
 import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
-
-const defaultProduct = {
-  name: '',
-  price: -1,
-  image: ''
-}
+import { Product, ProductDialog } from '@types'
 
 interface CreateProductProps {
-  handleClose: (reset: () => void) => void
+  handleClose: () => void
+  setProduct: Dispatch<SetStateAction<ProductDialog>>
+  setError: Dispatch<SetStateAction<string | null>>
+  product: ProductDialog
+  error: string | null
 }
 
-export default function CreateProduct({ handleClose }: CreateProductProps) {
+export default function CreateProduct({
+  handleClose,
+  setError,
+  setProduct,
+  error,
+  product
+}: CreateProductProps) {
   const {
     products: { addProduct, productsData }
   } = useTemplate()
-
-  const [product, setProduct] = useState<{
-    price: number
-    name: string
-    image: string
-  }>(defaultProduct)
-
-  const [error, setError] = useState<string>('')
 
   const intl = useIntl()
 
@@ -74,8 +77,9 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
       )
       return
     }
-    addProduct(product)
-    handleClose(() => setProduct(defaultProduct))
+    const copyProduct: Product = { ...product, price: Number(product.price) }
+    addProduct(copyProduct)
+    handleClose()
   }
 
   return (
@@ -95,7 +99,7 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
             label="Precio:"
             name="price"
             type="number"
-            value={price === -1 ? '' : price}
+            value={price}
             required
             placeholder="Precio del producto"
             handleChange={handleChangeFields('price')}
@@ -143,7 +147,9 @@ export default function CreateProduct({ handleClose }: CreateProductProps) {
           />
         </div>
       </div>
-      <span className="mx-auto block w-fit text-red-400">{error}</span>
+      {error ? (
+        <span className="mx-auto block w-fit text-red-400">{error}</span>
+      ) : null}
     </form>
   )
 }

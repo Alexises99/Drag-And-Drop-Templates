@@ -15,6 +15,10 @@ export interface Product {
   image: string
 }
 
+export interface ProductDialog extends Pick<Product, 'name' | 'image'> {
+  price: string
+}
+
 export type DragItem = Pick<Row, 'id' | 'items'>
 
 export type Data = Record<string, Omit<Product, 'name'>>

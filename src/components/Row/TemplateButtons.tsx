@@ -6,6 +6,24 @@ import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import type { Alignment } from '@types'
 import { useIntl } from 'react-intl'
 
+function DeleteButton({
+  handleDelete,
+  className
+}: {
+  handleDelete: () => void
+  className: string
+}) {
+  return (
+    <button
+      data-testid="remove-row"
+      className={`cursor-pointer hover:text-red-400 ${className}`}
+      onClick={handleDelete}
+    >
+      <DeleteIcon />
+    </button>
+  )
+}
+
 interface TemplateButtonProps
   extends Pick<TemplateButtonsProps, 'changeAligment'> {
   aligment: Alignment
@@ -54,6 +72,10 @@ export default function TemplateButtons({
   const intl = useIntl()
   return (
     <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-6">
+      <DeleteButton
+        handleDelete={handleDelete}
+        className="hidden group-hover:block"
+      />
       <div className="order-2 flex items-center gap-4 sm:order-1" role="group">
         <span
           id="aligment"
@@ -83,19 +105,13 @@ export default function TemplateButtons({
         />
       </div>
       <div className="flex items-center gap-4 sm:order-2">
-        <button
-          data-testid="remove-row"
-          className="cursor-pointer group-hover:block hover:text-red-400 sm:hidden"
-          onClick={handleDelete}
-        >
-          <DeleteIcon />
-        </button>
+        <DeleteButton handleDelete={handleDelete} className="sm:hidden" />
         <button
           type="button"
           aria-label={intl.formatMessage({
             id: 'row.remove.aria-label'
           })}
-          className="disabled:bg-light-gray flex cursor-pointer items-center gap-2 rounded-full border-1 disabled:cursor-auto sm:px-4 sm:py-1"
+          className="disabled:bg-light-gray flex cursor-pointer items-center gap-2 rounded-full border-1 bg-white disabled:cursor-auto sm:px-4 sm:py-1"
           onClick={() => openDialog()}
           disabled={items.length === 3}
         >

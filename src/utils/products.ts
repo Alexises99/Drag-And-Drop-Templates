@@ -1,5 +1,11 @@
 import { Data } from '@dnd-kit/core'
-import { Product } from '@types'
+import { Product, ProductDialog } from '@types'
+
+export const defaultProduct: ProductDialog = {
+  name: '',
+  price: '',
+  image: ''
+}
 
 function getProduct(id: string, products: Data): Product {
   return { name: id, ...products[id] }
