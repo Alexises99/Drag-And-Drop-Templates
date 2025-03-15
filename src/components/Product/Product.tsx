@@ -48,7 +48,7 @@ export default function Product({
               name
             }
           )}
-          className="max-h-40 max-w-24 object-cover select-none sm:max-w-32 md:max-h-48"
+          className="h-40 max-w-24 object-contain select-none sm:max-w-32 md:h-48"
           draggable={false}
           loading="lazy"
         />
