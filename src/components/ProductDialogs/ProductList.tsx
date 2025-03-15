@@ -52,7 +52,10 @@ const ProductButton = ({
         className={`h-full rounded-md ${isSelected ? 'text-blue-400' : ''}`}
       >
         {orderNumber !== null ? (
-          <div className="bg-medium-gray absolute inset-0 flex items-center justify-center rounded-md">
+          <div
+            className="bg-medium-gray absolute inset-0 flex items-center justify-center rounded-md"
+            data-testid="product-index-selector"
+          >
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-400 text-3xl text-white">
               {orderNumber + 1}
             </span>
