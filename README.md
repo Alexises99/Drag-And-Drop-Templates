@@ -22,14 +22,14 @@ This application is designed with usability, performance, and scalability in min
 - [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 - [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 - [![Vitest](https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
+- [![Storybook](https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white)](https://storybook.js.org/)
 
 ### Why Vite?
 
 Vite was chosen as the **best option** for this project because it offers:
 
-- ✅ **Blazing-fast build times** due to native **ES module support**.
-- ✅ **Instant hot module replacement (HMR)** for a smoother development experience.
-- ✅ **Flexibility**—since this application does not benefit from **React Server Components** or **traditional Server-Side Rendering (SSR)**, using **Vite** ensures a simpler, more efficient setup.
+- ✅ **Fast build times** due to native **ES module support**.
+- ✅ **Flexibility**—since this application does not benefit from **React Server Components** or **traditional Server-Side Rendering (SSR)**, using **Vite** ensures a simpler, more efficient setup with a client-based SPA.
 
 ## 📦 Installation
 
@@ -95,3 +95,4 @@ pnpm coverage
 - **`pnpm preview`** → Serves the production build locally.
 - **`pnpm test`** → Runs the test suite.
 - **`pnpm coverage`** → Generates a test coverage report.
+- **`pnpm storybook`** → Execute Storybook
