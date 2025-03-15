@@ -30,14 +30,14 @@ export default function Category({
   }
 
   return isEditing ? (
-    <div className="h-fit min-w-0">
+    <div className="h-fit max-w-80 min-w-0 flex-1">
       <input
         ref={inputRef}
         type="text"
         value={name}
         onChange={({ target: { value } }) => handleChangeName(id, value)}
         onKeyDown={handleKeyDown}
-        className="border-medium-gray rounded-lg border-1 bg-white px-2 py-1 outline-0"
+        className="border-medium-gray w-full rounded-lg border-1 bg-white px-2 py-1 outline-0"
         onBlur={() => setIsEditing(false)}
       />
     </div>

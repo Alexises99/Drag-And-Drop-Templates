@@ -31,7 +31,7 @@ export default function Zoom() {
       </button>
       <span
         id="zoomLevel"
-        className="text-lg font-semibold"
+        className="w-11 text-lg font-semibold"
         aria-live="polite"
         aria-label={intl.formatMessage(
           { id: 'zoom.level.label' },
