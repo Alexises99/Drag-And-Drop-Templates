@@ -6,7 +6,10 @@ import { useDialogContext } from '@hooks/useDialogContext'
 export default function Header() {
   const { openDialog } = useDialogContext()
   return (
-    <header className="flex items-end justify-between" role="banner">
+    <header
+      className="sticky top-0 z-1000 flex items-end justify-between bg-white py-2"
+      role="banner"
+    >
       <img
         src={zaraLogo}
         alt="Zara logo"
