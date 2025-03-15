@@ -30,8 +30,6 @@ export const ChangeAligment: Story = {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [{ selectedAligment }, updateArgs] = useArgs()
 
-    console.log({ selectedAligment, updateArgs })
-
     function onChange(aligment: Alignment) {
       updateArgs({ selectedAligment: aligment })
     }

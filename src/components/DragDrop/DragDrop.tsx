@@ -71,8 +71,6 @@ export default function DragDrop() {
 
     const { activeContainer, overContainer } = findContainers(activeId, overId)
 
-    console.log({ activeContainer, overContainer, activeId, rows })
-
     if (!activeContainer || !overContainer) return
 
     // Reorder rows list
