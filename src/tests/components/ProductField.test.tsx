@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import ProductField from '@components/ProductDialogs/ProductField'
 import { vi } from 'vitest'
 
-describe.only('ProductField', () => {
+describe('ProductField', () => {
   const defaultProps = {
     label: 'Test Label',
     name: 'test-field',

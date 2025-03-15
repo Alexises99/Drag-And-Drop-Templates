@@ -44,7 +44,7 @@ describe('Row', () => {
     expect(deleteRowSpy).toHaveBeenCalledWith(row.id)
   })
 
-  test.only('Change category name works correctly', async () => {
+  test('Change category name works correctly', async () => {
     const changeCategoryNameSpy = vi.spyOn(
       templateContextMock.rows,
       'changeCategoryName'

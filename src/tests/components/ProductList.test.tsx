@@ -6,7 +6,7 @@ import { initialProducts } from '@data/products'
 import { mockRow, templateContextMock } from '../mocks/useTemplate.mock'
 import { MAX_PRODUCTS } from '@utils/products'
 
-describe.only('ProductList', () => {
+describe('ProductList', () => {
   const mockProps = {
     editedRowId: null,
     handleClose: vi.fn(),
