@@ -3,6 +3,7 @@ import { RowState } from '@hooks/useRows'
 import type { Alignment, Row } from '@types'
 
 export const initialName = 'Sin nombre'
+export const NEW_ROW_ID = 'add_row'
 
 function createNewRow(size: number, initialItems?: UniqueIdentifier[]) {
   const newRow: Row = {

@@ -1,4 +1,4 @@
-import { DialogContext } from '@context/DialogContext'
+import { DialogContext } from '@context/Dialog/DialogContext'
 import { use } from 'react'
 
 export function useDialogContext() {

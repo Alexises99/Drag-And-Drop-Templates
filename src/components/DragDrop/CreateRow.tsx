@@ -1,4 +1,4 @@
-import { NEW_ROW_ID } from '@context/TemplateContext'
+import { NEW_ROW_ID } from '@utils/rows'
 import DroppableContainer from './DroppableContainer'
 import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 

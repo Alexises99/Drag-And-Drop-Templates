@@ -1,14 +1,13 @@
 import { describe, test, expect, vi } from 'vitest'
 import { render, renderHook } from '@testing-library/react'
-import TemplateProvider, {
-  TemplateContext,
-  NEW_ROW_ID
-} from '@context/TemplateContext'
+import TemplateProvider from '@context/Template/Template/TemplateProvider'
 import { useContext } from 'react'
 import { useProducts } from '@hooks/useProducts'
 import useZoom from '@hooks/useZoom'
 import { useRows } from '@hooks/useRows'
 import { useDragDrop } from '@hooks/useDragDrop'
+import { TemplateContext } from '@context/Template/Template/TemplateContext'
+import { NEW_ROW_ID } from '@utils/rows'
 
 // Mock all hooks
 vi.mock('@hooks/useProducts', () => ({

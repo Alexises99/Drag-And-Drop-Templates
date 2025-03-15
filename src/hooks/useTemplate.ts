@@ -1,4 +1,4 @@
-import { TemplateContext } from '@context/TemplateContext'
+import { TemplateContext } from '@context/Template/Template/TemplateContext'
 import { use } from 'react'
 
 export function useTemplate() {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { TemplateContextValue } from '@context/TemplateContext'
+import { TemplateContextValue } from '@context/Template/Template/TemplateContext'
 import { initialProducts } from '@data/products'
 import { UniqueIdentifier } from '@dnd-kit/core'
 import type { Data, Row } from '@types'

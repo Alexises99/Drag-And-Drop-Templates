@@ -19,10 +19,11 @@ import { useTemplate } from '@hooks/useTemplate'
 import dragDropUtils from '@utils/drag-drop'
 import { useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { NEW_ROW_ID } from '../../context/TemplateContext'
+
 import Row from '@components/Row/Row'
 import productUtils from '@utils/products'
 import RowContainer from '@components/RowContainer'
+import { NEW_ROW_ID } from '@utils/rows'
 
 export default function DragDrop() {
   const {
