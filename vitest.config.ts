@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config'
+import { defineConfig, coverageConfigDefaults } from 'vitest/config'
 import { resolve } from 'path'
 
 export default defineConfig({
@@ -10,8 +10,8 @@ export default defineConfig({
     mockReset: true,
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html']
-      // exclude: ['src/mocks/*']
+      reporter: ['text', 'json', 'html'],
+      exclude: ['src/test/mocks/**', ...coverageConfigDefaults.exclude]
     }
   },
   resolve: {
