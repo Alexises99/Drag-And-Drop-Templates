@@ -4,6 +4,7 @@ import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import type { Alignment } from '@types'
+import { MAX_PRODUCTS } from '@utils/products'
 import { useIntl } from 'react-intl'
 
 function DeleteButton({
@@ -113,7 +114,7 @@ export default function TemplateButtons({
           })}
           className="disabled:bg-light-gray flex cursor-pointer items-center gap-2 rounded-full border-1 bg-white disabled:cursor-auto sm:px-4 sm:py-1"
           onClick={() => openDialog()}
-          disabled={items.length === 3}
+          disabled={items.length === MAX_PRODUCTS}
         >
           <AddIcon />
           <span className="hidden sm:inline">

@@ -1,6 +1,8 @@
 import { Data } from '@dnd-kit/core'
 import { Product, ProductDialog } from '@types'
 
+export const MAX_PRODUCTS = 3
+
 export const defaultProduct: ProductDialog = {
   name: '',
   price: '',

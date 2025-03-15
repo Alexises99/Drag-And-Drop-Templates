@@ -1,14 +1,12 @@
 import Product from '@components/Product/Product'
 import { useTemplate } from '@hooks/useTemplate'
-import productUtils from '@utils/products'
+import productUtils, { MAX_PRODUCTS } from '@utils/products'
 import { Dispatch, FormEvent, SetStateAction } from 'react'
 
 import { UniqueIdentifier } from '@dnd-kit/core'
 import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 import { useIntl } from 'react-intl'
 import type { Data } from '@types'
-
-const MAX_PRODUCTS = 3
 
 interface ProductListProps {
   editedRowId: UniqueIdentifier | null

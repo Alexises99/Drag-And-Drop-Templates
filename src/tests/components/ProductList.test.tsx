@@ -4,6 +4,7 @@ import ProductList from '@components/ProductDialogs/ProductList'
 import { renderWithContext } from '../test-utils'
 import { initialProducts } from '@data/products'
 import { mockRow, templateContextMock } from '../mocks/useTemplate.mock'
+import { MAX_PRODUCTS } from '@utils/products'
 
 describe.only('ProductList', () => {
   const mockProps = {
@@ -49,7 +50,7 @@ describe.only('ProductList', () => {
     const numberMatch = maxProductsMessage.textContent?.match(/\d+/) // Extraer solo el número
     const maxProducts = numberMatch ? parseInt(numberMatch[0], 10) : null
 
-    expect(maxProducts).toBe(3 - mockRow.items.length)
+    expect(maxProducts).toBe(MAX_PRODUCTS - mockRow.items.length)
   })
 
   test('submits form with selected products', () => {

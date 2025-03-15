@@ -5,6 +5,7 @@ import { useRows } from './useRows'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useDragDrop } from './useDragDrop'
 import { NEW_ROW_ID } from '@utils/rows'
+import { MAX_PRODUCTS } from '@utils/products'
 
 interface useDragEventsArgs {
   rowsState: ReturnType<typeof useRows>
@@ -37,14 +38,35 @@ export function useDragEvents({
     [rows]
   )
 
+  const removeEmptyRows = useCallback(() => {
+    const emptyRows = Object.values(rows)
+      .filter((row) => row.items.length === 0)
+      .map((row) => row.id)
+    if (emptyRows.length > 0) deleteRow(emptyRows[0])
+  }, [rows, deleteRow])
+
+  const moveRowContainers = (
+    activeContainer: UniqueIdentifier,
+    overContainer: UniqueIdentifier
+  ) => {
+    const activeIndex = Object.keys(rows)
+      .map(Number)
+      .indexOf(activeContainer as number)
+    const overIndex = Object.keys(rows)
+      .map(Number)
+      .indexOf(overContainer as number)
+    if (activeIndex === overIndex) return
+    setRowContainers((state) => arrayMove(state, activeIndex, overIndex))
+  }
+
   const onDragOver = (event: DragOverEvent) => {
     const { active, over } = event
 
-    const overId = over?.id
+    if (!over) return
+
+    const overId = over.id
     const activeId = active.id
     // Active.id in rows for move containers
-
-    if (!overId) return
 
     const { activeContainer, overContainer } = findContainers(activeId, overId)
 
@@ -52,22 +74,14 @@ export function useDragEvents({
 
     // Reorder rows list
     if (rowContainers.includes(activeId)) {
-      const activeIndex = Object.keys(rows)
-        .map(Number)
-        .indexOf(activeContainer as number)
-      const overIndex = Object.keys(rows)
-        .map(Number)
-        .indexOf(overContainer as number)
-
-      if (overIndex === activeIndex) return
-      setRowContainers((state) => arrayMove(state, activeIndex, overIndex))
+      moveRowContainers(activeContainer, overContainer)
       return
     }
 
     // Moving product to another container, avoid more than 3 items
     if (
       activeContainer !== overContainer &&
-      rows[overContainer].items.length >= 3
+      rows[overContainer].items.length >= MAX_PRODUCTS
     ) {
       return
     }
@@ -91,13 +105,13 @@ export function useDragEvents({
   const onDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
 
-    const overId = over?.id
-    const activeId = active.id
-
-    if (!overId) {
+    if (!over) {
       setActiveId(null)
       return
     }
+
+    const overId = over.id
+    const activeId = active.id
 
     const { activeContainer, overContainer } = findContainers(activeId, overId)
 
@@ -118,37 +132,22 @@ export function useDragEvents({
         deleteRow(activeContainer)
       } else {
         deleteItemFromRow(activeContainer)(activeId as string)
-
         // Check if some row is empty after create a new row (row with only one product moved to NEW_ROW)
-        const toDeleteRow = Object.values(rows)
-          .filter((row) => row.items.length === 0)
-          .map((row) => row.id)
-
-        if (toDeleteRow.length !== 0) deleteRow(toDeleteRow[0])
+        removeEmptyRows()
       }
-
       addNewRow([activeId])
-
       return
     }
 
-    if (!overContainer) return
-
     if (
-      activeContainer !== overContainer &&
-      rows[overContainer].items.length >= 3
+      !overContainer ||
+      (activeContainer !== overContainer &&
+        rows[overContainer].items.length >= MAX_PRODUCTS)
     )
       return
 
-    // TODO REFACTOR Check if some row is empty after create a new row (row with only one product moved to NEW_ROW)
-    const toDeleteRow = Object.values(rows)
-      .filter((row) => row.items.length === 0)
-      .map((row) => row.id)
-
-    if (toDeleteRow.length !== 0) deleteRow(toDeleteRow[0])
-
+    removeEmptyRows()
     handleDragEnd(activeId, overId, activeContainer, overContainer)
-
     setActiveId(null)
   }
 
