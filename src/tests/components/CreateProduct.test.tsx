@@ -188,12 +188,10 @@ describe('CreateProduct', () => {
       }
     })
 
-    // Esperar a que el estado se actualice con la imagen
     await waitFor(() => {
       expect(props.setProduct).toHaveBeenCalledWith(expect.any(Function))
     })
 
-    // Extraer la función pasada a setProduct y simular su ejecución
     const updateFunction = props.setProduct.mock.calls[0][0]
     const prevState = {
       name: product.name,

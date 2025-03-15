@@ -39,19 +39,15 @@ describe('Zoom', () => {
     expect(increaseZoomSpy).toHaveBeenCalledTimes(1)
   })
 
-  // test('displays correct zoom percentage', () => {
-  //   vi.mocked(useTemplate).mockReturnValue({
-  //     zoom: {
-  //       decreaseZoom: mockDecreaseZoom,
-  //       increaseZoom: mockIncreaseZoom,
-  //       zoom: 1.5
-  //     }
-  //   } as any)
+  test('displays correct zoom percentage', () => {
+    const newValue = {
+      ...templateContextMock,
+      zoom: { ...templateContextMock.zoom, zoom: 1.5 }
+    }
+    renderWithContext(<Zoom />, newValue)
 
-  //   render(<Zoom />)
-
-  //   expect(screen.getByText('150%')).toBeInTheDocument()
-  // })
+    expect(screen.getByText(`${newValue.zoom.zoom * 100}%`)).toBeInTheDocument()
+  })
 
   test('buttons have correct accessibility attributes', () => {
     renderWithContext(<Zoom />)

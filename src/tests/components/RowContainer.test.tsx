@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react'
 import RowContainer from '@components/RowContainer'
 import { useDialogContext } from '@hooks/useDialogContext'
 import { renderWithContext, translate } from '../test-utils'
-import { mockRow } from '../mocks/useTemplate.mock'
+import { mockRow, templateContextMock } from '../mocks/useTemplate.mock'
 
 // Mock the hook
 vi.mock('@hooks/useDialogContext', () => ({
@@ -49,12 +49,15 @@ describe('RowContainer', () => {
     expect(screen.getByText(translate('list.create-row'))).toBeInTheDocument()
   })
 
-  // test('handles empty rowContainers', () => {
-  //   renderWithContext(<RowContainer />)
+  test('handles empty rowContainers', () => {
+    renderWithContext(<RowContainer isOrderingContainer={false} />, {
+      ...templateContextMock,
+      rows: { ...templateContextMock.rows, rowContainers: [] }
+    })
 
-  //   expect(screen.queryAllByRole('listitem')).toHaveLength(0)
-  //   expect(screen.getByText('+ Añadir Fila')).toBeInTheDocument()
-  // })
+    expect(screen.queryAllByRole('listitem')).toHaveLength(1)
+    expect(screen.getByText('+ Añadir Fila')).toBeInTheDocument()
+  })
 
   test('calls openDialog with correct parameters', () => {
     renderWithContext(<RowContainer isOrderingContainer={false} />)

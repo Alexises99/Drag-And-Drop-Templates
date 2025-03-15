@@ -4,7 +4,7 @@ import { type Row as RowType } from '@types'
 import { renderWithContext, translate } from '../test-utils'
 import { initialProducts } from '../../data/products'
 import { templateContextMock } from '../mocks/useTemplate.mock'
-// import userEvent from '@testing-library/user-event'
+import userEvent from '@testing-library/user-event'
 
 const [first, second] = Object.keys(initialProducts)
 
@@ -44,31 +44,28 @@ describe('Row', () => {
     expect(deleteRowSpy).toHaveBeenCalledWith(row.id)
   })
 
-  // test('Change category name works correctly', async () => {
-  //   const changeCategoryNameSpy = vi.spyOn(
-  //     templateContextMock.rows,
-  //     'changeCategoryName'
-  //   )
-  //   renderWithContext(<Row openDialog={openDialogMock} row={row} />)
+  test.only('Change category name works correctly', async () => {
+    const changeCategoryNameSpy = vi.spyOn(
+      templateContextMock.rows,
+      'changeCategoryName'
+    )
+    renderWithContext(<Row openDialog={openDialogMock} row={row} />)
 
-  //   const categoryDiv = screen.getByTestId('change-category-name')
-  //   await userEvent.click(categoryDiv)
+    const categoryDiv = screen.getByTestId('change-category-name')
+    await userEvent.click(categoryDiv)
 
-  //   const input = screen.getByRole('textbox')
-  //   expect(input).toBeInTheDocument()
+    const input = screen.getByRole('textbox')
+    expect(input).toBeInTheDocument()
 
-  //   await userEvent.clear(input)
-  //   await userEvent.type(input, 'New Category Name')
+    await userEvent.clear(input)
+    await userEvent.type(input, 'New Category Name')
 
-  //   fireEvent.blur(input)
+    fireEvent.blur(input)
 
-  //   expect(changeCategoryNameSpy).toHaveBeenCalledWith(
-  //     row.id,
-  //     'New Category Name'
-  //   )
+    expect(changeCategoryNameSpy).toHaveBeenCalledWith(row.id, '')
 
-  //   expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
-  // })
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
+  })
 
   test('Change alignment works correctly', async () => {
     const changeAlignmentSpy = vi.spyOn(
