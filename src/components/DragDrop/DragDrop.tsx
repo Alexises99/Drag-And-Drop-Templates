@@ -1,12 +1,14 @@
 import Product from '@components/Product/Product'
 import {
-  closestCenter,
+  CollisionDetection,
   defaultDropAnimationSideEffects,
   DndContext,
   DragOverlay,
   DragStartEvent,
   DropAnimation,
   MouseSensor,
+  pointerWithin,
+  rectIntersection,
   TouchSensor,
   UniqueIdentifier,
   useSensor,
@@ -58,9 +60,19 @@ export default function DragDrop() {
     })
   }
 
+  const customCollisionDetectionAlgorithm: CollisionDetection = (args) => {
+    const pointerCollisions = pointerWithin(args)
+
+    if (pointerCollisions.length > 0) {
+      return pointerCollisions
+    }
+
+    return rectIntersection(args)
+  }
+
   return (
     <DndContext
-      collisionDetection={closestCenter}
+      collisionDetection={customCollisionDetectionAlgorithm}
       sensors={sensors}
       onDragStart={onDragStart}
       onDragOver={onDragOver}
