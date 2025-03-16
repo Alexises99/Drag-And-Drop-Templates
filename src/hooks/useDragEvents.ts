@@ -49,14 +49,9 @@ export function useDragEvents({
     activeContainer: UniqueIdentifier,
     overContainer: UniqueIdentifier
   ) => {
-    const activeIndex = Object.keys(rows)
-      .map(Number)
-      .indexOf(activeContainer as number)
-    const overIndex = Object.keys(rows)
-      .map(Number)
-      .indexOf(overContainer as number)
+    const activeIndex = rowContainers.indexOf(activeContainer as number)
+    const overIndex = rowContainers.indexOf(overContainer as number)
 
-    console.log({ activeIndex, overIndex })
     if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex)
       return
     setRowContainers((state) => arrayMove(state, activeIndex, overIndex))
