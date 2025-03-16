@@ -18,7 +18,13 @@ export default function DraggableItem({ id, children }: DraggableItemProps) {
   }
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="touch-none"
+    >
       {children(active?.id === id)}
     </div>
   )

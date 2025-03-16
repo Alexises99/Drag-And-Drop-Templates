@@ -55,7 +55,10 @@ export function useDragEvents({
     const overIndex = Object.keys(rows)
       .map(Number)
       .indexOf(overContainer as number)
-    if (activeIndex === overIndex) return
+
+    console.log({ activeIndex, overIndex })
+    if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex)
+      return
     setRowContainers((state) => arrayMove(state, activeIndex, overIndex))
   }
 
@@ -83,6 +86,7 @@ export function useDragEvents({
       activeContainer !== overContainer &&
       rows[overContainer].items.length >= MAX_PRODUCTS
     ) {
+      setActiveId(null)
       return
     }
 
@@ -146,8 +150,9 @@ export function useDragEvents({
     )
       return
 
-    removeEmptyRows()
     handleDragEnd(activeId, overId, activeContainer, overContainer)
+    removeEmptyRows()
+
     setActiveId(null)
   }
 

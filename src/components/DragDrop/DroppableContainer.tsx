@@ -41,7 +41,7 @@ export default function DroppableContainer({
     <div
       ref={disabled ? null : setNodeRef}
       style={style}
-      className={`h-fit w-full ${isOver ? (overStyles ?? '') : ''}`}
+      className={`h-fit w-full touch-none ${isOver ? (overStyles ?? '') : ''}`}
     >
       {children(listeners, attributes)}
     </div>
