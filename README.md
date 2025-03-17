@@ -64,8 +64,10 @@ pnpm dev
   ├── assets        # Static assets (images, icons, etc.)
   ├── components    # Reusable UI components
   ├── context       # Global state management
+  ├── data          # Initial Data
   ├── hooks         # Custom Hooks
   ├── locales       # Translations (i18n)
+  ├── stories       # Storybook stories
   ├── tests         # Test Suites
   ├── utils         # Utility functions and helper methods
   ├── App.tsx       # Root component
