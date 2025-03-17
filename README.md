@@ -36,7 +36,7 @@ Vite was chosen as the **best option** for this project because it offers:
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/Alexises99/Inditex-Templates.git
+git clone https://github.com/Alexises99/Drag-And-Drop-Templates.git
 ```
 
 2. Enter in the project:
