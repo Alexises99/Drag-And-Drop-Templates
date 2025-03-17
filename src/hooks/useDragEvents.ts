@@ -1,6 +1,6 @@
 import { DragEndEvent, DragOverEvent, UniqueIdentifier } from '@dnd-kit/core'
 import dragDropUtils from '@utils/drag-drop'
-import { Dispatch, SetStateAction, useCallback } from 'react'
+import { Dispatch, RefObject, SetStateAction, useCallback } from 'react'
 import { useRows } from './useRows'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useDragDrop } from './useDragDrop'
@@ -11,11 +11,13 @@ interface useDragEventsArgs {
   rowsState: ReturnType<typeof useRows>
   dragDrop: ReturnType<typeof useDragDrop>
   setActiveId: Dispatch<SetStateAction<UniqueIdentifier | null>>
+  recentlyMovedToNewContainer: RefObject<boolean>
 }
 
 export function useDragEvents({
   rowsState,
   dragDrop,
+  recentlyMovedToNewContainer,
   setActiveId
 }: useDragEventsArgs) {
   const {
@@ -54,6 +56,7 @@ export function useDragEvents({
 
     if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex)
       return
+
     setRowContainers((state) => arrayMove(state, activeIndex, overIndex))
   }
 
@@ -64,7 +67,6 @@ export function useDragEvents({
 
     const overId = over.id
     const activeId = active.id
-    // Active.id in rows for move containers
 
     const { activeContainer, overContainer } = findContainers(activeId, overId)
 
@@ -87,6 +89,7 @@ export function useDragEvents({
 
     // Move items between containers
     if (activeContainer !== overContainer) {
+      recentlyMovedToNewContainer.current = true
       handleDragOver(
         activeId,
         overId,

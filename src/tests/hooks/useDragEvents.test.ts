@@ -44,7 +44,12 @@ describe('useDragEvents', () => {
 
   describe('onDragOver', () => {
     test('should do nothing when overId is null', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragOver({
         active: { id: 'item1', rect: { current: { translated: {} } } },
@@ -56,7 +61,12 @@ describe('useDragEvents', () => {
     })
 
     test('should handle row container reordering', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragOver({
         active: { id: 1, rect: { current: { translated: {} } } },
@@ -75,7 +85,8 @@ describe('useDragEvents', () => {
       const { result } = renderHook(() =>
         useDragEvents({
           ...defaultProps,
-          rowsState: { ...defaultProps.rowsState, rows: rowsWithThreeItems }
+          rowsState: { ...defaultProps.rowsState, rows: rowsWithThreeItems },
+          recentlyMovedToNewContainer: { current: false }
         })
       )
 
@@ -88,7 +99,12 @@ describe('useDragEvents', () => {
     })
 
     test('should handle movement between different containers', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragOver({
         active: {
@@ -109,7 +125,12 @@ describe('useDragEvents', () => {
     })
 
     test('should handle movement within same container', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragOver({
         active: {
@@ -125,7 +146,12 @@ describe('useDragEvents', () => {
 
   describe('onDragEnd', () => {
     test('should handle null overId', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragEnd({
         active: { id: 'item1' },
@@ -136,7 +162,12 @@ describe('useDragEvents', () => {
     })
 
     test('should handle null activeContainer', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragEnd({
         active: { id: 'nonexistent' },
@@ -147,7 +178,12 @@ describe('useDragEvents', () => {
     })
 
     test('should handle row position changes', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragEnd({
         active: { id: 1 },
@@ -158,7 +194,12 @@ describe('useDragEvents', () => {
     })
 
     test('should handle new row creation when dropping on NEW_ROW_ID with one item ', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragEnd({
         active: { id: 'item3' },
@@ -171,7 +212,12 @@ describe('useDragEvents', () => {
     })
 
     test('should handle new row creation when dropping on NEW_ROW_ID', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragEnd({
         active: { id: 'item1' },
@@ -194,7 +240,8 @@ describe('useDragEvents', () => {
         rowsState: {
           ...defaultProps.rowsState,
           rows: rowsWithThreeItems
-        }
+        },
+        recentlyMovedToNewContainer: { current: false }
       }
 
       const { result } = renderHook(() => useDragEvents(props))
@@ -208,7 +255,12 @@ describe('useDragEvents', () => {
     })
 
     test('should handle normal drag end between containers', () => {
-      const { result } = renderHook(() => useDragEvents(defaultProps))
+      const { result } = renderHook(() =>
+        useDragEvents({
+          ...defaultProps,
+          recentlyMovedToNewContainer: { current: false }
+        })
+      )
 
       result.current.onDragEnd({
         active: { id: 'item1' },
@@ -230,7 +282,8 @@ describe('useDragEvents', () => {
         rowsState: {
           ...defaultProps.rowsState,
           rows: rowsWithEmptyRow
-        }
+        },
+        recentlyMovedToNewContainer: { current: false }
       }
 
       const { result } = renderHook(() => useDragEvents(props))

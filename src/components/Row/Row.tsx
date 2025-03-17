@@ -1,5 +1,8 @@
 import TemplateButtons from './TemplateButtons'
-import { SortableContext } from '@dnd-kit/sortable'
+import {
+  horizontalListSortingStrategy,
+  SortableContext
+} from '@dnd-kit/sortable'
 import RowContent from './RowContent'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import type { DraggableAttributes } from '@dnd-kit/core'
@@ -25,7 +28,8 @@ export default function Row({
   const { alignment, id, items, name } = row
 
   const {
-    rows: { deleteItemFromRow, changeCategoryName, deleteRow, changeAligment }
+    rows: { deleteItemFromRow, changeCategoryName, deleteRow, changeAligment },
+    zoom: { zoom }
   } = useTemplate()
 
   const removeItem = deleteItemFromRow(id)
@@ -62,7 +66,10 @@ export default function Row({
         />
       </header>
       {isDraggable ? (
-        <SortableContext items={items} strategy={() => null}>
+        <SortableContext
+          items={items}
+          strategy={zoom === 1 ? horizontalListSortingStrategy : () => null}
+        >
           <RowContent
             row={row}
             alignment={alignment}
