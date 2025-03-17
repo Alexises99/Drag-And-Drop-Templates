@@ -56,7 +56,7 @@ describe('RowContainer', () => {
     })
 
     expect(screen.queryAllByRole('listitem')).toHaveLength(1)
-    expect(screen.getByText('+ Añadir Fila')).toBeInTheDocument()
+    expect(screen.getByText(translate('list.create-row'))).toBeInTheDocument()
   })
 
   test('calls openDialog with correct parameters', () => {

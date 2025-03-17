@@ -46,7 +46,7 @@ describe('ProductList', () => {
     }
 
     renderWithContext(<ProductList {...propsWithEditedRow} />)
-    const maxProductsMessage = screen.getByText(/Maximo \d+ productos/i)
+    const maxProductsMessage = screen.getByText(/Máximo \d+ productos/i)
     const numberMatch = maxProductsMessage.textContent?.match(/\d+/) // Extraer solo el número
     const maxProducts = numberMatch ? parseInt(numberMatch[0], 10) : null
 

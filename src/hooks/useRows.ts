@@ -1,8 +1,9 @@
-import { UniqueIdentifier } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
-import type { Alignment, Row } from '@types'
 import rowsUtils from '@utils/rows'
 import { useCallback, useState } from 'react'
+
+import { type UniqueIdentifier } from '@dnd-kit/core'
+import type { Alignment, Row } from '@types'
 
 export type RowState = Record<UniqueIdentifier, Row>
 
@@ -52,9 +53,9 @@ export function useRows() {
     []
   )
 
-  const changeAligment = useCallback(
-    (rowId: UniqueIdentifier, aligment: Alignment) =>
-      setRows(rowsUtils.changeAligment(rowId, aligment)),
+  const changeAlignment = useCallback(
+    (rowId: UniqueIdentifier, alignment: Alignment) =>
+      setRows(rowsUtils.changeAlignment(rowId, alignment)),
     []
   )
 
@@ -81,6 +82,6 @@ export function useRows() {
     deleteItemFromRow,
     setRowContainers,
     setRows,
-    changeAligment
+    changeAlignment
   }
 }

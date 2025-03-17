@@ -1,8 +1,9 @@
 import { UniqueIdentifier } from '@dnd-kit/core'
 import { DialogMethods } from '@hooks/useDialog'
-import { DialogMode } from '@types'
-import { PropsWithChildren, useRef, useState } from 'react'
 import { DialogContext } from './DialogContext'
+
+import { type PropsWithChildren, useRef, useState } from 'react'
+import type { DialogMode } from '@types'
 
 export default function DialogProvider({ children }: PropsWithChildren) {
   const dialogRef = useRef<DialogMethods>(null)

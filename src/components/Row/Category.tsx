@@ -1,5 +1,5 @@
 import { PencilIcon } from '@assets/icons'
-import { useRef, useState, KeyboardEvent } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 
 interface CategoryProps {
   name: string

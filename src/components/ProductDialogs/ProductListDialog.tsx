@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import ProductList from './ProductList'
 import DialogControls from './DialogControls'
-import { UniqueIdentifier } from '@dnd-kit/core'
 import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
+
+import { type UniqueIdentifier } from '@dnd-kit/core'
 
 interface ProductListDialogProps {
   handleClose: (reset?: () => void) => void

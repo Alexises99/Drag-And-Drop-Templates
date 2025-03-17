@@ -6,7 +6,7 @@ This project is a technical assessment for Inditex, built using **React** and **
 
 The goal is to build a template builder application with the following features:
 
-- Display a list of rows, each containing a **name**, a **template aligment**, and **1 to 3 products**.
+- Display a list of rows, each containing a **name**, a **template alignment**, and **1 to 3 products**.
 - Allow **reordering of rows**.
 - Enable **drag-and-drop functionality** for moving products within a row and between different rows.
 - **Create new products** and add products to existing rows.

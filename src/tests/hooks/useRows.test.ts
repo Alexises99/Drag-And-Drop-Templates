@@ -93,7 +93,7 @@ describe('useRows', () => {
 
       act(() => {
         result.current.addNewRow()
-        result.current.changeAligment(1, 'center')
+        result.current.changeAlignment(1, 'center')
       })
 
       expect(result.current.rows[1].alignment).toBe('center')

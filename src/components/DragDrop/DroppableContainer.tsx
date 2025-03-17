@@ -1,7 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable'
-import { ReactNode } from 'react'
 import { CSS } from '@dnd-kit/utilities'
 
+import { type ReactNode } from 'react'
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 

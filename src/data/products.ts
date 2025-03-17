@@ -1,5 +1,5 @@
-import type { Product } from '@types'
 import jeansImages from '@assets/jeans'
+import type { Product } from '@types'
 
 export const initialProducts: Record<string, Omit<Product, 'name'>> = {
   'Straight Fit Regular': {

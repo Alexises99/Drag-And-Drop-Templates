@@ -1,7 +1,7 @@
 import {
-  ButtonHTMLAttributes,
-  DetailedHTMLProps,
-  PropsWithChildren
+  type ButtonHTMLAttributes,
+  type DetailedHTMLProps,
+  type PropsWithChildren
 } from 'react'
 
 interface ButtonProps {

@@ -1,8 +1,9 @@
-import { UniqueIdentifier } from '@dnd-kit/core'
 import { DialogMethods } from '@hooks/useDialog'
-import { DialogMode } from '@types'
-import { createContext, RefObject } from 'react'
+import { createContext, type RefObject } from 'react'
 
+import { type UniqueIdentifier } from '@dnd-kit/core'
+
+import { DialogMode } from '@types'
 interface DialogContextValues {
   openDialog: (mode: DialogMode, editedRow?: UniqueIdentifier) => void
   closeDialog: () => void

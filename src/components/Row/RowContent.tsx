@@ -1,9 +1,10 @@
-import type { Alignment, Row } from '@types'
-import aligmentUtils from '@utils/aligment'
+import alignmentUtils from '@utils/alignment'
 import Product from '@components/Product/Product'
 import productUtils from '@utils/products'
 import { useTemplate } from '@hooks/useTemplate'
 import DraggableItem from '@components/DragDrop/DraggableItem'
+
+import type { Alignment, Row } from '@types'
 
 interface RowContentProps {
   row: Row
@@ -21,10 +22,10 @@ export default function RowContent({
   } = useTemplate()
 
   const { items } = row
-  const selectedAligment = aligmentUtils.getJustifyAligment(alignment)
+  const selectedAlignment = alignmentUtils.getJustifyAlignment(alignment)
   return (
     <div
-      className={`flex min-h-60 w-full gap-4 p-2 sm:p-4 ${selectedAligment}`}
+      className={`flex min-h-60 w-full gap-4 p-2 sm:p-4 ${selectedAlignment}`}
     >
       {items.map((item) => {
         const product = productUtils.getProduct(item as string, productsData)

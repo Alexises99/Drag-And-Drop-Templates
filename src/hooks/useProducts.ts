@@ -1,7 +1,8 @@
 import { initialProducts } from '@data/products'
-import { Data, Product } from '@types'
 import productUtils from '@utils/products'
 import { useState } from 'react'
+
+import type { Data, Product } from '@types'
 
 export function useProducts() {
   const [products, setProducts] = useState<Data>(initialProducts)

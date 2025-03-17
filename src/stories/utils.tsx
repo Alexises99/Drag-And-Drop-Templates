@@ -1,10 +1,10 @@
 import { IntlProvider } from 'react-intl'
 import messages from '../locales/es.json'
-import { PropsWithChildren } from 'react'
-
 import DialogProvider from '@context/Dialog/DialogProvider'
 import { TemplateContext } from '@context/Template/Template/TemplateContext'
 import { templateContextMock } from '../tests/mocks/useTemplate.mock'
+
+import { type PropsWithChildren } from 'react'
 
 export function StoryBookIntlProvider({ children }: PropsWithChildren) {
   return (

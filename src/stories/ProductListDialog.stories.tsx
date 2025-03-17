@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { expect, fn, userEvent, within } from '@storybook/test'
-
 import ProductListDialog from '@components/ProductDialogs/ProductListDialog'
 import { StoryBookDecorator } from './utils'
 import { translate } from '../tests/test-utils'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   component: ProductListDialog,
@@ -35,7 +35,7 @@ export const SelectProducts: Story = {
     expect(saveButton).toBeInTheDocument()
     expect(saveButton).toHaveAttribute('disabled')
     const [first, second, thrid, fourth] = canvas.getAllByRole('button', {
-      name: /Selecciona el producto/i
+      name: /Seleccionar el producto/i
     })
     expect(first).toBeInTheDocument()
     expect(second).toBeInTheDocument()

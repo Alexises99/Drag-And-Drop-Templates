@@ -1,11 +1,20 @@
-import { DragEndEvent, DragOverEvent, UniqueIdentifier } from '@dnd-kit/core'
-import dragDropUtils from '@utils/drag-drop'
-import { Dispatch, RefObject, SetStateAction, useCallback } from 'react'
 import { useRows } from './useRows'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useDragDrop } from './useDragDrop'
 import { NEW_ROW_ID } from '@utils/rows'
 import { MAX_PRODUCTS } from '@utils/products'
+import {
+  type DragEndEvent,
+  type DragOverEvent,
+  type UniqueIdentifier
+} from '@dnd-kit/core'
+import dragDropUtils from '@utils/drag-drop'
+import {
+  type Dispatch,
+  type RefObject,
+  type SetStateAction,
+  useCallback
+} from 'react'
 
 interface useDragEventsArgs {
   rowsState: ReturnType<typeof useRows>

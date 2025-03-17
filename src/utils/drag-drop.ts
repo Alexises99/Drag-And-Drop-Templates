@@ -4,11 +4,11 @@ import {
   getFirstCollision,
   pointerWithin,
   rectIntersection,
-  UniqueIdentifier
+  type UniqueIdentifier
 } from '@dnd-kit/core'
-import { RowState } from '@hooks/useRows'
-import { DragItem } from '@types'
-import { RefObject } from 'react'
+import { type RowState } from '@hooks/useRows'
+import { type RefObject } from 'react'
+import type { DragItem } from '@types'
 
 function findContainer(
   rows: Record<UniqueIdentifier, DragItem>,

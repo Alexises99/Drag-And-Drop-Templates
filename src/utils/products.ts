@@ -1,5 +1,5 @@
-import { Data } from '@dnd-kit/core'
-import { Product, ProductDialog } from '@types'
+import { type Data } from '@dnd-kit/core'
+import type { Product, ProductDialog } from '@types'
 
 export const MAX_PRODUCTS = 3
 

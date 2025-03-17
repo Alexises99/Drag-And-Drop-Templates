@@ -9,7 +9,7 @@ import {
 import ProductField from './ProductField'
 import { useIntl } from 'react-intl'
 import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
-import { Product, ProductDialog } from '@types'
+import type { Product, ProductDialog } from '@types'
 
 interface CreateProductProps {
   handleClose: () => void

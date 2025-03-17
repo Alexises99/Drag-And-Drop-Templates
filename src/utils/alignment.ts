@@ -1,7 +1,7 @@
 import type { Alignment } from '@types'
 
-function getJustifyAligment(aligment: Alignment) {
-  switch (aligment) {
+function getJustifyAlignment(alignment: Alignment) {
+  switch (alignment) {
     case 'left':
       return 'justify-start'
     case 'center':
@@ -11,8 +11,8 @@ function getJustifyAligment(aligment: Alignment) {
   }
 }
 
-const aligmentUtils = {
-  getJustifyAligment
+const alignmentUtils = {
+  getJustifyAlignment
 }
 
-export default aligmentUtils
+export default alignmentUtils

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { TemplateContextValue } from '@context/Template/Template/TemplateContext'
 import { initialProducts } from '@data/products'
-import { UniqueIdentifier } from '@dnd-kit/core'
+import { type UniqueIdentifier } from '@dnd-kit/core'
 import type { Data, Row } from '@types'
 
 const [firstProduct, secondProduct] = Object.keys(initialProducts)
@@ -39,7 +39,7 @@ export const templateContextMock: TemplateContextValue = {
     deleteItemFromRow: (_rowId) => (_itemId) => {},
     setRows: (_prev) => {},
     setRowContainers: (_prev) => {},
-    changeAligment: (_rowId, _alignment) => {}
+    changeAlignment: (_rowId, _alignment) => {}
   },
   dragDrop: {
     handleDragEnd: (_activeId, _overId, _activeContainer, _overContainer) => {},

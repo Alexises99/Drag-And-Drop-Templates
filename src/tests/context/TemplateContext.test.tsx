@@ -60,7 +60,7 @@ describe('TemplateContext', () => {
       ...mockRows,
       addItemToRow: () => {},
       addNewRow: () => {},
-      changeAligment: () => {},
+      changeAlignment: () => {},
       changeCategoryName: () => {},
       deleteItemFromRow: () => () => {},
       deleteRow: () => {},

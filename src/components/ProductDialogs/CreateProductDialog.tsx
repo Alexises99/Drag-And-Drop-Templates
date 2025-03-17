@@ -2,8 +2,9 @@ import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 import CreateProduct from './CreateProduct'
 import DialogControls from './DialogControls'
 import { useState } from 'react'
-import { ProductDialog } from '@types'
 import productUtils, { defaultProduct } from '@utils/products'
+
+import type { ProductDialog } from '@types'
 
 interface CreateProductDialogProps {
   handleClose: (reset?: () => void) => void

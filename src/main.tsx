@@ -5,9 +5,9 @@ import TemplateProvider from './context/Template/Template/TemplateProvider.tsx'
 import DialogProvider from '@context/Dialog/DialogProvider.tsx'
 import { IntlProvider } from 'react-intl'
 import localesEs from './locales/es.json'
+import ErrorBoundary from '@components/ErrorBoundary.tsx'
 
 import './index.css'
-import ErrorBoundary from '@components/ErrorBoundary.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

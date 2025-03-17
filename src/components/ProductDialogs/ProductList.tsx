@@ -1,11 +1,11 @@
 import Product from '@components/Product/Product'
 import { useTemplate } from '@hooks/useTemplate'
 import productUtils, { MAX_PRODUCTS } from '@utils/products'
-import { Dispatch, FormEvent, SetStateAction } from 'react'
-
-import { UniqueIdentifier } from '@dnd-kit/core'
 import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
 import { useIntl } from 'react-intl'
+
+import { type UniqueIdentifier } from '@dnd-kit/core'
+import { type Dispatch, type FormEvent, type SetStateAction } from 'react'
 import type { Data } from '@types'
 
 interface ProductListProps {

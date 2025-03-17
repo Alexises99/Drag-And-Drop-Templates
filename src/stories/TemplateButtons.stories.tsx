@@ -1,10 +1,10 @@
 import TemplateButtons from '@components/Row/TemplateButtons'
-import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 import { StoryBookIntlProvider } from './utils'
 import { useArgs } from '@storybook/preview-api'
-import { Alignment } from '@types'
 
-import { fn } from '@storybook/test'
+import type { Alignment } from '@types'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof TemplateButtons> = {
   component: TemplateButtons,
@@ -15,30 +15,30 @@ const meta: Meta<typeof TemplateButtons> = {
   ),
   args: {
     attributes: undefined,
-    changeAligment: fn(),
+    changeAlignment: fn(),
     handleDelete: fn(),
     items: [],
     listeners: undefined,
     openDialog: fn(),
-    selectedAligment: 'left'
+    selectedAlignment: 'left'
   }
 }
 type Story = StoryObj<typeof TemplateButtons>
 
-export const ChangeAligment: Story = {
+export const ChangeAlignment: Story = {
   render: function (args) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [{ selectedAligment }, updateArgs] = useArgs()
+    const [{ selectedAlignment }, updateArgs] = useArgs()
 
-    function onChange(aligment: Alignment) {
-      updateArgs({ selectedAligment: aligment })
+    function onChange(alignment: Alignment) {
+      updateArgs({ selectedAlignment: alignment })
     }
 
     return (
       <TemplateButtons
         {...args}
-        changeAligment={(aligment) => onChange(aligment)}
-        selectedAligment={selectedAligment}
+        changeAlignment={(alignment) => onChange(alignment)}
+        selectedAlignment={selectedAlignment}
       />
     )
   }

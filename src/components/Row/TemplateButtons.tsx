@@ -1,11 +1,11 @@
-import { aligmentRecord, DragIcon, DeleteIcon, AddIcon } from '@assets/icons'
+import { alignmentRecord, DragIcon, DeleteIcon, AddIcon } from '@assets/icons'
 import { FormattedMessage } from '@components/FormattedMessage/FormattedMessage'
+import { MAX_PRODUCTS } from '@utils/products'
+import { useIntl } from 'react-intl'
 
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import type { Alignment } from '@types'
-import { MAX_PRODUCTS } from '@utils/products'
-import { useIntl } from 'react-intl'
 
 function DeleteButton({
   handleDelete,
@@ -26,49 +26,49 @@ function DeleteButton({
 }
 
 interface TemplateButtonProps
-  extends Pick<TemplateButtonsProps, 'changeAligment'> {
-  aligment: Alignment
-  selectedAligment: Alignment
+  extends Pick<TemplateButtonsProps, 'changeAlignment'> {
+  alignment: Alignment
+  selectedAlignment: Alignment
 }
 
 function TemplateButton({
-  aligment,
-  selectedAligment,
-  changeAligment
+  alignment,
+  selectedAlignment,
+  changeAlignment
 }: TemplateButtonProps) {
-  const IconComponent = aligmentRecord[aligment]
+  const IconComponent = alignmentRecord[alignment]
   return (
     <button
       className="text-medium-gray hover:text-dark-gray cursor-pointer"
-      onClick={() => changeAligment(aligment)}
-      data-testid={`${aligment}-alignment-button`}
-      aria-controls="aligment"
+      onClick={() => changeAlignment(alignment)}
+      data-testid={`${alignment}-alignment-button`}
+      aria-controls="alignment"
     >
       <IconComponent
-        className={selectedAligment === aligment ? 'text-blue-300' : ''}
+        className={selectedAlignment === alignment ? 'text-blue-300' : ''}
       />
     </button>
   )
 }
 
 interface TemplateButtonsProps {
-  selectedAligment: Alignment
+  selectedAlignment: Alignment
   listeners: SyntheticListenerMap | undefined
   attributes: DraggableAttributes | undefined
   items: UniqueIdentifier[]
-  changeAligment: (alignment: Alignment) => void
+  changeAlignment: (alignment: Alignment) => void
   handleDelete: () => void
   openDialog: () => void
 }
 
 export default function TemplateButtons({
-  changeAligment,
+  changeAlignment,
   handleDelete,
   openDialog,
   items,
   listeners,
   attributes,
-  selectedAligment
+  selectedAlignment
 }: TemplateButtonsProps) {
   const intl = useIntl()
   return (
@@ -79,30 +79,30 @@ export default function TemplateButtons({
       />
       <div className="order-2 flex items-center gap-4 sm:order-1" role="group">
         <span
-          id="aligment"
+          id="alignment"
           aria-live="polite"
           aria-label={intl.formatMessage({
-            id: 'row.aligment.aria-label'
+            id: 'row.alignment.aria-label'
           })}
         >
           {intl.formatMessage({
-            id: `aligment.${selectedAligment}`
+            id: `alignment.${selectedAlignment}`
           })}
         </span>
         <TemplateButton
-          selectedAligment={selectedAligment}
-          aligment={'left'}
-          changeAligment={changeAligment}
+          selectedAlignment={selectedAlignment}
+          alignment={'left'}
+          changeAlignment={changeAlignment}
         />
         <TemplateButton
-          selectedAligment={selectedAligment}
-          aligment={'center'}
-          changeAligment={changeAligment}
+          selectedAlignment={selectedAlignment}
+          alignment={'center'}
+          changeAlignment={changeAlignment}
         />
         <TemplateButton
-          selectedAligment={selectedAligment}
-          aligment={'right'}
-          changeAligment={changeAligment}
+          selectedAlignment={selectedAlignment}
+          alignment={'right'}
+          changeAlignment={changeAlignment}
         />
       </div>
       <div className="flex items-center gap-4 sm:order-2">

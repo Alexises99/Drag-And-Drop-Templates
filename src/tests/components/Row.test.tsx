@@ -1,10 +1,11 @@
 import Row from '../../components/Row/Row'
 import { screen, fireEvent } from '@testing-library/react'
-import { type Row as RowType } from '@types'
 import { renderWithContext, translate } from '../test-utils'
 import { initialProducts } from '../../data/products'
 import { templateContextMock } from '../mocks/useTemplate.mock'
 import userEvent from '@testing-library/user-event'
+
+import { type Row as RowType } from '@types'
 
 const [first, second] = Object.keys(initialProducts)
 
@@ -70,7 +71,7 @@ describe('Row', () => {
   test('Change alignment works correctly', async () => {
     const changeAlignmentSpy = vi.spyOn(
       templateContextMock.rows,
-      'changeAligment'
+      'changeAlignment'
     )
     renderWithContext(<Row openDialog={openDialogMock} row={row} />)
 

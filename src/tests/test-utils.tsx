@@ -1,6 +1,5 @@
 import DialogProvider from '@context/Dialog/DialogProvider'
 import { render } from '@testing-library/react'
-import { PropsWithChildren, ReactNode } from 'react'
 import { IntlProvider } from 'react-intl'
 import localesEs from '../locales/es.json'
 import { templateContextMock } from './mocks/useTemplate.mock'
@@ -8,6 +7,7 @@ import {
   TemplateContext,
   TemplateContextValue
 } from '@context/Template/Template/TemplateContext'
+import { type PropsWithChildren, type ReactNode } from 'react'
 
 export const translate = (key: keyof typeof localesEs) => localesEs[key] // Helper to get translation
 

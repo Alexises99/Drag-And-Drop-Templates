@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react'
-
 import Product from '@components/Product/Product'
 import { initialProducts } from '@data/products'
 import { StoryBookIntlProvider } from './utils'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Product> = {
   component: Product,

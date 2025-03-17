@@ -16,7 +16,6 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useTemplate } from '@hooks/useTemplate'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-
 import Row from '@components/Row/Row'
 import productUtils from '@utils/products'
 import RowContainer from '@components/RowContainer'

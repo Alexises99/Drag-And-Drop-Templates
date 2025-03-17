@@ -2,9 +2,10 @@
 import { renderHook } from '@testing-library/react'
 import { describe, test, expect, vi, beforeEach } from 'vitest'
 import { useDragEvents } from '@hooks/useDragEvents'
-import { RowState } from '@hooks/useRows'
-import { UniqueIdentifier } from '@dnd-kit/core'
 import { NEW_ROW_ID } from '@utils/rows'
+
+import { type RowState } from '@hooks/useRows'
+import { type UniqueIdentifier } from '@dnd-kit/core'
 
 describe('useDragEvents', () => {
   const mockSetActiveId = vi.fn()
@@ -29,7 +30,7 @@ describe('useDragEvents', () => {
       setRows: vi.fn(),
       addItemToRow: vi.fn(),
       changeCategoryName: vi.fn(),
-      changeAligment: vi.fn()
+      changeAlignment: vi.fn()
     },
     dragDrop: {
       handleDragOver: mockHandleDragOver,

@@ -102,7 +102,7 @@ describe('rowsUtils', () => {
 
   describe('changeAlignment', () => {
     test('updates row alignment', () => {
-      const updatedState = rowsUtils.changeAligment(
+      const updatedState = rowsUtils.changeAlignment(
         'row-1',
         'center'
       )(mockInitialState)
@@ -110,7 +110,7 @@ describe('rowsUtils', () => {
     })
 
     test('returns same state if row does not exist', () => {
-      const updatedState = rowsUtils.changeAligment(
+      const updatedState = rowsUtils.changeAlignment(
         'non-existent',
         'right'
       )(mockInitialState)
@@ -118,7 +118,7 @@ describe('rowsUtils', () => {
     })
 
     test('returns same state if alignment is unchanged', () => {
-      const updatedState = rowsUtils.changeAligment(
+      const updatedState = rowsUtils.changeAlignment(
         'row-1',
         'left'
       )(mockInitialState)

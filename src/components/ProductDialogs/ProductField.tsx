@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react'
+import { type DetailedHTMLProps, type InputHTMLAttributes } from 'react'
 
 interface ProductFieldProps {
   label: string

@@ -1,9 +1,10 @@
-import { PropsWithChildren } from 'react'
 import { useProducts } from '@hooks/useProducts'
 import useZoom from '@hooks/useZoom'
 import { useRows } from '@hooks/useRows'
 import { useDragDrop } from '@hooks/useDragDrop'
 import { TemplateContext, TemplateContextValue } from './TemplateContext'
+
+import { type PropsWithChildren } from 'react'
 
 export default function TemplateProvider({ children }: PropsWithChildren) {
   const products = useProducts()

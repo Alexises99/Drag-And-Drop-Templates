@@ -9,7 +9,7 @@ export { default as AddIcon } from './add.svg?react'
 import type { FunctionComponent, SVGProps } from 'react'
 import type { Alignment } from '@types'
 
-export const aligmentRecord: Record<
+export const alignmentRecord: Record<
   Alignment,
   FunctionComponent<
     SVGProps<SVGSVGElement> & {

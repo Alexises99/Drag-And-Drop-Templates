@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction, useCallback } from 'react'
-import { RowState } from './useRows'
 import dragDropUtils from '@utils/drag-drop'
 import { arrayMove } from '@dnd-kit/sortable'
-import { ClientRect, UniqueIdentifier } from '@dnd-kit/core'
+
+import { type ClientRect, type UniqueIdentifier } from '@dnd-kit/core'
+import { type Dispatch, type SetStateAction, useCallback } from 'react'
+import { type RowState } from './useRows'
 
 /**
  * Custom hook to handle drag-and-drop functionality for managing row items.

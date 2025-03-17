@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { StoryBookDecorator } from './utils'
 import Row from '@components/Row/Row'
 import { initialProducts } from '@data/products'
-import { Row as RowType } from '@types'
+
+import type { Row as RowType } from '@types'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const defaultRow: RowType = {
   alignment: 'left',

@@ -1,8 +1,8 @@
 import { DeleteIcon } from '@assets/icons'
-
-import { Product as ProductType } from '@types'
-import { ReactNode } from 'react'
 import { FormattedNumber, useIntl } from 'react-intl'
+
+import type { Product as ProductType } from '@types'
+import { type ReactNode } from 'react'
 
 interface ProductProps {
   product: ProductType
