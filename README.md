@@ -95,4 +95,5 @@ pnpm coverage
 - **`pnpm preview`** → Serves the production build locally.
 - **`pnpm test`** → Runs the test suite.
 - **`pnpm coverage`** → Generates a test coverage report.
-- **`pnpm storybook`** → Execute Storybook
+- **`pnpm storybook`** → Runs Storybook.
+- **`pnpm prettier`** → Run Prettier to format files.
