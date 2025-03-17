@@ -1,4 +1,4 @@
-# 🖥️ Technical Test - Inditex Templates
+# 🖥️ Technical Test - Drag And Drop Templates
 
 This project is a technical assessment for Inditex, built using **React** and **TypeScript** with **Vite**.
 
