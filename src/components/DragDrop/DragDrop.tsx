@@ -23,6 +23,8 @@ import RowContainer from '@components/RowContainer'
 import { NEW_ROW_ID } from '@utils/rows'
 import { useDragEvents } from '@hooks/useDragEvents'
 import dragDropUtils from '@utils/drag-drop'
+import DragError from '@components/DragError'
+import ErrorBoundary from '@components/ErrorBoundary'
 
 export default function DragDrop() {
   const {
@@ -69,50 +71,52 @@ export default function DragDrop() {
   }
 
   return (
-    <DndContext
-      collisionDetection={dragDropUtils.collisionDetectionStrategy(
-        rows,
-        activeId,
-        lastOverId,
-        recentlyMovedToNewContainer
-      )}
-      sensors={sensors}
-      onDragStart={onDragStart}
-      onDragOver={onDragOver}
-      onDragEnd={onDragEnd}
-      onDragCancel={() => setActiveId(null)}
-      onDragAbort={() => setActiveId(null)}
-      measuring={{
-        droppable: { strategy: MeasuringStrategy.Always }
-      }}
-    >
-      <SortableContext
-        items={[...rowContainers, NEW_ROW_ID]}
-        strategy={zoom === 1 ? verticalListSortingStrategy : () => null}
+    <ErrorBoundary Error={(reset) => <DragError resetError={reset} />}>
+      <DndContext
+        collisionDetection={dragDropUtils.collisionDetectionStrategy(
+          rows,
+          activeId,
+          lastOverId,
+          recentlyMovedToNewContainer
+        )}
+        sensors={sensors}
+        onDragStart={onDragStart}
+        onDragOver={onDragOver}
+        onDragEnd={onDragEnd}
+        onDragCancel={() => setActiveId(null)}
+        onDragAbort={() => setActiveId(null)}
+        measuring={{
+          droppable: { strategy: MeasuringStrategy.Always }
+        }}
       >
-        <RowContainer isOrderingContainer={isOrderingContainer} />
-      </SortableContext>
-      {zoom === 1
-        ? createPortal(
-            <DragOverlay dropAnimation={dropAnimation}>
-              {activeId ? (
-                <div>
-                  {rowContainers.includes(activeId as number) ? (
-                    <Row openDialog={() => null} row={rows[activeId]} />
-                  ) : (
-                    <Product
-                      product={productUtils.getProduct(
-                        activeId as string,
-                        productsData
-                      )}
-                    />
-                  )}
-                </div>
-              ) : null}
-            </DragOverlay>,
-            document.body
-          )
-        : null}
-    </DndContext>
+        <SortableContext
+          items={[...rowContainers, NEW_ROW_ID]}
+          strategy={zoom === 1 ? verticalListSortingStrategy : () => null}
+        >
+          <RowContainer isOrderingContainer={isOrderingContainer} />
+        </SortableContext>
+        {zoom === 1
+          ? createPortal(
+              <DragOverlay dropAnimation={dropAnimation}>
+                {activeId ? (
+                  <div>
+                    {rowContainers.includes(activeId as number) ? (
+                      <Row openDialog={() => null} row={rows[activeId]} />
+                    ) : (
+                      <Product
+                        product={productUtils.getProduct(
+                          activeId as string,
+                          productsData
+                        )}
+                      />
+                    )}
+                  </div>
+                ) : null}
+              </DragOverlay>,
+              document.body
+            )
+          : null}
+      </DndContext>
+    </ErrorBoundary>
   )
 }

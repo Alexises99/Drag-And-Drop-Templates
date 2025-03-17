@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from 'react'
+import { FormattedMessage } from './FormattedMessage/FormattedMessage'
 
 type State = {
   hasError: boolean
@@ -6,6 +7,7 @@ type State = {
 
 type Props = {
   children: ReactNode
+  Error?: (resetError: () => void) => ReactNode
 }
 
 class ErrorBoundary extends Component<Props, State> {
@@ -24,7 +26,13 @@ class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>
+      return this.props.Error ? (
+        this.props.Error(() => this.setState({ hasError: false }))
+      ) : (
+        <h1>
+          <FormattedMessage id="error-boundary.error" />
+        </h1>
+      )
     }
 
     return this.props.children
